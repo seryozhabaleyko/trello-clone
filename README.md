@@ -1,3 +1,3 @@
 # kanban
 
--[kanban](https://seryozhabaleyko.github.io/kanban/)
+- [kanban](https://seryozhabaleyko.github.io/kanban/)
