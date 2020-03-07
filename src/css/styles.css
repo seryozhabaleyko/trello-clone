@@ -17,11 +17,12 @@ a {
 }
 
 header {
-	background-color: #fff;
+	background-color: rgba(255, 255, 255, 0.5);
 	height: 47px;
 }
 
 main {
+	margin-top: 30px;
     display: flex;
 	align-items: flex-start;
 }
