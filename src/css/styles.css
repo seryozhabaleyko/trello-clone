@@ -16,6 +16,11 @@ a {
     text-decoration: none;
 }
 
+header {
+	background-color: #fff;
+	height: 47px;
+}
+
 main {
     display: flex;
 	align-items: flex-start;
