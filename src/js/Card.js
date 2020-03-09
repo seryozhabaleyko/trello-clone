@@ -27,14 +27,14 @@ class Card {
             }
         });
 
-        $card.addEventListener('dragstart', this.dragstart);
-        $card.addEventListener('dragend', this.dragend);
+        /* $card.addEventListener('dragstart', this.dragstart, false);
+        $card.addEventListener('dragend', this.dragend, false);
 
-        $card.addEventListener('dragenter', this.dragenter);
-        $card.addEventListener('dragover', this.dragover);
+        $card.addEventListener('dragenter', this.dragenter, false);
+        $card.addEventListener('dragover', this.dragover, false);
 
-        $card.addEventListener('dragleave', this.dragleave);
-        $card.addEventListener('drop', this.drop);
+        $card.addEventListener('dragleave', this.dragleave, false);
+        $card.addEventListener('drop', this.drop, false); */
 
         return $card;
     }
@@ -56,6 +56,7 @@ class Card {
     }
 
     dragstart() {
+        alert('123123');
         console.log('dragstart');
     }
 
@@ -70,11 +71,16 @@ class Card {
 
     dragover(e) {
         e.preventDefault();
-        console.log('dragover');
+        console.log(123123);
     }
 
-    dragleave() {
+    dragleave(e) {
         console.log('dragleave');
+        console.log(e.target.className);
+        
+        if (e.target.className === 'list') {
+            console.log(leave);
+        }
     }
 
     drop() {
