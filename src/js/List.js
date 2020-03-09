@@ -1,5 +1,6 @@
 'use strict';
 
+import Header from './List/Header.js';
 import { template } from './template.js';
 
 class List {
@@ -39,7 +40,7 @@ class List {
 
     dragover(e) {
         e.preventDefault();
-        console.log('dragover');
+        console.log(123123);
     }
 
     dragleave() {
@@ -81,34 +82,11 @@ class List {
     }
 
     header(title) {
-        const $header = document.createElement('div');
-        $header.classList.add('list-header');
+        const {
+            header
+        } = Header();
 
-        const $title = document.createElement('span');
-        $title.classList.add('list-title');
-        $title.textContent = title;
-
-        $title.addEventListener('dblclick', function () {
-            this.setAttribute('contenteditable', 'true');
-            this.focus();
-        });
-
-        $title.addEventListener('blur', function () {
-            this.removeAttribute('contenteditable');
-        });
-
-        const $more = document.createElement('div');
-        $more.classList.add('list-more');
-
-        const $moreLink = document.createElement('a');
-        $moreLink.href = '#';
-        $moreLink.insertAdjacentHTML('afterbegin', template.more);
-
-        $more.appendChild($moreLink);
-
-        $header.append($title, $more);
-
-        return $header;
+        return header(title);
     }
 
     cards() {
