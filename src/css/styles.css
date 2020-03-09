@@ -1,3 +1,15 @@
+:root {
+    --color: #ddd;
+    --height-header: 60px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+
 body {
     margin: 0;
     background-image: url('../img/brick-wall.jfif');
@@ -5,10 +17,10 @@ body {
     background-color: #fafafa;
 
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-}
-
-* {
-    box-sizing: border-box;
+    /* overflow-y: hidden; */
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
 }
 
 a {
@@ -16,15 +28,68 @@ a {
     text-decoration: none;
 }
 
+ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+h3 {
+    margin: 0;
+}
+
 header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
 	background-color: rgba(255, 255, 255, 0.5);
-	height: 47px;
+    height: var(--height-header);
+    background-image: linear-gradient(to right, #eea2a2 0%, #bbc1bf 19%, #57c6e1 42%, #b49fda 79%, #7ac5d8 100%);
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
 }
 
 main {
-	margin-top: 30px;
+	margin-top: var(--height-header);
     display: flex;
 	align-items: flex-start;
+}
+
+/*
+ * sidebar
+*/
+.sidebar-section {
+}
+
+.sidebar {
+    margin-top: 40px;
+    padding: 0 30px;
+}
+
+.nav {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 5px;
+    grid-auto-rows: 35px;
+}
+
+.nav-item {
+    border-radius: 2px;
+}
+
+.nav-item[active] {
+    background-color: rgba(76, 175, 80, 0.3);
+}
+
+.nav-item:hover {
+    background-color: rgba(76, 175, 80, 0.3);
+}
+
+.nav-link {
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    align-items: center;
+    height: 100%;
 }
 
 /*
@@ -109,6 +174,10 @@ main {
     padding: 1px 4px;
     z-index: 1;
     min-height: 0;
+
+    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
+    overflow-y: auto
 }
 
 /*
@@ -196,6 +265,8 @@ main {
     color: rgb(82, 106, 122);
 
     transition: background-color 0.2s linear;
+
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
 }
 
 .card:hover {
@@ -338,4 +409,130 @@ main {
 
 #add-list:focus {
     background-color: #000;
+}
+
+
+
+/*
+ *  Modal
+*/
+
+.modal-overlay {
+   opacity: 0;
+   visibility: hidden;
+
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-color: rgba(0, 0, 0, .5);
+   z-index: 20;
+   transition: .3s all;
+}
+
+.modal {
+   /* Скрываем окна  */
+   opacity: 0;
+   visibility: hidden;
+
+   /*  Установаем ширину окна  */
+   width: 100%;
+   max-width: 500px;
+
+   /*  Центрируем и задаем z-index */
+   position: fixed;
+   top: 20%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   z-index: 30; /* Должен быть выше чем у подложки*/
+
+   /*  Побочные стили   */
+   box-shadow: 0 3px 10px -.5px rgba(0, 0, 0, .2);
+   padding: 30px;
+   border-radius: 3px;
+   background-color: #fff;
+   transition: 0.3s all;
+}
+
+.modal.active,
+.modal-overlay.active{
+   opacity: 1;
+   visibility: visible;
+}
+
+.modal__cross {
+   width: 15px;
+   height: 15px;
+   position: absolute;
+   top: 20px;
+   right: 20px;
+   fill: #444;
+   cursor: pointer;
+}
+
+
+/*
+ * from
+*/
+
+.create-board-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 10px;
+}
+
+.form-header {
+    display: grid;
+    grid-template-columns: 1fr 110px;
+    grid-gap: 10px;
+}
+
+.background-board {
+    display: grid;
+    grid-template-columns: 30px 30px 30px;
+    grid-gap: 10px;
+    grid-auto-rows: 30px;
+}
+
+.background-board-trigger {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+/* .background-board-trigger::before {
+    background: rgba(0,0,0,.15);
+    position: absolute;
+    bottom: 0;
+    content: "";
+    display: block;
+    left: 0;
+    right: 0;
+    top: 0;
+    border-radius: 3px;
+}
+
+.background-board-trigger:hover::before {
+    background: rgba(0,0,0,.15);
+} */
+
+
+.create-board-tile {
+    width: 100%;
+    height: 100%;
+    background-color: brown;
+    border-radius: 2px;
+}
+
+.create-board-submit-button {
+    background-color: teal;
+    color: #fff;
+    border: none;
+    border-radius: 2px;
+    padding: 10px 15px;
+    cursor: pointer;
 }
