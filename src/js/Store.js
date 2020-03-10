@@ -52,11 +52,19 @@ const Store = () => {
         setLocalStorage(store);
     };
 
+    const find = (id) => {
+        const store = getLocalStorage();
+        const obj = store.find(obj => obj.id === id);
+
+        return obj;
+    };
+
     return {
         getLocalStorage,
         insert,
         remove,
-        edit
+        edit,
+        find
     };
 };
 

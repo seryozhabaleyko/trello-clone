@@ -16,15 +16,17 @@ const {
 
 class Database {
     static create(obj) {
-        return fetch('https://kanban-fcf5f.firebaseio.com/boards.json', {
+        const options = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },
             body: JSON.stringify(obj)
-        })
+        };
+
+        return fetch('https://kanban-fcf5f.firebaseio.com/boards.json', options)
             .then(response => response.json())
-            .then(response  => {
+            .then(response => {
                 obj.id = response.name;
                 return obj;
             })
@@ -32,10 +34,26 @@ class Database {
             .then(Database.renderList)
     }
 
+    static createList(obj) {
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(obj)
+        };
+
+        return fetch('https://kanban-fcf5f.firebaseio.com/boards/lists.json', options)
+            .then(response => response.json())
+            .then(response => {
+                console.log(response);
+            })
+    }
+
     static renderList() {
         const boards = getLocalStorage();
-
-        const html = boards.length ? boards.map(toBoard).join('').trim() : '<div class="board"></div>';
+        const { board } = Board();
+        //const html = boards.length ? boards.map(toBoard).join('').trim() : '<div class="board"></div>';
 
         const $boards = getElement('.boards');
 
@@ -43,7 +61,19 @@ class Database {
             item.remove();
         });
 
-        $boards.insertAdjacentHTML('afterbegin', html);
+        boards.reverse().map(obj => {
+            $boards.insertAdjacentHTML('afterbegin', `
+                <a href="/#boards/${obj.id}" class="board" style="background: ${obj.bg}">
+                    <div class="board-title">${obj.title}</div>
+                    <div>${obj.date}</div>
+                    <div>${obj.time}</div>
+                </a>
+            `);
+        });
+
+        
+
+        //$boards.insertAdjacentHTML('afterbegin', html);
 
     }
 }

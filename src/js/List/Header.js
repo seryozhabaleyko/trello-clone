@@ -37,7 +37,7 @@ const Header = () => {
         return $more;
     };
 
-    const header = (titleText) => {
+    const header = (titleText = 'Название') => {
         const $header = createElement('div', '.list-header');
 
         $header.append(title(titleText), more());

@@ -20,7 +20,12 @@ const Board = () => {
 
     const board = (obj) => {
         const $board = createElement('div', '.board');
-
+        $board.style.background = obj.bg;
+        $board.insertAdjacentHTML('afterbegin', `
+            <div class="board-title">${obj.title}</div>
+            <div>${obj.date}</div>
+            <div>${obj.time}</div>
+        `);
         return $board;
     };
 
@@ -39,20 +44,7 @@ const Board = () => {
         $add.insertAdjacentHTML('afterbegin', template.board.add);
 
         on($add, 'click', function () {
-            //this.before(board());
-
-            /* const obj = {
-                date: new Date(),
-                title: 'title',
-                completed: false
-            };
-
-            Database.create(obj).then(() => {
-                console.log('Отправили на сервер');
-            }); */
-
             open();
-
         }, false);
 
         return $add;

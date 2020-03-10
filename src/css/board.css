@@ -4,7 +4,6 @@ body {
 
 
 main {
-    height: 100vh;
     display: grid;
     grid-template-columns: 300px 1fr;
 }
@@ -34,8 +33,35 @@ main {
 }
 
 .board {
+  position: relative;
+    padding: 10px;
     border-radius: 3px;
     background-color: #97a0af;
+    color: #fff;
+    display: grid;
+    grid-template-rows: 50%;
+    grid-auto-rows: 20px;
+    gap: 10px;
+    align-items: center;
+
+    box-shadow: 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);
+}
+
+.board::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  transition-property: background-color;
+  transition-duration: 85ms;
+  transition-timing-function: ease;
+}
+
+.board:hover::before {
+  background-color: rgba(0,0,0,0.2);
 }
 
 .create-new-board {
@@ -50,9 +76,11 @@ main {
     align-items: center;
     justify-content: center;
 
-    transition-property: background-color,border-color,box-shadow;
+    transition-property: background-color, border-color, box-shadow;
     transition-duration: 85ms;
     transition-timing-function: ease;
+
+    box-shadow: 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);
 }
 
 .create-new-board:hover {
