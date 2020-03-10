@@ -1,3 +1,5 @@
+'use strict';
+
 const DOMHelpers = () => {
 
     const createElement = (tag, idClass) => {
