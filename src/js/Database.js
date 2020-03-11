@@ -63,7 +63,7 @@ class Database {
 
         boards.reverse().map(obj => {
             $boards.insertAdjacentHTML('afterbegin', `
-                <a href="/#boards/${obj.id}" class="board" style="background: ${obj.bg}">
+                <a href="/kanban/#boards/${obj.id}" class="board" style="background: ${obj.bg}">
                     <div class="board-title">${obj.title}</div>
                     <div>${obj.date}</div>
                     <div>${obj.time}</div>
