@@ -1,8 +1,6 @@
 'use strict';
 
-//Object.defineProperty(exports, '__esModule', { value: true });
-
-var parseRouteParamToCorrectType = function parseRouteParamToCorrectType(paramValue) {
+const parseRouteParamToCorrectType = function parseRouteParamToCorrectType(paramValue) {
 	if (!isNaN(paramValue)) {
 		return parseInt(paramValue, 10);
 	}
@@ -14,16 +12,16 @@ var parseRouteParamToCorrectType = function parseRouteParamToCorrectType(paramVa
 	return paramValue;
 };
 
-var extractRouteParams = function extractRouteParams(routeIdentifier, currentHash) {
-	var splittedHash = currentHash.split('/');
-	var splittedRouteIdentifier = routeIdentifier.split('/');
+const extractRouteParams = function extractRouteParams(routeIdentifier, currentHash) {
+	const splittedHash = currentHash.split('/');
+	const splittedRouteIdentifier = routeIdentifier.split('/');
 
 	return splittedRouteIdentifier.map(function (routeIdentifierToken, index) {
 		if (routeIdentifierToken.indexOf(':', 0) === -1) {
 			return null;
 		}
-		var routeParam = {};
-		var key = routeIdentifierToken.substr(1, routeIdentifierToken.length - 1);
+		const routeParam = {};
+		const key = routeIdentifierToken.substr(1, routeIdentifierToken.length - 1);
 		routeParam[key] = splittedHash[index];
 		return routeParam;
 	}).filter(function (p) {
@@ -36,13 +34,13 @@ var extractRouteParams = function extractRouteParams(routeIdentifier, currentHas
 	}, {});
 };
 
-var findMatchingRouteIdentifier = function findMatchingRouteIdentifier(currentHash, routeKeys) {
-	var splittedHash = currentHash.split('/');
-	var firstHashToken = splittedHash[0];
+const findMatchingRouteIdentifier = function findMatchingRouteIdentifier(currentHash, routeKeys) {
+	const splittedHash = currentHash.split('/');
+	const firstHashToken = splittedHash[0];
 
 	return routeKeys.filter(function (routeKey) {
-		var splittedRouteKey = routeKey.split('/');
-		var staticRouteTokensAreEqual = splittedRouteKey.map(function (routeToken, i) {
+		const splittedRouteKey = routeKey.split('/');
+		const staticRouteTokensAreEqual = splittedRouteKey.map(function (routeToken, i) {
 			if (routeToken.indexOf(':', 0) !== -1) {
 				return true;
 			}
@@ -58,10 +56,10 @@ var findMatchingRouteIdentifier = function findMatchingRouteIdentifier(currentHa
 	})[0];
 };
 
-var XMLHttpRequestFactory = window.XMLHttpRequest;
+const XMLHttpRequestFactory = window.XMLHttpRequest;
 
-var loadTemplate = function loadTemplate(templateUrl, successCallback) {
-	var xhr = new XMLHttpRequestFactory();
+const loadTemplate = function loadTemplate(templateUrl, successCallback) {
+	const xhr = new XMLHttpRequestFactory();
 	xhr.onreadystatechange = function () {
 		if (xhr.readyState === 4) {
 			successCallback(xhr.responseText);
@@ -71,7 +69,7 @@ var loadTemplate = function loadTemplate(templateUrl, successCallback) {
 	xhr.send();
 };
 
-var renderTemplates = function renderTemplates(routeConfiguration, domEntryPoint, successCallback) {
+const renderTemplates = function renderTemplates(routeConfiguration, domEntryPoint, successCallback) {
 	if (!routeConfiguration) {
 		return;
 	}
@@ -185,5 +183,3 @@ export var createRouter = function createRouter(domEntryPoint) {
 
 	return { addRoute: addRoute, otherwise: otherwise, navigateTo: navigateTo };
 };
-
-/* exports.createRouter = createRouter; */
