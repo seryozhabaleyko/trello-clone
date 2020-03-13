@@ -1,3 +1,5 @@
+'use strict';
+
 const Store = () => {
 
     const name = 'kanban';
@@ -17,15 +19,7 @@ const Store = () => {
     const setLocalStorage = (value) => localStorage.setItem(name, JSON.stringify(value));
 
     const insert = (obj) => {
-
-        /* const item = {
-            id: Date.now(),
-            title,
-            completed: false
-        }; */
-
         const store = getLocalStorage();
-
         store.push(obj);
 
         setLocalStorage(store);
@@ -33,7 +27,6 @@ const Store = () => {
 
     const remove = (id = null) => {
         const store = getLocalStorage();
-
         store = store.filter(board => board.id !== id);
 
         setLocalStorage(store);
@@ -59,8 +52,13 @@ const Store = () => {
         return obj;
     };
 
+    const rewrite = (from, to) => {
+
+    };
+
     return {
         getLocalStorage,
+        setLocalStorage,
         insert,
         remove,
         edit,
