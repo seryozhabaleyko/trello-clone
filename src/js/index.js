@@ -1,7 +1,5 @@
 'use strict';
 
-import './store/index.js';
-
 firebase.initializeApp({
     apiKey: "AIzaSyC9LpTOmPc6H7auu-XSJxNbSQ-AoekES3g",
     authDomain: "kanban-fcf5f.firebaseapp.com",
@@ -18,7 +16,6 @@ import { main } from './Home/index.js';
 import Database from './Database.js';
 import Store from './Store.js';
 import board from './Board/index.js';
-
 import { createRouter } from './vanilla-ui-router.js';
 
 const { header } = Header();
@@ -38,7 +35,8 @@ document.addEventListener('click', function(e) {
             title: input || 'title',
             date: new Date().toLocaleDateString(),
             time: new Date().toLocaleTimeString(),
-            bg: document.querySelector('.making-board').style.background
+            bg: document.querySelector('.making-board').style.background,
+            lists: []
         };
 
         Database.create(obj)
@@ -61,12 +59,33 @@ function modalClose(e) {
 
 const store = Store();
 
+
+const obj = new Proxy(store.getLocalStorage(), {
+    get: function (target, prop) {
+        console.log({
+            type: "get",
+            target,
+            prop
+        });
+        return Reflect.get(target, prop);
+    },
+    set: function (target, prop, value) {
+
+        store.setLocalStorage(target)
+
+        console.log({
+            type: "set",
+            target,
+            prop,
+            value
+        });
+        return Reflect.set(target, prop, value);
+    }
+});
+
 const router = createRouter(document.getElementById('root'));
 router
     .addRoute('', () => {
-		/*
-			Use navigateTo(…) to make dynamic route changes, i.e. to redirect to another route
-		*/
         router.navigateTo('boards');
     })
     .addRoute('home', (domEntryPoint) => {
@@ -76,22 +95,47 @@ router
         domEntryPoint.append(header(), main);
         Database.renderList();
     })
-    .addRoute('about/:aboutId/:editable', (domEntryPoint, routeParams) => {
-        console.log('I am the about route.');
-
-		/*
-			routeParams are extracted from the URL and are casted to the correct type
-			(Number/Boolean/String)
-        */
+    .addRoute('boards/:aboutId/:editable', (domEntryPoint, routeParams) => {
         console.log(domEntryPoint);
         console.log(routeParams); // => { aboutId: 42, editable:false }
     })
     .addRoute('boards/:id', (domEntryPoint, routeParams) => {
-        const $board = board(store.find(routeParams.id));
-        domEntryPoint.append(header(), $board);
+        let obj = store.find(routeParams.id);
+        localStorage.setItem('id', routeParams.id);
+
+        //const objBoard = obj.find(board => board.id === routeParams.id);
+
+        domEntryPoint.style.background = obj.bg;
+        domEntryPoint.append(header(), board(obj));
     })
     .otherwise(() => {
-        // If no route configuration matches, the otherwise route is invoked.
         console.log('I am the otherwise route');
         router.navigateTo('404');
     });
+
+
+
+
+
+/* const a = store.getLocalStorage();
+
+const b = a.map(board => {
+    if (board.id === localStorage.getItem('id')) {
+        console.log(board);
+        board.lists.map(list => {
+            if (list.id === 1584106280307) {
+                console.log(list);
+                list.cards.map(card => {
+                    if (card.id === 221) {
+                        console.log(card.title = 'asdadasdasdasdasdasd');
+                    }
+                    return card;
+                });
+            }
+            return list;
+        });
+    };
+    return board;
+})
+
+console.log(b); */
