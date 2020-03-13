@@ -1,53 +1,77 @@
 'use strict';
 
-import { template } from '../template.js';
+import Template from '../Template.js';
 import DOMHelpers from '../helpers/DOMHelpers.js';
+import Store from '../Store.js';
 
-const Header = () => {
+const { createElement } = DOMHelpers();
+const store = Store();
+const template = Template();
 
-    const {
-        createElement
-    } = DOMHelpers();
+function titleDblclickHandler() {
+    this.setAttribute('contenteditable', 'true');
+    this.focus();
+}
 
-    const title = (text) => {
-        const $title = createElement('span', '.list-title');
-        $title.textContent = text;
+function titleBlurHandler(obj, title) {
+    this.removeAttribute('contenteditable');
 
-        $title.addEventListener('dblclick', function () {
-            this.setAttribute('contenteditable', 'true');
-            this.focus();
-        });
+    const listID = Number(this.parentNode.parentNode.getAttribute('data-list-id'));
+    const boardID = localStorage.getItem('id');
 
-        $title.addEventListener('blur', function () {
-            this.removeAttribute('contenteditable');
-        });
+    const b = store.getLocalStorage().map(board => {
+        if (board.id === boardID) {
+            board.lists.map(list => {
+                if (list.id === listID) {
+                    list.title = this.textContent;
+                }
+                return list;
+            });
+        };
+        return board;
+    });
 
-        return $title;
-    };
+    store.setLocalStorage(b);
+}
 
-    const more = () => {
-        const $more = createElement('div', '.list-more');
+const title = (obj) => {
+    const $title = createElement('span', '.list-title');
+    $title.textContent = obj.title;
 
-        const $moreLink = document.createElement('a');
-        $moreLink.href = 'javascript:void(0)';
-        $moreLink.insertAdjacentHTML('afterbegin', template.more);
+    $title.addEventListener('dblclick', titleDblclickHandler, false);
+    $title.addEventListener('blur', titleBlurHandler.bind($title, obj, $title), false);
 
-        $more.appendChild($moreLink);
-
-        return $more;
-    };
-
-    const header = (titleText = 'Название') => {
-        const $header = createElement('div', '.list-header');
-
-        $header.append(title(titleText), more());
-
-        return $header;
-    };
-
-    return {
-        header
-    };
+    return $title;
 };
 
-export default Header;
+const dropdown = () => {
+
+};
+
+function moreHandler() {
+    console.log(234234);
+}
+
+const more = () => {
+    const $more = createElement('div', '.list-more');
+
+    const $moreLink = document.createElement('a');
+    $moreLink.href = 'javascript:void(0)';
+    $moreLink.insertAdjacentHTML('afterbegin', template.more);
+
+    $moreLink.addEventListener('click', moreHandler, false);
+
+    $more.appendChild($moreLink);
+
+    return $more;
+};
+
+const header = (obj) => {
+    const $header = createElement('div', '.list-header');
+
+    $header.append(title(obj), more());
+
+    return $header;
+};
+
+export default header;
