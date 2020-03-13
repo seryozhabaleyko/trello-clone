@@ -1,7 +1,6 @@
 'use strict';
 
 import DOMHelpers from '../helpers/DOMHelpers.js';
-import { template } from '../template.js';
 
 const Sidebar = () => {
 
