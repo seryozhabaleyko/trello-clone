@@ -1,22 +1,16 @@
 'use strict';
 
 import DOMHelpers from '../helpers/DOMHelpers.js';
-import { template } from '../template.js';
+import Template from '../Template.js';
 import Store from '../Store.js';
 import Database from '../Database.js';
 import Modal from '../modal.js';
 
+const { createElement, on } = DOMHelpers();
+const { open } = Modal();
+const template = Template();
+
 const Board = () => {
-
-    const {
-        open,
-        close
-    } = Modal();
-
-    const {
-        createElement,
-        on
-    } = DOMHelpers();
 
     const board = (obj) => {
         const $board = createElement('div', '.board');
