@@ -9,7 +9,6 @@
     box-sizing: border-box;
 }
 
-
 body {
     margin: 0;
     background-image: url('../img/brick-wall.jfif');
@@ -17,7 +16,6 @@ body {
     background-color: #fafafa;
 
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    /* overflow-y: hidden; */
     font-size: 14px;
     line-height: 20px;
     font-weight: 400;
@@ -38,21 +36,44 @@ h3 {
     margin: 0;
 }
 
+textarea {
+  resize: none;
+  width: 100%;
+  font: inherit;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    font: inherit;
+}
+
+/* .show {
+    display: block!important;
+} */
+
+.hide {
+    display: none!important;
+}
+
 header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 99;
 
 	background-color: rgba(255, 255, 255, 0.5);
     height: var(--height-header);
     background-image: linear-gradient(to right, #eea2a2 0%, #bbc1bf 19%, #57c6e1 42%, #b49fda 79%, #7ac5d8 100%);
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.15);
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 8px;
 }
 
 main {
-	margin-top: var(--height-header);
     display: flex;
 	align-items: flex-start;
 }
@@ -92,13 +113,67 @@ main {
 }
 
 /*
+ * main #board
+*/
+
+#root {
+    height: 100vh;
+    overflow: hidden;
+
+    background-position: 50%;
+    background-size: cover;
+}
+
+#main {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0%;
+}
+
+#board {
+    
+
+    display: flex;
+    align-items: flex-start;
+}
+
+/*
+ * board header
+*/
+
+.board-header {
+    padding: 10px;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.board-title {
+    line-height: 32px;
+    border-radius: 2px;
+}
+
+.board-title:hover {
+    background-color: hsla(0,0%,100%,.32);
+}
+
+.board-title-text {
+    padding: 0 12px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700
+}
+
+
+
+
+/*
  * List
 */
 
 #lists {
     display: flex;
-    flex-direction: row;
-    min-height: 100%;
+    align-items: flex-start;
 }
 
 .list {
@@ -114,12 +189,16 @@ main {
     width: 272px;
     margin: 0 4px;
     height: 100%;
-    box-sizing: border-box;
-    display: inline-block;
-    vertical-align: top;
-    white-space: nowrap;
 
     box-shadow: 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);
+}
+
+.list-wrapper {
+    width: 272px;
+    height: 100%;
+    display: inline-block;
+    vertical-align: top;
+    margin: 0px 4px;
 }
 
 
@@ -205,6 +284,7 @@ main {
     z-index: 0;
 }
 
+
 /*
  * Footer
 */
@@ -217,23 +297,73 @@ main {
     justify-content: space-between;
 }
 
-[data-add-card] {
-    display: block;
+/*
+ * add card
+*/
+
+.add-card {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    font: inherit;
+    text-align: left;
+    background: none;
+
     width: 100%;
     height: 32px;
     line-height: 23px;
     padding: 4px 8px;
-    border-radius: 2px;
-
     font-size: 14px;
     font-weight: 400;
+    border-radius: 2px;
+
     color: rgb(82, 82, 82);
 }
 
-[data-add-card]:hover {
+.add-card:hover {
     background-color: rgba(0, 0, 0, 0.1);
 }
 
+.card-adding-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 60px 40px;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.card-add-text {
+    height: 60px;
+    padding: 10px;
+    border: none;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+}
+
+.add-card-action {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.add-card-submit {
+    cursor: pointer;
+    border: none;
+    font: inherit;
+    border-radius: 2px;
+    padding: 10px 15px;
+    color: #fff;
+    background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+}
+
+.add-card-close {
+    border: none;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .card {
 	cursor: default;
@@ -292,32 +422,13 @@ main {
 
 
 
-/*
- * main #board
-*/
 
-#main {
-    height: 100vh;
-    padding-top: 60px;
-}
-
-#board {
-    padding: 10px;
-
-    display: flex;
-    flex-direction: row;
-
-    overflow-x: auto;
-    overflow-y: hidden;
-
-    flex-grow: 1;
-}
 
 /*
  * add list
 */
 
-.open-form-add-list {
+.show-form-add-list {
     cursor: pointer;
     height: 35px;
     padding: 6px 8px;
@@ -326,7 +437,7 @@ main {
     align-items: center;
 }
 
-.show .open-form-add-list {
+.show .show-form-add-list {
     display: none;
 }
 
@@ -380,7 +491,7 @@ main {
     background-color: rgba(241, 241, 241, 0.5);
     transition: all 0.2s ease;
 
-    margin: 0 4px;
+    margin: 0 8px;
     width: 240px;
     border-radius: 3px;
 
