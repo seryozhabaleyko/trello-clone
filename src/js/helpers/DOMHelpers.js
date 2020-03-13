@@ -40,16 +40,67 @@ const DOMHelpers = () => {
 
     const toggleClass = (elem, className) => elem.classList.toggle(className);
 
+    const hide = (elem) => {
+        if (elem.classList.contains('show')) {
+            elem.classList.remove('show');
+        }
+        elem.classList.add('hide');
+    }
+
+    const show = (elem) => {
+        if (elem.classList.contains('hide')) {
+            elem.classList.remove('hide');
+        }
+        elem.classList.add('show');
+    }
+
+    const removeDOMNode = (node) => {
+        node.parentNode.removeChild(node);
+    };
+
+    const insertAfter = (node, refNode) => {
+        const { parentNode } = refNode;
+        const nextNode = refNode.nextElementSibling;
+        if (nextNode) {
+            parentNode.insertBefore(node, nextNode);
+        } else {
+            parentNode.appendChild(node);
+        }
+    };
+
+    const getDOMNodePosition = (node) => {
+        const { top, left } = node.getBoundingClintRect();
+
+        return {
+            top,
+            left
+        };
+    };
+
+    const swapTwoDOMNodes = (node1, node2) => {
+        if (node1.nextElementSibling === node2) {
+            node2.parentNode.insertBefore(node1, node2);
+        } else {
+            node1.parentNode.insertBefore(node1, node2);
+        }
+    };
+
     return {
         createElement,
         on,
         off,
+        show,
+        hide,
         empty,
         getElement,
         getElements,
         addClass,
         removeClass,
-        toggleClass
+        toggleClass,
+        removeDOMNode,
+        insertAfter,
+        getDOMNodePosition,
+        swapTwoDOMNodes
     };
 };
 
