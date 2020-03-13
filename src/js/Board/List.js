@@ -1,32 +1,41 @@
 'use strict';
 
 import DOMHelpers from '../helpers/DOMHelpers.js';
-import Header from '../List/Header.js';
+import header from '../List/header.js';
+import footer from '../List/footer.js';
+import form from '../List/cardAddingForm.js';
+import Card from '../Card/index.js';
+import Store from '../Store.js';
+
+const { createElement } = DOMHelpers();
+const card = Card();
+const store = Store();
 
 const List = () => {
 
-    const {
-        createElement,
-        getElement
-    } = DOMHelpers();
-
-    const { header } = Header();
-
     const insert = (obj) => {
-        const $lists = document.getElementById('lists');
-
+        const $wrapper = createElement('div', '.list-wrapper');
         const $list = createElement('div', '.list');
         $list.setAttribute('draggable', 'true');
+        $list.setAttribute('data-list-id', obj.id);
 
-        const $header = header(obj.title);
+        const $header = header(obj);
 
-        const $footer = document.createElement('div');
-        $footer.classList.add('list-footer');
-        $footer.insertAdjacentHTML('afterbegin', `<a href="#" data-add-card>+ Добавить карточку</a>`);
+        const $cards = createElement('div', '.list-cards');
 
-        $list.append($header, $footer);
+        if (obj.cards) {
+            obj.cards.map(obj => {
+                $cards.appendChild(card.insert(obj));
+            });
+        }
 
-        $lists.appendChild($list);
+        const $form = form($list);
+
+        $cards.appendChild($form);
+
+        $wrapper.appendChild($list).append($header, $cards, footer($form));
+
+        return $wrapper;
     };
 
     return {
