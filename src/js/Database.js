@@ -53,8 +53,6 @@ class Database {
     static renderList() {
         const boards = getLocalStorage();
         const { board } = Board();
-        //const html = boards.length ? boards.map(toBoard).join('').trim() : '<div class="board"></div>';
-
         const $boards = getElement('.boards');
 
         $boards.querySelectorAll('.board').forEach(item => {
@@ -63,18 +61,13 @@ class Database {
 
         boards.reverse().map(obj => {
             $boards.insertAdjacentHTML('afterbegin', `
-                <a href="/#boards/${obj.id}" class="board" style="background: ${obj.bg}">
+                <a data-draggable draggable="true" href="/#boards/${obj.id}" class="board" style="background: ${obj.bg}">
                     <div class="board-title">${obj.title}</div>
                     <div>${obj.date}</div>
                     <div>${obj.time}</div>
                 </a>
             `);
         });
-
-        
-
-        //$boards.insertAdjacentHTML('afterbegin', html);
-
     }
 }
 
