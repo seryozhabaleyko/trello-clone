@@ -1,18 +1,12 @@
 'use strict';
 
 import DOMHelpers from './helpers/DOMHelpers.js';
-import { boardCreation } from './template.js';
+import Template from './Template.js';
+
+const { createElement, getElement } = DOMHelpers();
+const template = Template();
 
 const Modal = () => {
-
-    const {
-        createElement,
-        getElement
-    } = DOMHelpers();
-
-    const template = `
-        <div class="modal">${boardCreation}</div>
-    `;
 
     const overlay = () => {
         const $overlay = createElement('div', '.modal-overlay');
@@ -23,9 +17,9 @@ const Modal = () => {
 
     const createModal = () => {
         const $overlay = overlay();
-        $overlay.insertAdjacentHTML('afterbegin', template);
+        $overlay.insertAdjacentHTML('afterbegin', `<div class="modal">${template.boardCreation}</div>`);
         document.body.appendChild($overlay);
-    }
+    };
 
     const open = () => {
         createModal();
@@ -37,7 +31,7 @@ const Modal = () => {
 
     return {
         open
-    }
+    };
 }
 
 export default Modal;
