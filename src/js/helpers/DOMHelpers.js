@@ -20,9 +20,9 @@ const DOMHelpers = () => {
         return elem;
     };
 
-    const on = (target, type, callback, options) => target.addEventListener(type, callback, options);
+    const on = (target, type, callback, options = false) => target.addEventListener(type, callback, options);
 
-    const off = (target, type, callback) => target.removeEventListener(type, callback);
+    const off = (target, type, callback, options = false) => target.removeEventListener(type, callback, options);
 
     const empty = (parentNode) => {
         while (parentNode.firstChild) {
