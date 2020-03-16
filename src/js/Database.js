@@ -2,7 +2,6 @@
 
 import Store from './Store.js';
 import DOMHelpers from './helpers/DOMHelpers.js';
-import Board from './Home/Board.js';
 
 const {
     insert,
@@ -10,8 +9,7 @@ const {
 } = Store();
 
 const {
-    getElement,
-    getElements
+    getElement
 } = DOMHelpers();
 
 class Database {
@@ -52,7 +50,6 @@ class Database {
 
     static renderList() {
         const boards = getLocalStorage();
-        const { board } = Board();
         const $boards = getElement('.boards');
 
         $boards.querySelectorAll('.board').forEach(item => {
@@ -61,7 +58,7 @@ class Database {
 
         boards.reverse().map(obj => {
             $boards.insertAdjacentHTML('afterbegin', `
-                <a href="/kanban/#boards/${obj.id}" class="board" style="background: ${obj.bg}">
+                <a href="/#boards/${obj.id}" class="board" style="background: ${obj.bg}">
                     <div class="board-title">${obj.title}</div>
                     <div>${obj.date}</div>
                     <div>${obj.time}</div>
