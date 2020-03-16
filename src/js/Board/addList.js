@@ -5,17 +5,27 @@ import Template from '../Template.js';
 import Store from '../Store.js';
 import List from './List.js';
 
-const { createElement } = DOMHelpers();
+const { createElement, on, off } = DOMHelpers();
 const template = Template();
 const store = Store();
 const list = List();
 
+function hideHandler(e) {
+    if (!e.target.closest('.add-list.show')) {
+        document
+            .querySelector('.add-list.show')
+            .classList.remove('show');
+        off(document, 'click', hideHandler, true);
+    }
+}
 
 function showHandler(e) {
-    e.target.parentNode.classList.add('show');
+    e.target.parentElement.classList.add('show');
 
     const $input = document.querySelector('.form-add-list-input');
     $input.focus();
+
+    on(document, 'click', hideHandler, true);
 }
 
 const show = () => {
@@ -71,6 +81,7 @@ const form = () => {
     function closeHandler() {
         const form = document.querySelector('.add-list');
         form.classList.remove('show');
+        off(document, 'click', hideHandler, true);
     }
 
     const close = () => {
