@@ -4,7 +4,7 @@ import Template from '../Template.js';
 import DOMHelpers from '../helpers/DOMHelpers.js';
 import Store from '../Store.js';
 
-const { createElement } = DOMHelpers();
+const { createElement, on, off } = DOMHelpers();
 const store = Store();
 const template = Template();
 
@@ -38,38 +38,78 @@ const title = (obj) => {
     const $title = createElement('span', '.list-title');
     $title.textContent = obj.title;
 
-    $title.addEventListener('dblclick', titleDblclickHandler, false);
-    $title.addEventListener('blur', titleBlurHandler.bind($title, obj, $title), false);
+    on($title, 'dblclick', titleDblclickHandler, false);
+    on($title, 'blur', titleBlurHandler.bind($title, obj, $title), false);
 
     return $title;
 };
 
-const dropdown = () => {
+const menu = (root) => {
 
+    function removeHandler(root, e) {
+        e.preventDefault();
+        root.parentNode.remove();
+
+        const listID = Number(root.getAttribute('data-list-id'));
+        const boardID = localStorage.getItem('id');
+
+        const b = store.getLocalStorage().map(board => {
+            if (board.id === boardID) {
+                board.lists = board.lists.filter(list => list.id !== listID);
+            }
+            return board;
+        });
+
+        store.setLocalStorage(b);
+    }
+
+    const remove = (root) => {
+        const $link = createElement('a', '.more-item');
+        $link.href = '#';
+        $link.textContent = 'Архивировать список';
+
+        on($link, 'click', removeHandler.bind(this, root), false);
+
+        return $link;
+    };
+
+    const $menu = createElement('div', '.more-menu');
+
+    $menu.appendChild(remove(root));
+
+    return $menu;
 };
 
-function moreHandler() {
-    console.log(234234);
+
+function closeMoreMenuHandler() {
+    const show = document.querySelector('.list-more.show');
+    show.classList.remove('show');
+    off(window, 'click', closeMoreMenuHandler, true);
 }
 
-const more = () => {
+function moreHandler() {
+    this.parentNode.classList.toggle('show');
+    on(window, 'click', closeMoreMenuHandler, true);
+}
+
+const more = (root) => {
     const $more = createElement('div', '.list-more');
 
-    const $moreLink = document.createElement('a');
-    $moreLink.href = 'javascript:void(0)';
-    $moreLink.insertAdjacentHTML('afterbegin', template.more);
+    const $toggle = createElement('button', '.more-toggle');
+    $toggle.setAttribute('data-more-toggle', '');
+    $toggle.insertAdjacentHTML('afterbegin', template.more);
 
-    $moreLink.addEventListener('click', moreHandler, false);
+    on($toggle, 'click', moreHandler, false);
 
-    $more.appendChild($moreLink);
+    $more.append($toggle, menu(root));
 
     return $more;
 };
 
-const header = (obj) => {
+const header = (obj, root) => {
     const $header = createElement('div', '.list-header');
 
-    $header.append(title(obj), more());
+    $header.append(title(obj), more(root));
 
     return $header;
 };
