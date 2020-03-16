@@ -139,3 +139,10 @@ const b = a.map(board => {
 })
 
 console.log(b); */
+
+
+/* document.addEventListener('click', function(e) {
+    if (!e.target.closest('.add-list.show')) {
+        console.log('if');
+    }
+}); */
