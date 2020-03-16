@@ -87,7 +87,7 @@ const renderTemplates = function renderTemplates(routeConfiguration, domEntryPoi
 	}
 
 	if (routeConfiguration.templateId) {
-		var templateScript = document.getElementById(routeConfiguration.templateId);
+		const templateScript = document.getElementById(routeConfiguration.templateId);
 		domEntryPoint.innerHTML = templateScript.text;
 		successCallback();
 	}
