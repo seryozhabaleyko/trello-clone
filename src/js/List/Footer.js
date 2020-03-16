@@ -5,14 +5,32 @@ import DOMHelpers from '../helpers/DOMHelpers.js';
 const {
     createElement,
     show,
-    hide
+    hide,
+    on,
+    off
 } = DOMHelpers();
+
+export function hideFormHandler(e) {
+    if (!e.target.closest('.card-adding-form.show')) {
+        const $cardAddingFormShow = document.querySelector('.card-adding-form.show');
+        $cardAddingFormShow.classList.remove('show');
+        $cardAddingFormShow.classList.add('hide');
+
+        document
+            .querySelector('.list-footer.hide')
+            .classList.remove('hide');
+
+        off(document, 'click', hideFormHandler, true);
+    }
+}
 
 function showFormHandler(root, form) {
     hide(root);
     show(form);
     const $input = form.querySelector('.card-add-text');
     $input.focus();
+
+    on(document, 'click', hideFormHandler, true);
 }
 
 const showForm = (root, form) => {
