@@ -2,8 +2,6 @@
 
 import DOMHelpers from '../helpers/DOMHelpers.js';
 import Template from '../Template.js';
-import Store from '../Store.js';
-import Database from '../Database.js';
 import Modal from '../modal.js';
 
 const { createElement, on } = DOMHelpers();
