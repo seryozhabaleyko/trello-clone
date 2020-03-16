@@ -5,11 +5,10 @@ import header from '../List/header.js';
 import footer from '../List/footer.js';
 import form from '../List/cardAddingForm.js';
 import Card from '../Card/index.js';
-import Store from '../Store.js';
+import drag from '../List/drag&drop.js';
 
 const { createElement } = DOMHelpers();
 const card = Card();
-const store = Store();
 
 const List = () => {
 
@@ -19,7 +18,9 @@ const List = () => {
         $list.setAttribute('draggable', 'true');
         $list.setAttribute('data-list-id', obj.id);
 
-        const $header = header(obj);
+        drag($list);
+
+        const $header = header(obj, $list);
 
         const $cards = createElement('div', '.list-cards');
 
