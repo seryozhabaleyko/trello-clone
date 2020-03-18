@@ -1,10 +1,7 @@
 'use strict';
 
-import Board from './Board.js';
-import Sidebar from './Aside.js';
-
-const { sidebar } = Sidebar();
-const { section } = Board();
+import boards from './boards.js';
+import sidebar from './sidebar.js';
 
 export const main = document.createElement('main');
-main.append(sidebar(), section());
+main.append(sidebar(), boards());
