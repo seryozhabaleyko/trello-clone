@@ -25,7 +25,7 @@ const home = () => {
 
 const header = () => {
     const $header = createElement('header');
-    $header.append(home(), boards(), logo());
+    $header.append(logo()); // home(), boards()
     return $header;
 }
 
