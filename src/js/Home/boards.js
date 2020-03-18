@@ -53,17 +53,15 @@ const boards = () => {
 
     const section = () => createElement('section', '.boards-section');
 
-    /* console.log(result.length);
     if (result.length) {
         const $boards = createElement('div', '.boards');
 
         for (const obja of result) {
-            console.log(obja);
             $boards.insertAdjacentHTML('afterbegin', temp(obja));
         }
 
         $wrapper.appendChild(section()).append(title(favorites), $boards);
-    } */
+    }
 
     const $boards = createElement('div', '.boards');
 
