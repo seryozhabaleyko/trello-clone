@@ -5,16 +5,15 @@ import Template from '../Template.js';
 import Store from '../Store.js';
 import List from './List.js';
 
-const { createElement, on, off } = DOMHelpers();
+const { $, createElement, on, off } = DOMHelpers();
 const template = Template();
 const store = Store();
 const list = List();
 
 function hideHandler(e) {
     if (!e.target.closest('.add-list.show')) {
-        document
-            .querySelector('.add-list.show')
-            .classList.remove('show');
+        $('.add-list.show').classList.remove('show');
+
         off(document, 'click', hideHandler, true);
     }
 }
@@ -22,8 +21,7 @@ function hideHandler(e) {
 function showHandler(e) {
     e.target.parentElement.classList.add('show');
 
-    const $input = document.querySelector('.form-add-list-input');
-    $input.focus();
+    $('.form-add-list-input').focus();
 
     on(document, 'click', hideHandler, true);
 }
@@ -32,7 +30,7 @@ const show = () => {
     const $show = createElement('div', '.show-form-add-list');
     $show.insertAdjacentText('afterbegin', '+ Добавьте еще одну колонку');
 
-    $show.addEventListener('click', showHandler, false);
+    on($show, 'click', showHandler, false);
 
     return $show;
 };
@@ -49,7 +47,7 @@ const form = () => {
 
     function submitHandler() {
         const obj = store.find(localStorage.getItem('id'));
-        const $input = document.querySelector('.form-add-list-input');
+        const $input = $('.form-add-list-input');
 
         const qwe = {
             id: Date.now(),
@@ -73,14 +71,13 @@ const form = () => {
         $submit.type = 'button';
         $submit.value = 'Добавить список';
 
-        $submit.addEventListener('click', submitHandler, false);
+        on($submit, 'click', submitHandler, false);
 
         return $submit;
     };
 
     function closeHandler() {
-        const form = document.querySelector('.add-list');
-        form.classList.remove('show');
+        $('.add-list').classList.remove('show');
         off(document, 'click', hideHandler, true);
     }
 
@@ -89,7 +86,7 @@ const form = () => {
         $close.type = 'button';
         $close.insertAdjacentHTML('afterbegin', template.close);
 
-        $close.addEventListener('click', closeHandler, false);
+        on($close, 'click', closeHandler, false);
 
         return $close;
     };
