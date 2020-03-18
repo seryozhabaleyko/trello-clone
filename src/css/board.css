@@ -3,51 +3,42 @@ body {
 }
 
 
-main {
-    display: grid;
-    grid-template-columns: 300px 1fr;
-}
-
-
 /*
  * boards section
 */
 
-.boards-section {
-    padding-top: 40px;
-}
-
-.boards-section-header {
-    display: grid;
-    grid-template-columns: 32px 1fr;
-    grid-auto-rows: 32px;
-    align-items: center;
-}
-
 .boards{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: minmax(100px, auto);
+  gap: 15px;
+}
+
+@media (min-width: 575.98px) {
+  .boards{
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     grid-auto-rows: 150px;
-    gap: 16px;
-    margin: 16px 0px;
+    gap: 15px;
+  }
 }
 
 .board {
   position: relative;
-    padding: 10px;
-    border-radius: 3px;
-    background-color: #97a0af;
-    color: #fff;
-    display: grid;
-    grid-template-rows: 50%;
-    grid-auto-rows: 20px;
-    gap: 10px;
-    align-items: center;
+  padding: 10px;
+  border-radius: 3px;
 
-    box-shadow: 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);
+  color: #fff;
+  background-color: #97a0af;
+  box-shadow: 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);
+  transition: all .15s ease-in-out;
 }
 
-.board::before {
+.board:hover {
+  transform: scale(1.02);
+}
+
+/* .board::before {
   content: '';
   position: absolute;
   top: 0;
@@ -62,6 +53,13 @@ main {
 
 .board:hover::before {
   background-color: rgba(0,0,0,0.2);
+} */
+
+.board-title {
+  font-size: 1.6rem;
+  font-weight: 400;
+  font-family: "Roboto","Helvetica","Arial",sans-serif;
+  overflow: hidden;
 }
 
 .create-new-board {
@@ -85,33 +83,4 @@ main {
 
 .create-new-board:hover {
     background-color: rgba(9,30,66,.08);
-}
-
-
-main {
-  padding: 0 15px;
-}
-
-@media (min-width: 575.98px){
-  main {
-    padding: 0 calc(50vw - 270px);
-  }
-}
-
-@media (min-width: 767.98px){
-  main {
-    padding: 0 calc(50vw - 360px);
-  }
-}
-
-@media (min-width: 991.98px) {
-  main {
-    padding: 0 calc(50vw - 480px);
-  }
-}
-
-@media (min-width: 1199.98px){
-  main {
-    padding: 0 calc(50vw - 590px);
-  }
 }
