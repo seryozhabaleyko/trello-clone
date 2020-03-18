@@ -4,7 +4,7 @@ import Template from '../Template.js';
 import DOMHelpers from '../helpers/DOMHelpers.js';
 import Store from '../Store.js';
 
-const { createElement, on, off } = DOMHelpers();
+const { $, createElement, on, off } = DOMHelpers();
 const store = Store();
 const template = Template();
 
@@ -48,7 +48,7 @@ const menu = (root) => {
 
     function removeHandler(root, e) {
         e.preventDefault();
-        root.parentNode.remove();
+        root.remove();
 
         const listID = Number(root.getAttribute('data-list-id'));
         const boardID = localStorage.getItem('id');
@@ -82,7 +82,7 @@ const menu = (root) => {
 
 
 function closeMoreMenuHandler() {
-    const show = document.querySelector('.list-more.show');
+    const show = $('.list-more.show');
     show.classList.remove('show');
     off(window, 'click', closeMoreMenuHandler, true);
 }
