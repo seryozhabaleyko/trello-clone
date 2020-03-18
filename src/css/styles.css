@@ -13,18 +13,41 @@
 }
 
 html {
-    font-size: 10px;
+    font-size: 6px;
 }
 
+@media (min-width: 576px) {
+    html {
+        font-size: 7px;
+    }
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 8px;
+    }
+}
+
+@media (min-width: 992px) {
+    html {
+        font-size: 9px;
+    }
+}
+
+@media (min-width: 1200px) {
+    html {
+        font-size: 10px;
+    }
+}
 
 body {
     margin: 0;
-    background-color: #fafafa;
+    background-color: #f5f5f5;
 
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     font-size: 14px;
     line-height: 20px;
     font-weight: 400;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
 
 a {
