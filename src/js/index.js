@@ -1,16 +1,5 @@
 'use strict';
 
-firebase.initializeApp({
-    apiKey: "AIzaSyC9LpTOmPc6H7auu-XSJxNbSQ-AoekES3g",
-    authDomain: "kanban-fcf5f.firebaseapp.com",
-    databaseURL: "https://kanban-fcf5f.firebaseio.com",
-    projectId: "kanban-fcf5f",
-    storageBucket: "kanban-fcf5f.appspot.com",
-    messagingSenderId: "969818368788",
-    appId: "1:969818368788:web:a1608f0abd6c0f75053001"
-});
-
-
 import header from './header.js';
 import { main } from './Home/index.js';
 import Database from './Database.js';
@@ -57,30 +46,6 @@ function modalClose(e) {
 
 const store = Store();
 
-
-const obj = new Proxy(store.getLocalStorage(), {
-    get: function (target, prop) {
-        console.log({
-            type: "get",
-            target,
-            prop
-        });
-        return Reflect.get(target, prop);
-    },
-    set: function (target, prop, value) {
-
-        store.setLocalStorage(target)
-
-        console.log({
-            type: "set",
-            target,
-            prop,
-            value
-        });
-        return Reflect.set(target, prop, value);
-    }
-});
-
 const router = createRouter(document.getElementById('root'));
 router
     .addRoute('', () => {
@@ -96,13 +61,11 @@ router
     })
     .addRoute('boards/:aboutId/:editable', (domEntryPoint, routeParams) => {
         console.log(domEntryPoint);
-        console.log(routeParams); // => { aboutId: 42, editable:false }
+        console.log(routeParams);
     })
     .addRoute('boards/:id', (domEntryPoint, routeParams) => {
         let obj = store.find(routeParams.id);
         localStorage.setItem('id', routeParams.id);
-
-        //const objBoard = obj.find(board => board.id === routeParams.id);
 
         domEntryPoint.style.background = obj.bg;
         domEntryPoint.append(header(), board(obj));
@@ -140,3 +103,27 @@ const b = a.map(board => {
 })
 
 console.log(b); */
+
+
+/* const obj = new Proxy(store.getLocalStorage(), {
+    get: function (target, prop) {
+        console.log({
+            type: "get",
+            target,
+            prop
+        });
+        return Reflect.get(target, prop);
+    },
+    set: function (target, prop, value) {
+
+        store.setLocalStorage(target)
+
+        console.log({
+            type: "set",
+            target,
+            prop,
+            value
+        });
+        return Reflect.set(target, prop, value);
+    }
+}); */
