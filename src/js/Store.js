@@ -1,5 +1,9 @@
 'use strict';
 
+import DOMHelpers from './helpers/DOMHelpers.js';
+
+const { $, $$ } = DOMHelpers();
+
 const Store = () => {
 
     const name = 'kanban';
@@ -17,6 +21,10 @@ const Store = () => {
     };
 
     const setLocalStorage = (value) => localStorage.setItem(name, JSON.stringify(value));
+
+    const replace = (obj) => getLocalStorage().map(board => board.id === obj.id ? obj : board);
+
+    const find = (id) => getLocalStorage().find(board => board.id === id);
 
     const insert = (obj) => {
         const store = getLocalStorage();
@@ -45,24 +53,45 @@ const Store = () => {
         setLocalStorage(store);
     };
 
-    const find = (id) => {
-        const store = getLocalStorage();
-        const obj = store.find(obj => obj.id === id);
+    const save = () => {
+        const currentId = localStorage.getItem('id');
+        const currentBoard = find(currentId);
+        currentBoard.lists = [];
 
-        return obj;
+        $$('.list').forEach(list => {
+            const objList = {
+                id: Number(list.getAttribute('data-list-id')),
+                title: $('.list-title', list).textContent,
+                cards: []
+            };
+
+            $$('.card', list).forEach(card => {
+                objList.cards.push({
+                    id: card.getAttribute('data-card-id'),
+                    content: card.textContent
+                });
+            });
+
+            currentBoard.lists.push(objList);
+        });
+
+        setLocalStorage(replace(currentBoard));
     };
 
-    const rewrite = (from, to) => {
+    const load = () => {
 
     };
 
     return {
         getLocalStorage,
         setLocalStorage,
+        replace,
         insert,
         remove,
         edit,
-        find
+        find,
+        save,
+        load
     };
 };
 
