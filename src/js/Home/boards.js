@@ -53,10 +53,12 @@ const boards = () => {
 
     const section = () => createElement('section', '.boards-section');
 
+    console.log(result.length);
     if (result.length) {
         const $boards = createElement('div', '.boards');
 
         for (const obj of result) {
+            console.log(obj);
             $boards.insertAdjacentHTML('afterbegin', temp(obj));
         }
 
