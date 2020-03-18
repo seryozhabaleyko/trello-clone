@@ -3,6 +3,7 @@
 import DOMHelpers from '../helpers/DOMHelpers.js';
 
 const {
+    $,
     createElement,
     show,
     hide,
@@ -12,13 +13,11 @@ const {
 
 export function hideFormHandler(e) {
     if (!e.target.closest('.card-adding-form.show')) {
-        const $cardAddingFormShow = document.querySelector('.card-adding-form.show');
+        const $cardAddingFormShow = $('.card-adding-form.show');
         $cardAddingFormShow.classList.remove('show');
         $cardAddingFormShow.classList.add('hide');
 
-        document
-            .querySelector('.list-footer.hide')
-            .classList.remove('hide');
+        $('.list-footer.hide').classList.remove('hide');
 
         off(document, 'click', hideFormHandler, true);
     }
@@ -27,8 +26,7 @@ export function hideFormHandler(e) {
 function showFormHandler(root, form) {
     hide(root);
     show(form);
-    const $input = form.querySelector('.card-add-text');
-    $input.focus();
+    $('.card-add-text', form).focus();
 
     on(document, 'click', hideFormHandler, true);
 }
