@@ -53,7 +53,7 @@ const boards = () => {
 
     const section = () => createElement('section', '.boards-section');
 
-    if (result.length) {
+    /* if (result.length) {
         const $boards = createElement('div', '.boards');
 
         for (const obja of result) {
@@ -61,7 +61,7 @@ const boards = () => {
         }
 
         $wrapper.appendChild(section()).append(title(favorites), $boards);
-    }
+    } */
 
     const $boards = createElement('div', '.boards');
 
