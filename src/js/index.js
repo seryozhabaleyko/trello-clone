@@ -11,14 +11,12 @@ firebase.initializeApp({
 });
 
 
-import Header from './Header.js';
+import header from './header.js';
 import { main } from './Home/index.js';
 import Database from './Database.js';
 import Store from './Store.js';
 import board from './Board/index.js';
 import { createRouter } from './vanilla-ui-router.js';
-
-const { header } = Header();
 
 document.addEventListener('click', function(e) {
     modalClose(e);
@@ -86,7 +84,8 @@ const obj = new Proxy(store.getLocalStorage(), {
 const router = createRouter(document.getElementById('root'));
 router
     .addRoute('', () => {
-        router.navigateTo('boards');
+        document.getElementById('root').innerHTML = 'Hello World!!';
+        //router.navigateTo('boards');
     })
     .addRoute('home', (domEntryPoint) => {
         domEntryPoint.append(header(), main);
@@ -107,6 +106,8 @@ router
 
         domEntryPoint.style.background = obj.bg;
         domEntryPoint.append(header(), board(obj));
+
+        store.save();
     })
     .otherwise(() => {
         console.log('I am the otherwise route');
@@ -139,10 +140,3 @@ const b = a.map(board => {
 })
 
 console.log(b); */
-
-
-/* document.addEventListener('click', function(e) {
-    if (!e.target.closest('.add-list.show')) {
-        console.log('if');
-    }
-}); */
