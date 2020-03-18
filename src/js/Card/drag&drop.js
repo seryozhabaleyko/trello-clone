@@ -1,26 +1,31 @@
 'use strict';
 
 import DOMHelpers from '../helpers/DOMHelpers.js';
+import Store from '../Store.js';
 
-const { on } = DOMHelpers();
+const { $$, on } = DOMHelpers();
+const store = Store();
 
-export let dragged = null;
+export let draggedCard = null;
 
-function dragstart() {
-    dragged = this;
-    this.classList.add('dragged');
+function dragstart(e) {
+    draggedCard = this;
+    this.classList.add('draggedCard');
+
+    e.stopPropagation();
 }
 
-function dragend() {
-    dragged = null;
-    this.classList.remove('dragged');
-    document
-        .querySelectorAll('.card.under')
-        .forEach(x => x.classList.remove('under'));
+function dragend(e) {
+    this.classList.remove('draggedCard');
+    draggedCard = null;
+
+    $$('.card.under').forEach(x => x.classList.remove('under'));
+
+    e.stopPropagation();
 }
 
 function dragenter() {
-    if (this === dragged) {
+    if (!draggedCard || this === draggedCard) {
         return;
     }
 
@@ -30,13 +35,13 @@ function dragenter() {
 function dragover(e) {
     e.preventDefault();
 
-    if (this === dragged) {
+    if (!draggedCard || this === draggedCard) {
         return;
     }
 }
 
 function dragleave() {
-    if (this === dragged) {
+    if (!draggedCard || this === draggedCard) {
         return;
     }
 
@@ -46,24 +51,26 @@ function dragleave() {
 function drop(e) {
     e.stopPropagation();
 
-    if (this === dragged) {
+    if (!draggedCard || this === draggedCard) {
         return;
     }
 
-    if (this.parentElement === dragged.parentElement) {
-        const cards = [...this.parentElement.querySelectorAll('.card')];
+    if (this.parentElement === draggedCard.parentElement) {
+        const cards = $$('.card', this.parentElement);
         const indexA = cards.indexOf(this);
-        const indexB = cards.indexOf(dragged);
+        const indexB = cards.indexOf(draggedCard);
 
         if (indexA < indexB) {
-            this.parentElement.insertBefore(dragged, this);
+            this.parentElement.insertBefore(draggedCard, this);
         } else {
-            this.parentElement.insertBefore(dragged, this.nextElementSibling);
+            this.parentElement.insertBefore(draggedCard, this.nextElementSibling);
         }
 
     } else {
-        this.parentElement.insertBefore(dragged, this);
+        this.parentElement.insertBefore(draggedCard, this);
     }
+
+    store.save();
 }
 
 const drag = (card) => {
