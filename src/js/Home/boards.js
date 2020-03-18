@@ -53,7 +53,7 @@ const boards = () => {
 
     const section = () => createElement('section', '.boards-section');
 
-    console.log(result.length);
+    /* console.log(result.length);
     if (result.length) {
         const $boards = createElement('div', '.boards');
 
@@ -63,13 +63,12 @@ const boards = () => {
         }
 
         $wrapper.appendChild(section()).append(title(favorites), $boards);
-    }
+    } */
 
     const $boards = createElement('div', '.boards');
 
     if (object.length) {
         for (const obj of object) {
-            console.log(obj);
             $boards.insertAdjacentHTML('afterbegin', temp(obj));
         }
     }
