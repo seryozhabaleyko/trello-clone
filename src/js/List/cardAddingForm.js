@@ -44,7 +44,7 @@ function submitHandler(listNode, form, input, e) {
 
     const obj = {
         id: Date.now(),
-        text: input.value
+        content: input.value
     };
 
     const listID = Number(listNode.getAttribute('data-list-id'));
