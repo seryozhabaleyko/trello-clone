@@ -15,9 +15,9 @@ const result = [object[2], object[4]];
 
 const boards = () => {
 
-    const temp = (obj) => `
-        <a href="/#boards/${obj.id}" class="board" style="background: ${obj.bg}">
-            <div class="board-title">${obj.title}</div>
+    const temp = ({ id, bg, title }) => `
+        <a href="/#boards/${id}" class="board" style="background: ${bg}">
+            <div class="board-title">${title}</div>
         </a>
     `;
 
