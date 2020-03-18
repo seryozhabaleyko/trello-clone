@@ -67,6 +67,7 @@ const boards = () => {
 
     if (object.length) {
         for (const obj of object) {
+            console.log(obj);
             $boards.insertAdjacentHTML('afterbegin', temp(obj));
         }
     }
