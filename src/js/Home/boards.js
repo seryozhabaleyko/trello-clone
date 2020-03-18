@@ -65,8 +65,10 @@ const boards = () => {
 
     const $boards = createElement('div', '.boards');
 
-    for (const obj of object) {
-        $boards.insertAdjacentHTML('afterbegin', temp(obj));
+    if (object.length) {
+        for (const obj of object) {
+            $boards.insertAdjacentHTML('afterbegin', temp(obj));
+        }
     }
 
     $boards.appendChild(add());
