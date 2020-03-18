@@ -14,7 +14,7 @@ const Card = () => {
         const $card = createElement('div', '.card');
         $card.setAttribute('draggable', 'true');
         $card.setAttribute('data-card-id', obj.id);
-        $card.insertAdjacentHTML('afterbegin', obj.text);
+        $card.insertAdjacentHTML('afterbegin', obj.content);
 
         function cardHandler() {
             console.log(123123);
