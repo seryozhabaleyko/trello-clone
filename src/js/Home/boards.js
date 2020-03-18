@@ -57,9 +57,9 @@ const boards = () => {
     if (result.length) {
         const $boards = createElement('div', '.boards');
 
-        for (const obj of result) {
-            console.log(obj);
-            $boards.insertAdjacentHTML('afterbegin', temp(obj));
+        for (const obja of result) {
+            console.log(obja);
+            $boards.insertAdjacentHTML('afterbegin', temp(obja));
         }
 
         $wrapper.appendChild(section()).append(title(favorites), $boards);
