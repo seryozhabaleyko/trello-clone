@@ -52,11 +52,11 @@ class Database {
         const boards = getLocalStorage();
         const $boards = getElement('.boards');
 
-        $boards.querySelectorAll('.board').forEach(item => {
+        /* $boards.querySelectorAll('.board').forEach(item => {
             item.remove();
-        });
+        }); */
 
-        boards.reverse().map(obj => {
+        /* boards.reverse().map(obj => {
             $boards.insertAdjacentHTML('afterbegin', `
                 <a href="/#boards/${obj.id}" class="board" style="background: ${obj.bg}">
                     <div class="board-title">${obj.title}</div>
@@ -64,7 +64,7 @@ class Database {
                     <div>${obj.time}</div>
                 </a>
             `);
-        });
+        }); */
     }
 }
 
