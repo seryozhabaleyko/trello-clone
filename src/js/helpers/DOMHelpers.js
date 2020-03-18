@@ -2,6 +2,12 @@
 
 const DOMHelpers = () => {
 
+    // Get the first matching element in the DOM
+    const $ = (selector, parent) => (parent ? parent : document).querySelector(selector);
+
+    // Get an array of all matching elements in the DOM
+    const $$ = (selector, parent) => Array.from((parent ? parent : document).querySelectorAll(selector));
+
     const createElement = (tag, idClass) => {
         let elem = document.createElement(tag);
 
@@ -86,6 +92,8 @@ const DOMHelpers = () => {
     };
 
     return {
+        $,
+        $$,
         createElement,
         on,
         off,
