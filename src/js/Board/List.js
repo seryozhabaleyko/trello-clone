@@ -13,14 +13,11 @@ const card = Card();
 const List = () => {
 
     const insert = (obj) => {
-        const $wrapper = createElement('div', '.list-wrapper');
         const $list = createElement('div', '.list');
         $list.setAttribute('draggable', 'true');
         $list.setAttribute('data-list-id', obj.id);
 
         drag($list);
-
-        const $header = header(obj, $list);
 
         const $cards = createElement('div', '.list-cards');
 
@@ -34,9 +31,9 @@ const List = () => {
 
         $cards.appendChild($form);
 
-        $wrapper.appendChild($list).append($header, $cards, footer($form));
+        $list.append(header(obj, $list), $cards, footer($form));
 
-        return $wrapper;
+        return $list;
     };
 
     return {
