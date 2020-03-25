@@ -1,11 +1,10 @@
 'use strict';
 
 import DOMHelpers from '../helpers/DOMHelpers.js';
-import Store from '../Store.js';
+import store from '../Store.js';
 import { draggedCard } from '../Card/drag&drop.js';
 
 const { $, $$, on } = DOMHelpers();
-const store = Store();
 
 let draggedList = null;
 let droppedList = null;
@@ -74,9 +73,9 @@ function drop() {
         const indexB = lists.indexOf(draggedList);
 
         if (indexA < indexB) {
-            document.getElementById('lists').insertBefore(draggedList, this);
+            document.getElementById('board-lists').insertBefore(draggedList, this);
         } else {
-            document.getElementById('lists').insertBefore(draggedList, this.nextElementSibling);
+            document.getElementById('board-lists').insertBefore(draggedList, this.nextElementSibling);
         }
     }
 

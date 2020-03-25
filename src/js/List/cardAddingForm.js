@@ -1,20 +1,15 @@
 'use strict';
 
 import DOMHelpers from '../helpers/DOMHelpers.js';
-import Store from '../Store.js';
-import Card from '../Card/index.js';
-import { hideFormHandler } from './footer.js';
+import store from '../Store.js';
+import card from '../Card/card.js';
+import { hideFormHandler } from './listFooter.js';
 
 const {
     createElement,
     show,
-    hide,
-    on,
-    off
+    hide
 } = DOMHelpers();
-
-const store = Store();
-const card = Card();
 
 function closeHandler(root, input) {
     hide(root);
@@ -22,7 +17,7 @@ function closeHandler(root, input) {
     const $footer = root.parentNode.nextSibling;
     show($footer);
 
-    off(document, 'click', hideFormHandler, true);
+    document.removeEventListener('click', hideFormHandler, true);
 }
 
 const close = (root, input) => {
@@ -47,8 +42,8 @@ function submitHandler(listNode, form, input, e) {
         content: input.value
     };
 
-    const listID = Number(listNode.getAttribute('data-list-id'));
-    const boardID = localStorage.getItem('id');
+    const listID = parseInt(listNode.getAttribute('data-list-id'), 10);
+    const boardID = parseInt(localStorage.getItem('id'), 10);
 
     const b = store.getLocalStorage().map(board => {
         if (board.id === boardID) {
@@ -58,14 +53,14 @@ function submitHandler(listNode, form, input, e) {
                 }
                 return list;
             });
-        };
+        }
         return board;
     });
 
     store.setLocalStorage(b);
 
     input.value = '';
-    form.before(card.insert(obj));
+    form.before(card(obj));
     input.focus();
 }
 

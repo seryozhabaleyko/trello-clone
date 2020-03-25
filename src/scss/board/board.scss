@@ -1,0 +1,22 @@
+main#board-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0%;
+}
+
+#board {
+    position: relative;
+    flex: 1 1 0%;
+}
+
+#board-lists {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    user-select: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+}

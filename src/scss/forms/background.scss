@@ -1,0 +1,19 @@
+.backgrounds {
+    display: grid;
+    grid-template-columns: 30px 30px 30px;
+    grid-gap: 10px;
+    grid-auto-rows: 30px;
+}
+
+.background {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+
+    background-color: #fff;
+    background-position: 50%;
+    background-size: cover;
+}

@@ -1,11 +1,12 @@
 'use strict';
 
 import boards from './boards.js';
-import sidebar from './sidebar.js';
+import navigation from './bottomNavigation.js';
 
-export const main = document.createElement('main');
+const main = document.createElement('main');
 
 const $sidebar = document.createElement('div');
 
+main.append(navigation(), $sidebar, boards());
 
-main.append(sidebar(), $sidebar, boards());
+export default main;

@@ -1,0 +1,23 @@
+header {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+    height: var(--height-header);
+    padding-left: 10px;
+
+    background: rgba(0,0,0,.15);
+    background: rgba(0,0,0,.32);
+    background-color: rgba(25, 118, 210, 0.35);
+}
+
+#logo {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}

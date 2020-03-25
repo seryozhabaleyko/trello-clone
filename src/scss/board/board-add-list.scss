@@ -1,0 +1,106 @@
+.board-add-list {
+    position: relative;
+    overflow: hidden;
+
+    width: 272px;
+    border-radius: 3px;
+
+    margin-left: 10px;
+    margin-right: 10px;
+
+    display: inline-block;
+    vertical-align: top;
+
+    box-shadow: 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);
+
+    &.show {
+        padding: 5px;
+        background-color: #ebecf0;
+        box-shadow: 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);
+    }
+}
+
+.show-form-adding-list {
+    width: 100%;
+    height: 45px;
+    padding: 0 15px;
+    border-radius: 3px;
+
+    display: flex;
+    align-items: center;
+
+    outline: none;
+    cursor: pointer;
+    background-color: rgba(241, 241, 241, 0.5);
+
+    svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    &:hover {
+        background-color: rgba(227, 242, 253, 0.7);
+    }
+}
+
+.show .show-form-adding-list {
+    display: none;
+}
+
+
+
+.form-adding-list {
+    display: none;
+    grid-template-rows: 35px;
+    gap: 5px;
+}
+
+.show .form-adding-list {
+    display: grid;
+}
+
+
+
+.form-adding-list-input {
+    background: #fff;
+    border: none;
+    border-radius: 2px;
+    margin: 0;
+    padding: 8px 12px;
+}
+
+.form-adding-list-action {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+}
+
+.form-adding-list-submit {
+    cursor: pointer;
+    border: none;
+    font: inherit;
+    border-radius: 2px;
+    padding: 7px 15px;
+    color: #fff;
+    background-color: #1976d2;
+}
+
+.form-adding-list-close {
+    padding: 0;
+    border: none;
+    background: transparent;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+        width: 30px;
+        height: 30px;
+        fill: #42526e;
+    }
+
+    &:hover svg {
+        fill: #172b4d;
+    }
+}

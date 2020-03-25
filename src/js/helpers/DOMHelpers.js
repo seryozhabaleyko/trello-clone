@@ -8,6 +8,10 @@ const DOMHelpers = () => {
     // Get an array of all matching elements in the DOM
     const $$ = (selector, parent) => Array.from((parent ? parent : document).querySelectorAll(selector));
 
+    const contains = (elem, child) => elem !== child && elem.contains(child);
+
+    const position = (elem) => ({ left: elem.offsetLeft, top: elem.offsetTop});
+
     const createElement = (tag, idClass) => {
         let elem = document.createElement(tag);
 
@@ -26,9 +30,13 @@ const DOMHelpers = () => {
         return elem;
     };
 
-    const on = (target, type, callback, options = false) => target.addEventListener(type, callback, options);
+    const on = (target, type, callback, options = false) => (
+        target.addEventListener(type, callback, options)
+    );
 
-    const off = (target, type, callback, options = false) => target.removeEventListener(type, callback, options);
+    const off = (target, type, callback, options = false) => (
+        target.removeEventListener(type, callback, options)
+    );
 
     const empty = (parentNode) => {
         while (parentNode.firstChild) {
@@ -51,14 +59,53 @@ const DOMHelpers = () => {
             elem.classList.remove('show');
         }
         elem.classList.add('hide');
-    }
+    };
+
+    const hideAll = (elemList) => {
+        Array.from(elemList).forEach(elem => hide(elem));
+    };
 
     const show = (elem) => {
         if (elem.classList.contains('hide')) {
             elem.classList.remove('hide');
         }
         elem.classList.add('show');
-    }
+    };
+
+    const fadeOut = (elem) => {
+        if (window.requestAnimationFrame) {
+            elem.style.opacity = 1;
+
+            (function fade() {
+                if ((elem.style.opacity -= 0.1) < 0) {
+                    elem.style.display = 'none';
+                } else {
+                    requestAnimationFrame(fade);
+                }
+            })();
+        } else {
+            elem.style.display = 'none';
+        }
+    };
+
+    const fadeIn = (elem) => {
+        if (window.requestAnimationFrame) {
+            elem.style.opacity = 0;
+            elem.style.display = display || 'block';
+
+            (function fade() {
+                let val = parseFloat(elem.style.opacity);
+                const calc = (val += 0.1) > 1;
+
+                if (!calc) {
+                    elem.style.opacity = val;
+                    requestAnimationFrame(fade);
+                }
+            })();
+        } else {
+            elem.style.display = display || 'block';
+        }
+    };
 
     const removeDOMNode = (node) => {
         node.parentNode.removeChild(node);
@@ -74,31 +121,18 @@ const DOMHelpers = () => {
         }
     };
 
-    const getDOMNodePosition = (node) => {
-        const { top, left } = node.getBoundingClintRect();
-
-        return {
-            top,
-            left
-        };
-    };
-
-    const swapTwoDOMNodes = (node1, node2) => {
-        if (node1.nextElementSibling === node2) {
-            node2.parentNode.insertBefore(node1, node2);
-        } else {
-            node1.parentNode.insertBefore(node1, node2);
-        }
-    };
-
     return {
+        fadeOut,
+        fadeIn,
         $,
         $$,
+        contains,
         createElement,
         on,
         off,
         show,
         hide,
+        hideAll,
         empty,
         getElement,
         getElements,
@@ -106,9 +140,7 @@ const DOMHelpers = () => {
         removeClass,
         toggleClass,
         removeDOMNode,
-        insertAfter,
-        getDOMNodePosition,
-        swapTwoDOMNodes
+        insertAfter
     };
 };
 

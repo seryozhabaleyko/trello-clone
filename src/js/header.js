@@ -1,15 +1,8 @@
 'use strict';
 
-import DOMHelpers from './helpers/DOMHelpers.js';
+import DOMHelpers from '../js/helpers/DOMHelpers';
 
 const { createElement } = DOMHelpers();
-
-const logo = () => {
-    const $logo = createElement('a', '#logo');
-    $logo.href = '/';
-    $logo.textContent = 'kanban';
-    return $logo;
-};
 
 const boards = () => {
     const $boards = createElement('button', '.btn-boards');
@@ -23,7 +16,14 @@ const home = () => {
     return $home;
 };
 
-const header = () => {
+function logo() {
+    const $logo = createElement('a', '#logo');
+    $logo.href = '/';
+    $logo.textContent = 'kanban';
+    return $logo;
+}
+
+function header() {
     const $header = createElement('header');
     $header.append(logo()); // home(), boards()
     return $header;

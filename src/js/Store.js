@@ -1,18 +1,14 @@
 'use strict';
 
-import DOMHelpers from './helpers/DOMHelpers.js';
+const store = (function() {
 
-const { $, $$ } = DOMHelpers();
-
-const Store = () => {
-
-    const name = 'kanban';
+    const STORE_NAME = 'kanban';
 
     const getLocalStorage = () => {
         let store;
 
         try {
-            store = JSON.parse(localStorage.getItem(name) || '[]');
+            store = JSON.parse(localStorage.getItem(STORE_NAME) || '[]');
         } catch (e) {
             console.error(e);
         }
@@ -20,7 +16,7 @@ const Store = () => {
         return store;
     };
 
-    const setLocalStorage = (value) => localStorage.setItem(name, JSON.stringify(value));
+    const setLocalStorage = (value) => localStorage.setItem(STORE_NAME, JSON.stringify(value));
 
     const replace = (obj) => getLocalStorage().map(board => board.id === obj.id ? obj : board);
 
@@ -34,7 +30,7 @@ const Store = () => {
     };
 
     const remove = (id = null) => {
-        const store = getLocalStorage();
+        let store = getLocalStorage();
         store = store.filter(board => board.id !== id);
 
         setLocalStorage(store);
@@ -46,7 +42,7 @@ const Store = () => {
             title
         };
 
-        const store = getLocalStorage();
+        let store = getLocalStorage();
 
         store = store.map(board => board.id === newObject.id ? newObject : board);
 
@@ -54,26 +50,28 @@ const Store = () => {
     };
 
     const save = () => {
-        const currentId = localStorage.getItem('id');
+        const currentId = parseInt(localStorage.getItem('id'), 10);
         const currentBoard = find(currentId);
         currentBoard.lists = [];
 
-        $$('.list').forEach(list => {
-            const objList = {
-                id: Number(list.getAttribute('data-list-id')),
-                title: $('.list-title', list).textContent,
-                cards: []
-            };
+        document
+            .querySelectorAll('.list')
+            .forEach(list => {
+                const objList = {
+                    id: parseInt(list.getAttribute('data-list-id'), 10),
+                    title: list.querySelector('.list-title').textContent,
+                    cards: []
+                };
 
-            $$('.card', list).forEach(card => {
-                objList.cards.push({
-                    id: card.getAttribute('data-card-id'),
-                    content: card.textContent
+                list.querySelectorAll('.card').forEach(card => {
+                    objList.cards.push({
+                        id: parseInt(card.getAttribute('data-card-id'), 10),
+                        content: card.textContent.trim()
+                    });
                 });
-            });
 
-            currentBoard.lists.push(objList);
-        });
+                currentBoard.lists.push(objList);
+            });
 
         setLocalStorage(replace(currentBoard));
     };
@@ -93,6 +91,6 @@ const Store = () => {
         save,
         load
     };
-};
+})();
 
-export default Store;
+export default store;

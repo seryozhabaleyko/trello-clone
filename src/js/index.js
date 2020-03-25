@@ -5,52 +5,16 @@ import { main } from './Home/index.js';
 import Database from './Database.js';
 import Store from './Store.js';
 import board from './Board/index.js';
-import { createRouter } from './vanilla-ui-router.js';
+import { createRouter } from './router.js';
 
-document.addEventListener('click', function(e) {
-    modalClose(e);
-
-    if (e.target.dataset.trigger !== undefined) {
-        const title = document.querySelector('.making-board');
-        title.setAttribute('style', e.target.getAttribute('style'));
-    }
-
-    if (e.target.dataset.submit !== undefined) {
-        const input = document.querySelector('.making-board-title').value;
-
-        const obj = {
-            title: input || 'title',
-            date: new Date().toLocaleDateString(),
-            time: new Date().toLocaleTimeString(),
-            bg: document.querySelector('.making-board').style.background,
-            lists: []
-        };
-
-        Database.create(obj)
-            .then(response => {
-                console.log(response);
-            });
-
-        const modal = document.querySelector('.modal-overlay');
-        modal.remove();
-    }
-});
-
-function modalClose(e) {
-    if (e.target.dataset.close !== undefined) {
-        const modal = document.querySelector('.modal-overlay');
-        modal.remove();
-    }
-}
-
+import ripple from './plugins/ripple.js';
 
 const store = Store();
 
 const router = createRouter(document.getElementById('root'));
 router
     .addRoute('', () => {
-        document.getElementById('root').innerHTML = 'Hello World!!';
-        //router.navigateTo('boards');
+        router.navigateTo('boards');
     })
     .addRoute('home', (domEntryPoint) => {
         domEntryPoint.append(header(), main);
@@ -58,25 +22,36 @@ router
     .addRoute('boards', (domEntryPoint) => {
         domEntryPoint.append(header(), main);
         Database.renderList();
+
+        ripple(
+            Array.from(
+                document.querySelectorAll('[ripple]')
+            )
+        );
     })
-    .addRoute('boards/:aboutId/:editable', (domEntryPoint, routeParams) => {
-        console.log(domEntryPoint);
-        console.log(routeParams);
-    })
-    .addRoute('boards/:id', (domEntryPoint, routeParams) => {
-        let obj = store.find(routeParams.id);
+    .addRoute('board/:id', (domEntryPoint, routeParams) => {
+        const obj = store.find(routeParams.id);
         localStorage.setItem('id', routeParams.id);
 
         domEntryPoint.style.background = obj.bg;
         domEntryPoint.append(header(), board(obj));
 
         store.save();
+
+        ripple(
+            Array.from(
+                document.querySelectorAll('[ripple]')
+            )
+        );
+    })
+    .addRoute('boards/:aboutId/:editable', (domEntryPoint, routeParams) => {
+        console.log(domEntryPoint);
+        console.log(routeParams);
     })
     .otherwise(() => {
         console.log('I am the otherwise route');
         router.navigateTo('404');
     });
-
 
 
 

@@ -1,0 +1,56 @@
+.card {
+    position: relative;
+    overflow: hidden;
+
+	cursor: default;
+	width: 100%;
+	background: white;
+	padding: 10px;
+	border: none;
+	border-radius: 3px;
+    margin-bottom: 8px;
+    box-shadow: 0px 1px 0px 0px #c9cfd4;
+
+    text-align: left;
+    font-size: 14px;
+    line-height: 1.3;
+    font-weight: 400;
+    color: rgb(82, 106, 122);
+
+    transition: background-color 0.2s linear;
+
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+}
+
+.card:hover {
+	background-color: #e3f2fd;
+    cursor: pointer;
+}
+
+.card:focus {
+	cursor: auto;
+}
+
+.card textarea {
+	margin: 0;
+}
+
+.card.dragged {
+	opacity: 0.01;
+}
+
+.list.dragged {
+	opacity: 0.4;
+}
+
+.action {
+	cursor: pointer;
+}
+
+.list.under {
+	margin-top: 20px;
+}
+
+.card.under {
+	opacity: 0.5;
+}

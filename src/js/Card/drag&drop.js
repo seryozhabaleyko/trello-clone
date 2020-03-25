@@ -1,10 +1,9 @@
 'use strict';
 
 import DOMHelpers from '../helpers/DOMHelpers.js';
-import Store from '../Store.js';
+import store from '../Store.js';
 
 const { $$, on } = DOMHelpers();
-const store = Store();
 
 export let draggedCard = null;
 
@@ -80,6 +79,6 @@ const drag = (card) => {
     on(card, 'dragover', dragover, false);
     on(card, 'dragleave', dragleave, false);
     on(card, 'drop', drop, false);
-}
+};
 
 export default drag;

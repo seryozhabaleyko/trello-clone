@@ -1,79 +1,71 @@
 'use strict';
 
-import DOMHelpers from '../helpers/DOMHelpers.js';
-import Template from '../Template.js';
-import Modal from '../modal.js';
-import Store from '../Store.js';
+import DOMHelpers from '../helpers/DOMHelpers';
+import icons from '../helpers/icons';
+import store from '../Store';
+import board from './board/board';
+import addingBoard from './addingBoard';
 
-const { createElement, on } = DOMHelpers();
-const { open } = Modal();
-const template = Template();
-const store = Store();
+const { createElement } = DOMHelpers();
 
 const object = store.getLocalStorage();
-const result = [object[2], object[4]];
+const favorite = object.filter(board => !!board.favorite);
+
+const CLASS = {
+    boardsWrapper: '.boards-wrapper',
+    boardsSection: '.boards-section',
+    boardsFavorites: '.boards-favorites',
+    boardsHeader: '.boards-header',
+    boards: '.boards',
+};
+
+const title = (template) => {
+    const $title = createElement('div', CLASS.boardsHeader);
+    $title.insertAdjacentHTML('afterbegin', template);
+
+    return $title;
+};
+
+const boardsFavorites = (wrapper) => {
+    const $boardsSection = createElement('section', CLASS.boardsSection);
+    const $boards = createElement('div', CLASS.boardsFavorites);
+
+    for (const iterator of favorite) {
+        $boards.appendChild(board(iterator));
+    }
+
+    wrapper
+        .appendChild($boardsSection)
+        .append(
+            title(`${icons.starBorder}<h3>Отмеченные доски</h3>`),
+            $boards
+        );
+};
 
 const boards = () => {
+    const $wrapper = createElement('div', CLASS.boardsWrapper);
 
-    const temp = ({ id, bg, title }) => `
-        <a href="/#boards/${id}" class="board" style="background: ${bg}">
-            <div class="board-title">${title}</div>
-        </a>
-    `;
-
-    const add = () => {
-        const $add = createElement('div', '.create-new-board');
-        $add.insertAdjacentHTML('afterbegin', template.board.add);
-
-        on($add, 'click', function () {
-            open();
-        }, false);
-
-        return $add;
-    };
-
-    const $wrapper = createElement('div', '.boards-wrapper');
-
-    const favorites = `
-        ${template.star({ width: '24px', height: '24px', color: '#42526e' })}
-        <h3>Отмеченные доски</h3>
-    `;
-
-    const personal = `
-        ${template.personal({ width: '24px', height: '24px', color: '#42526e' })}
-        <h3>Персональные доски</h3>
-    `;
-
-    function title(template) {
-        const $title = createElement('div', '.boards-header');
-        $title.insertAdjacentHTML('afterbegin', template);
-
-        return $title;
+    if (favorite.length > 0) {
+        boardsFavorites($wrapper);
     }
 
-    const section = () => createElement('section', '.boards-section');
+    const $boardsSection = createElement('section', CLASS.boardsSection);
+    const $boards = createElement('div', CLASS.boards);
 
-    /* if (result.length) {
-        const $boards = createElement('div', '.boards');
-
-        for (const obja of result) {
-            $boards.insertAdjacentHTML('afterbegin', temp(obja));
-        }
-
-        $wrapper.appendChild(section()).append(title(favorites), $boards);
-    } */
-
-    const $boards = createElement('div', '.boards');
-
-    if (object.length) {
-        for (const obj of object) {
-            $boards.insertAdjacentHTML('afterbegin', temp(obj));
+    if (object.length > 0) {
+        for (const iterator of object) {
+            $boards.appendChild(board(iterator));
         }
     }
 
-    $boards.appendChild(add());
+    $boards.appendChild(addingBoard());
 
-    $wrapper.appendChild(section()).append(title(personal), $boards);
+    $wrapper
+        .appendChild($boardsSection)
+        .append(
+            title(`${icons.personOutline}<h3>Персональные доски</h3>`),
+            $boards
+        );
 
     return $wrapper;
 };

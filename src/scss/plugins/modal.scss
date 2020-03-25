@@ -1,0 +1,47 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 999;
+    opacity: 0;
+    animation: overlay 0.5s ease forwards;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+
+    background: rgba(0, 0, 0, 0.75);
+}
+
+.open {
+    cursor: default;
+    opacity: 1;
+    animation: openn 0.5s ease forwards;
+}
+
+@keyframes openn {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes overlay {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.modal {
+    position: relative;
+    margin-top: 100px;
+}
