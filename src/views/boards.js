@@ -1,24 +1,25 @@
-'use strict';
-
+import firebase from '../js/firebase';
 import header from '../js/header';
 import bottomNavigation from '../js/Home/bottomNavigation';
 import boards from '../js/Home/boards';
-import ripple from '../js/plugins/ripple';
 import sidebar from '../js/Home/sidebar';
 
 function boardsPage(root) {
-    const $main = document.createElement('main');
-    $main.id = 'boards-body';
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            const $main = document.createElement('main');
+            $main.id = 'boards-body';
 
-    $main.append(sidebar(), bottomNavigation(), boards());
+            $main.append(sidebar(), bottomNavigation(), boards());
 
-    root.append(header(), $main);
+            const $header = header();
+            $header.classList.add('bg-boards');
 
-    ripple(
-        Array.from(
-            document.querySelectorAll('[ripple]')
-        )
-    );
+            root.append($header, $main);
+        } else {
+            window.location.href = '/#login';
+        }
+    });
 }
 
 export default boardsPage;

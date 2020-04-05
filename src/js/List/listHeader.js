@@ -1,17 +1,19 @@
 'use strict';
 
-import Template from '../Template.js';
-import DOMHelpers from '../helpers/DOMHelpers.js';
-import store from '../Store.js';
+import Template from '../Template';
+import DOMHelpers from '../helpers/DOMHelpers';
+import icons from '../helpers/icons';
+import store from '../Store';
 
 const { createElement } = DOMHelpers();
 const template = Template();
 
-const className = {
+const CLASS = {
     listHeader: '.list-header',
     listTitle: '.list-title',
     listMore: '.list-more',
     listMoreToggle: '.list-more-toggle',
+    listMoreMenuPopover: '.list-more-menu-popover',
     listMoreMenu: '.list-more-menu',
     listMoreItem: '.list-more-item',
 };
@@ -44,7 +46,7 @@ function titleBlurHandler() {
 }
 
 const title = (obj) => {
-    const $title = createElement('span', className.listTitle);
+    const $title = createElement('span', CLASS.listTitle);
     $title.textContent = obj.title;
 
     $title.addEventListener('dblclick', titleDblclickHandler, false);
@@ -73,24 +75,27 @@ const menu = (root) => {
     }
 
     const remove = (root) => {
-        const $link = createElement('a', className.listMoreItem);
+        const $link = createElement('a', CLASS.listMoreItem);
         $link.href = '#';
-        $link.textContent = 'Архивировать список';
+        $link.insertAdjacentHTML('afterbegin', `${icons.remove}<span>Удалить список</span>`);
 
         $link.addEventListener('click', removeHandler.bind(this, root), false);
 
         return $link;
     };
 
-    const $menu = createElement('div', className.listMoreMenu);
+    const $popover = createElement('div', CLASS.listMoreMenuPopover);
+    const $menu = createElement('div', CLASS.listMoreMenu);
     $menu.appendChild(remove(root));
 
-    return $menu;
+    $popover.appendChild($menu);
+
+    return $popover;
 };
 
 
 function closeMoreMenuHandler() {
-    document.querySelector(`${className.listMore}.show`).classList.remove('show');
+    document.querySelector(`${CLASS.listMore}.show`).classList.remove('show');
     window.removeEventListener('click', closeMoreMenuHandler, true);
 }
 
@@ -100,17 +105,18 @@ function moreHandler() {
 }
 
 function more(root) {
-    const $more = createElement('div', className.listMore);
-    const $toggle = createElement('button', className.listMoreToggle);
-    $toggle.insertAdjacentHTML('afterbegin', template.more({color: '#555'}));
+    const $more = createElement('div', CLASS.listMore);
+    const $toggle = createElement('button', CLASS.listMoreToggle);
+    $toggle.insertAdjacentHTML('afterbegin', icons.moreHoriz);
     $toggle.addEventListener('click', moreHandler, false);
+
     $more.append($toggle, menu(root));
 
     return $more;
 }
 
 function header(obj, root) {
-    const $header = createElement('div', className.listHeader);
+    const $header = createElement('div', CLASS.listHeader);
     $header.append(title(obj), more(root));
 
     return $header;

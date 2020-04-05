@@ -1,0 +1,64 @@
+.popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+
+    z-index: 1000;
+
+    /* background-color: #f4f5f7; */
+
+    animation: show 0.5s ease-out forwards;
+
+    &.close {
+        animation: close 0.5s ease-out forwards;
+    }
+
+    &-overlay {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+
+		overflow-y: auto;
+		position: fixed;
+
+		@media only screen and (max-width: 750px) {
+    		position: absolute;
+		}
+
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 20;
+
+        background-color: rgba(0,0,0,.64);
+
+        animation: show 0.5s ease-out forwards;
+
+        &.close {
+          animation: close 0.5s ease-out forwards;
+        }
+    }
+}
+
+@keyframes show {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes close {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}

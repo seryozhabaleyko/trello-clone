@@ -2,47 +2,43 @@
 
 import DOMHelpers from '../helpers/DOMHelpers.js';
 
-const {
-    $,
-    createElement,
-    show,
-    hide,
-    on,
-    off
-} = DOMHelpers();
+const { createElement } = DOMHelpers();
 
 export function hideFormHandler(e) {
-    if (!e.target.closest('.card-adding-form.show')) {
-        const $cardAddingFormShow = $('.card-adding-form.show');
-        $cardAddingFormShow.classList.remove('show');
-        $cardAddingFormShow.classList.add('hide');
+    if (!e.target.closest('.form-adding-card.show')) {
+        const $cardAddingFormShow = document.querySelector('.form-adding-card.show');
+        $cardAddingFormShow.hide();
 
-        $('.list-footer.hide').classList.remove('hide');
+        document.querySelector('.list-footer.hide').classList.remove('hide');
 
-        off(document, 'click', hideFormHandler, true);
+        document.removeEventListener('click', hideFormHandler, true);
     }
 }
 
-function showFormHandler(root, form) {
-    hide(root);
-    show(form);
-    $('.card-add-text', form).focus();
-
-    on(document, 'click', hideFormHandler, true);
-}
-
-const showForm = (root, form) => {
-    const $button = createElement('button', '.add-card');
-    $button.setAttribute('type', 'button');
-    $button.insertAdjacentText('afterbegin', '+ Добавить карточку');
-
-    $button.addEventListener('click', showFormHandler.bind(this, root, form), false);
-
-    return $button;
-};
-
 const footer = (form) => {
-    const $footer = createElement('div', '.list-footer');
+    const CLASS = {
+        listFooter: '.list-footer',
+    };
+
+    function showFormHandler(root, form) {
+        root.hide();
+        form.show();
+        form.querySelector('.field-input-form-adding-card').focus();
+
+        document.addEventListener('click', hideFormHandler, true);
+    }
+
+    const showForm = (root, form) => {
+        const $button = createElement('button', '.add-card');
+        $button.setAttribute('type', 'button');
+        $button.insertAdjacentText('afterbegin', '+ Добавить карточку');
+
+        $button.addEventListener('click', showFormHandler.bind(this, root, form), false);
+
+        return $button;
+    };
+
+    const $footer = createElement('div', CLASS.listFooter);
 
     $footer.appendChild(showForm($footer, form));
 

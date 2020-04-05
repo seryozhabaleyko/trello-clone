@@ -2,15 +2,11 @@
 
 const DOMHelpers = () => {
 
-    // Get the first matching element in the DOM
     const $ = (selector, parent) => (parent ? parent : document).querySelector(selector);
 
-    // Get an array of all matching elements in the DOM
     const $$ = (selector, parent) => Array.from((parent ? parent : document).querySelectorAll(selector));
 
     const contains = (elem, child) => elem !== child && elem.contains(child);
-
-    const position = (elem) => ({ left: elem.offsetLeft, top: elem.offsetTop});
 
     const createElement = (tag, idClass) => {
         let elem = document.createElement(tag);
@@ -38,41 +34,27 @@ const DOMHelpers = () => {
         target.removeEventListener(type, callback, options)
     );
 
-    const empty = (parentNode) => {
-        while (parentNode.firstChild) {
-            parentNode.removeChild(parentNode.firstChild);
-        }
-    };
-
-    const getElement = (selector) => document.querySelector(selector);
-
-    const getElements = (selector) => document.querySelectorAll(selector);
-
     const addClass = (elem, ...className) => elem.classList.add(...className);
 
     const removeClass = (elem, ...className) => elem.classList.remove(...className);
 
     const toggleClass = (elem, className) => elem.classList.toggle(className);
 
-    const hide = (elem) => {
-        if (elem.classList.contains('show')) {
-            elem.classList.remove('show');
-        }
-        elem.classList.add('hide');
+    Element.prototype.show = function () {
+        this.classList.contains('hide') && this.classList.remove('hide');
+        this.classList.add('show');
+    };
+
+    Element.prototype.hide = function() {
+        this.classList.contains('show') && this.classList.remove('show');
+        this.classList.add('hide');
     };
 
     const hideAll = (elemList) => {
         Array.from(elemList).forEach(elem => hide(elem));
     };
 
-    const show = (elem) => {
-        if (elem.classList.contains('hide')) {
-            elem.classList.remove('hide');
-        }
-        elem.classList.add('show');
-    };
-
-    const fadeOut = (elem) => {
+    /* const fadeOut = (elem) => {
         if (window.requestAnimationFrame) {
             elem.style.opacity = 1;
 
@@ -94,7 +76,7 @@ const DOMHelpers = () => {
             elem.style.display = display || 'block';
 
             (function fade() {
-                let val = parseFloat(elem.style.opacity);
+                let val = parseFloat(elem.style.opacity, 10);
                 const calc = (val += 0.1) > 1;
 
                 if (!calc) {
@@ -105,42 +87,72 @@ const DOMHelpers = () => {
         } else {
             elem.style.display = display || 'block';
         }
-    };
+    }; */
 
-    const removeDOMNode = (node) => {
-        node.parentNode.removeChild(node);
-    };
+    const fadeIn = (el, smooth = true, displayStyle = 'block') => {
+        el.style.opacity = 0;
+        el.style.display = displayStyle;
+        if (smooth) {
+            let opacity = 0;
+            let request;
 
-    const insertAfter = (node, refNode) => {
-        const { parentNode } = refNode;
-        const nextNode = refNode.nextElementSibling;
-        if (nextNode) {
-            parentNode.insertBefore(node, nextNode);
+            const animation = () => {
+                el.style.opacity = opacity += 0.04;
+                if (opacity >= 1) {
+                    opacity = 1;
+                    cancelAnimationFrame(request);
+                }
+            };
+
+            const rAf = () => {
+                request = requestAnimationFrame(rAf);
+                animation();
+            };
+            rAf();
+
         } else {
-            parentNode.appendChild(node);
+            el.style.opacity = 1;
+        }
+    };
+
+    const fadeOut = (el, smooth = true, displayStyle = 'none') => {
+        if (smooth) {
+            let opacity = el.style.opacity;
+            let request;
+
+            const animation = () => {
+                el.style.opacity = opacity -= 0.04;
+                if (opacity <= 0) {
+                    opacity = 0;
+                    el.style.display = displayStyle;
+                    cancelAnimationFrame(request);
+                }
+            };
+
+            const rAf = () => {
+                request = requestAnimationFrame(rAf);
+                animation();
+            };
+            rAf();
+
+        } else {
+            el.style.opacity = 0;
         }
     };
 
     return {
-        fadeOut,
-        fadeIn,
+        createElement,
         $,
         $$,
+        fadeOut,
+        fadeIn,
         contains,
-        createElement,
         on,
         off,
-        show,
-        hide,
         hideAll,
-        empty,
-        getElement,
-        getElements,
         addClass,
         removeClass,
         toggleClass,
-        removeDOMNode,
-        insertAfter
     };
 };
 

@@ -17,6 +17,7 @@ const making = () => {
         makingBoard: '.making-board',
         makingBoardTitle: '.making-board-title',
         makingBoardClose: '.making-board-close',
+        makingBoardSubmit: '.making-board-submit',
     };
 
     const $making = createElement('form', CLASS.making);
@@ -34,11 +35,12 @@ const making = () => {
     $button.type = 'button';
     $button.insertAdjacentHTML('afterbegin', icons.close);
 
-    function closeHandler() {
-        console.log(this.closest('.modal-overlay'));
+    function makingModalCloseHandler() {
+        this.closest('[data-modal-close]').remove();
+        this.removeEventListener('click', makingModalCloseHandler, false);
     }
 
-    $button.addEventListener('click', closeHandler, false);
+    $button.addEventListener('click', makingModalCloseHandler, false);
 
     $makingBoard.append($input, $button);
 
@@ -51,7 +53,7 @@ const making = () => {
     const $background = background();
     $background.addEventListener('click', backgroundHandler, false);
 
-    const $submit = createElement('button', '');
+    const $submit = createElement('button', CLASS.makingBoardSubmit);
     $submit.type = 'button';
     $submit.innerHTML = 'Создать доску';
 
@@ -66,7 +68,7 @@ const making = () => {
             lists: []
         };
 
-        document.querySelector('.boards').appendChild(board(obj));
+        document.querySelector('.adding-board').before(board(obj));
 
         store.insert(obj);
     }

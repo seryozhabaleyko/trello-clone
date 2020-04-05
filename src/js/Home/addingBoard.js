@@ -13,16 +13,22 @@ const CLASS = {
 };
 
 const modal = () => {
-    const $overlay = createElement('div', CLASS.modalOverlay);
-    $overlay.setAttribute('data-modal-close', '');
-    $overlay.addEventListener('click', function(e) {
+    function modalOverlayAnimationEndHandler() {
+        this.remove();
+        this.removeEventListener('animationend', modalOverlayAnimationEndHandler, false);
+    }
+
+    function modalOverlayHandler(e) {
         if (e.target.dataset.modalClose !== undefined) {
             this.classList.add('open');
-            this.addEventListener('animationend', function() {
-                this.remove();
-            }, false);
+            this.addEventListener('animationend', modalOverlayAnimationEndHandler, false);
+            this.removeEventListener('click', modalOverlayHandler, false);
         }
-    }, false);
+    }
+
+    const $overlay = createElement('div', CLASS.modalOverlay);
+    $overlay.setAttribute('data-modal-close', '');
+    $overlay.addEventListener('click', modalOverlayHandler, false);
 
     const $modal = createElement('div', CLASS.modal);
 

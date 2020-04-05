@@ -32,7 +32,7 @@ module.exports = {
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             template: './index.html',
-            favicon: './img/favicon.png',
+            favicon: './img/favicon.svg',
             minify: {
                 collapseWhitespace: true
             },

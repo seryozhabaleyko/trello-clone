@@ -1,0 +1,56 @@
+.form-adding-card {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 60px 40px;
+    gap: 10px;
+    margin-top: 2px;
+    margin-bottom: 8px;
+
+    &-action {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+}
+
+.field-input-form-adding-card {
+    height: 60px;
+    padding: 10px;
+    border: none;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+}
+
+.button-submit-field-input-form-adding-card {
+    cursor: pointer;
+    border: none;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 400;
+    border-radius: 2px;
+    padding: 0 10px;
+    color: #fff;
+    background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+}
+
+.button-close-field-input-form-adding-card {
+    border: none;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+        width: 24px;
+        height: 24px;
+        fill: #6b778c;
+        transition: fill .3s ease;
+    }
+
+    &:hover {
+        svg {
+            fill: #172b4d;
+        }
+    }
+}

@@ -1,7 +1,5 @@
-'use strict';
-
-const parseRouteParamToCorrectType = function parseRouteParamToCorrectType(paramValue) {
-	if (!isNaN(paramValue)) {
+const parseRouteParamToCorrectType = (paramValue) => {
+	if (!Number.isNaN(paramValue)) {
 		return parseInt(paramValue, 10);
 	}
 
@@ -12,11 +10,11 @@ const parseRouteParamToCorrectType = function parseRouteParamToCorrectType(param
 	return paramValue;
 };
 
-const extractRouteParams = function extractRouteParams(routeIdentifier, currentHash) {
+const extractRouteParams = (routeIdentifier, currentHash) => {
 	const splittedHash = currentHash.split('/');
 	const splittedRouteIdentifier = routeIdentifier.split('/');
 
-	return splittedRouteIdentifier.map(function (routeIdentifierToken, index) {
+	return splittedRouteIdentifier.map((routeIdentifierToken, index) => {
 		if (routeIdentifierToken.indexOf(':', 0) === -1) {
 			return null;
 		}
@@ -24,28 +22,26 @@ const extractRouteParams = function extractRouteParams(routeIdentifier, currentH
 		const key = routeIdentifierToken.substr(1, routeIdentifierToken.length - 1);
 		routeParam[key] = splittedHash[index];
 		return routeParam;
-	}).filter(function (p) {
-		return p !== null;
-	}).reduce(function (acc, curr) {
-		Object.keys(curr).forEach(function (key) {
+	}).filter((p) => p !== null).reduce((acc, curr) => {
+		Object.keys(curr).forEach((key) => {
 			acc[key] = parseRouteParamToCorrectType(curr[key]);
 		});
 		return acc;
 	}, {});
 };
 
-const findMatchingRouteIdentifier = function findMatchingRouteIdentifier(currentHash, routeKeys) {
+const findMatchingRouteIdentifier = (currentHash, routeKeys) => {
 	const splittedHash = currentHash.split('/');
 	const firstHashToken = splittedHash[0];
 
-	return routeKeys.filter(function (routeKey) {
+	return routeKeys.filter((routeKey) => {
 		const splittedRouteKey = routeKey.split('/');
-		const staticRouteTokensAreEqual = splittedRouteKey.map(function (routeToken, i) {
+		const staticRouteTokensAreEqual = splittedRouteKey.map((routeToken, i) => {
 			if (routeToken.indexOf(':', 0) !== -1) {
 				return true;
 			}
 			return routeToken === splittedHash[i];
-		}).reduce(function (countInvalid, currentValidationState) {
+		}).reduce((countInvalid, currentValidationState) => {
 			if (currentValidationState === false) {
 				++countInvalid;
 			}
@@ -58,9 +54,9 @@ const findMatchingRouteIdentifier = function findMatchingRouteIdentifier(current
 
 const XMLHttpRequestFactory = window.XMLHttpRequest;
 
-const loadTemplate = function loadTemplate(templateUrl, successCallback) {
+const loadTemplate = (templateUrl, successCallback) => {
 	const xhr = new XMLHttpRequestFactory();
-	xhr.onreadystatechange = function () {
+	xhr.onreadystatechange = () => {
 		if (xhr.readyState === 4) {
 			successCallback(xhr.responseText);
 		}
@@ -69,7 +65,7 @@ const loadTemplate = function loadTemplate(templateUrl, successCallback) {
 	xhr.send();
 };
 
-const renderTemplates = function renderTemplates(routeConfiguration, domEntryPoint, successCallback) {
+const renderTemplates = (routeConfiguration, domEntryPoint, successCallback) => {
 	if (!routeConfiguration) {
 		return;
 	}
@@ -80,7 +76,7 @@ const renderTemplates = function renderTemplates(routeConfiguration, domEntryPoi
 	}
 
 	if (routeConfiguration.templateUrl) {
-		loadTemplate(routeConfiguration.templateUrl, function (templateString) {
+		loadTemplate(routeConfiguration.templateUrl, (templateString) => {
 			domEntryPoint.innerHTML = templateString;
 			successCallback();
 		});
@@ -93,31 +89,32 @@ const renderTemplates = function renderTemplates(routeConfiguration, domEntryPoi
 	}
 };
 
-export var createRouter = function createRouter(domEntryPoint) {
-	var routes = {};
-	var lastDomEntryPoint = domEntryPoint.cloneNode(true);
-	var lastRouteHandler = null;
+const createRouter = (domEntryPoint) => {
+	const routes = {};
+	const lastDomEntryPoint = domEntryPoint.cloneNode(true);
+	let lastRouteHandler = null;
 
-	var navigateTo = function navigateTo(hashUrl) {
+	const navigateTo = (hashUrl) => {
 		window.location.hash = hashUrl;
 	};
 
-	var otherwise = function otherwise(routeHandler) {
+	const otherwise = (routeHandler) => {
 		routes['*'] = routeHandler;
 	};
 
-	var addRoute = function addRoute(hashUrl, routeHandler, data) {
+	const addRoute = (hashUrl, routeHandler, data) => {
 		routes[hashUrl] = routeHandler;
 		routes[hashUrl].data = data;
-		return { addRoute: addRoute, otherwise: otherwise, navigateTo: navigateTo };
+
+		return { addRoute, otherwise, navigateTo };
 	};
 
-	var initializeDomElement = function initializeDomElement() {
+	const initializeDomElement = () => {
 		if (!domEntryPoint.parentElement) {
 			return;
 		}
 
-		var domClone = lastDomEntryPoint.cloneNode(true);
+		const domClone = lastDomEntryPoint.cloneNode(true);
 		domEntryPoint.parentElement.insertBefore(domClone, domEntryPoint);
 
 		if (typeof domEntryPoint.remove === 'undefined') {
@@ -129,23 +126,23 @@ export var createRouter = function createRouter(domEntryPoint) {
 		domEntryPoint = domClone;
 	};
 
-	var disposeLastRoute = function disposeLastRoute() {
+	const disposeLastRoute = () => {
 		if (!lastRouteHandler) return;
 		if (typeof lastRouteHandler.dispose === 'undefined') return;
 		lastRouteHandler.dispose(domEntryPoint);
 	};
 
-	var handleRouting = function handleRouting() {
-		var defaultRouteIdentifier = '*';
-		var currentHash = location.hash.slice(1);
+	const handleRouting = () => {
+		const defaultRouteIdentifier = '*';
+		const currentHash = window.location.hash.slice(1);
 
-		var maybeMatchingRouteIdentifier = findMatchingRouteIdentifier(currentHash, Object.keys(routes));
-		var routeParams = {};
+		const maybeMatchingRouteIdentifier = findMatchingRouteIdentifier(currentHash, Object.keys(routes));
+		let routeParams = {};
 		if (maybeMatchingRouteIdentifier) {
 			routeParams = extractRouteParams(maybeMatchingRouteIdentifier, currentHash);
 		}
 
-		var routeHandler = Object.keys(routes).indexOf(maybeMatchingRouteIdentifier) > -1 ? routes[maybeMatchingRouteIdentifier] : routes[defaultRouteIdentifier];
+		const routeHandler = Object.keys(routes).indexOf(maybeMatchingRouteIdentifier) > -1 ? routes[maybeMatchingRouteIdentifier] : routes[defaultRouteIdentifier];
 
 		if (!routeHandler) {
 			return;
@@ -153,7 +150,6 @@ export var createRouter = function createRouter(domEntryPoint) {
 
 		disposeLastRoute(routeHandler);
 
-		// Memory last routeHandler
 		lastRouteHandler = routeHandler;
 
 		initializeDomElement();
@@ -161,12 +157,11 @@ export var createRouter = function createRouter(domEntryPoint) {
 		if (typeof routeHandler === 'function') {
 			routeHandler(domEntryPoint, routeParams, routeHandler.data);
 		} else {
-
 			if (!routeHandler.templateString && !routeHandler.templateId && !routeHandler.templateUrl) {
-				throw Error('No template configured for route ' + currentHash);
+				throw Error(`Шаблон не настроен для маршрута ${currentHash}`);
 			}
 
-			renderTemplates(routeHandler, domEntryPoint, function () {
+			renderTemplates(routeHandler, domEntryPoint, () => {
 				if (typeof routeHandler.routeHandler === 'function') {
 					routeHandler.routeHandler(domEntryPoint, routeParams, routeHandler.data);
 				}
@@ -181,5 +176,7 @@ export var createRouter = function createRouter(domEntryPoint) {
 		window.addEventListener('load', handleRouting);
 	}
 
-	return { addRoute: addRoute, otherwise: otherwise, navigateTo: navigateTo };
+	return { addRoute, otherwise, navigateTo };
 };
+
+export default createRouter;

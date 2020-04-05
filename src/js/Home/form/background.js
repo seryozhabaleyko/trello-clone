@@ -14,10 +14,23 @@ const background = () => {
 
     const $backgrounds = createElement('div', CLASS.backgrounds);
 
-    for (let i = 1; i < 10; i++) {
+    const array = ['#1B5E20', '#004D40', '#006064', '#01579B', '#0D47A1', '#b71c1c', '#E65100'];
+
+    for (const key in backgroundsImages) {
+        if (backgroundsImages.hasOwnProperty(key)) {
+            const $background = createElement('button', CLASS.background);
+            $background.type = 'button';
+            $background.style.backgroundImage = `url('${backgroundsImages[key]}')`;
+            $background.setAttribute('data-trigger', '');
+
+            $backgrounds.appendChild($background);
+        }
+    }
+
+    for (const iterator of array) {
         const $background = createElement('button', CLASS.background);
         $background.type = 'button';
-        $background.style.backgroundImage = `url('${backgroundsImages[`bg${i}`]}')`;
+        $background.style.background = `${iterator}`;
         $background.setAttribute('data-trigger', '');
 
         $backgrounds.appendChild($background);

@@ -28,46 +28,52 @@
 }
 
 .board:hover::before {
-  background-color: rgba(0,0,0,0.2);
+	background-color: rgba(0,0,0,0.2);
 }
 
 .board-title {
-  font-size: 1.4rem;
-  font-weight: 400;
-  overflow: hidden;
+	font-size: 1.4rem;
+	font-weight: 400;
+	overflow: hidden;
 }
 
 .board-details {
-  position: relative;
-  height: 100%;
+	position: relative;
+	height: 100%;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
 .board-favorite {
-  display: flex;
-  align-items: baseline;
-  justify-content: flex-end;
+	display: flex;
+	align-items: baseline;
+	justify-content: flex-end;
 }
 
 .btn-favorite {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
-  padding: 0;
-  background-color: initial;
+	padding: 0;
+	background-color: initial;
 
-  width: 24px;
-  height: 24px;
-  margin-right: -35px;
-  transition: margin-right 0.3s cubic-bezier(.25,.8,.25,1);
+	width: 24px;
+	height: 24px;
+	margin-right: -35px;
+	transition: margin-right 0.3s cubic-bezier(.25,.8,.25,1);
+
+	svg {
+		width: 20px;
+		height: 20px;
+		fill: #fff;
+	}
 }
 
 .btn-favorite[data-favorite] {
-  margin-right: 0;
+	margin-right: 0;
 }
 
 .btn-favorite[data-favorite] svg {
@@ -75,10 +81,10 @@
 }
 
 .board:hover .btn-favorite {
-  margin-right: 0;
+	margin-right: 0;
 }
 
 .btn-favorite:hover svg {
-  width: 24px;
-  height: 24px;
+	width: 24px;
+	height: 24px;
 }

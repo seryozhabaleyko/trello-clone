@@ -10,6 +10,10 @@
 
     display: inline-block;
     vertical-align: top;
+
+    /* height: 100vh;
+    width: 100vw;
+    scroll-snap-align: start; */
 }
 
 
@@ -36,7 +40,6 @@
     position: absolute;
     right: 8px;
     top: 8px;
-    z-index: 1;
 }
 
 .list-more-toggle {
@@ -49,6 +52,20 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    transition: all 0.3s ease;
+
+    svg {
+        width: 24px;
+        height: 24px;
+        fill: #6b778c;
+    }
+
+    &:hover {
+        svg {
+            fill: #00000091;
+        }
+    }
 }
 
 .list-more-toggle:hover {
@@ -70,6 +87,52 @@
     border-radius: 3px;
     background-color: #fff;
     box-shadow: 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);
+
+
+    @media (max-width: 576px) {
+        position: fixed;
+        top: auto;
+        right: 0;
+        bottom: 0;
+        border-radius: 0px;
+        transform: translateY(50px);
+
+        animation: showw 0.5s ease forwards;
+    }
+
+    @media (min-width: 768px) {}
+
+    @media (min-width: 992px) {}
+
+    @media (min-width: 1200px) {}
+
+    &-popover {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,.05);
+    }
+}
+
+@keyframes showw {
+    from {
+        transform: translateY(50px);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+.show .list-more-menu-popover {
+    @media (max-width: 576px) {
+        display: block;
+    }
+
+    display: block;
+    position: absolute;
 }
 
 .show .list-more-menu {
@@ -77,7 +140,9 @@
 }
 
 .list-more-item {
-    display: block;
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    gap: 10px;
     width: 100%;
     line-height: 32px;
     font-weight: 400;
@@ -87,8 +152,19 @@
     background-color: transparent;
     border: 0;
 
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    font-size: 1.4rem;
+    font-weight: 400;
+
+    svg {
+        width: 20px;
+        height: 20px;
+        margin: 6px 0;
+
+        fill: #6b778c;
+    }
 }
 
 .list-more-item:hover {
@@ -107,6 +183,9 @@
     overflow-y: auto;
     padding-left: 8px;
     padding-right: 8px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .list-footer {
@@ -139,46 +218,4 @@
 
 .add-card:hover {
     background-color: rgba(0, 0, 0, 0.1);
-}
-
-.card-adding-form {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 60px 40px;
-    gap: 10px;
-    margin-top: 2px;
-    margin-bottom: 8px;
-}
-
-.card-add-text {
-    height: 60px;
-    padding: 10px;
-    border: none;
-    border-radius: 2px;
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
-}
-
-.add-card-action {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-}
-
-.add-card-submit {
-    cursor: pointer;
-    border: none;
-    font: inherit;
-    border-radius: 2px;
-    padding: 10px 15px;
-    color: #fff;
-    background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
-}
-
-.add-card-close {
-    border: none;
-    background: transparent;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }

@@ -1,23 +1,26 @@
-'use strict';
+import DOMHelpers from '../helpers/DOMHelpers';
+import icons from '../helpers/icons';
 
-import DOMHelpers from '../helpers/DOMHelpers.js';
-import Template from '../Template.js';
-
-const template = Template();
 const { createElement } = DOMHelpers();
 
 const object = [
-    { name: 'Доски', href: '#boards', icon: template.boards({}) },
-    { name: 'Шаблоны', href: '/', icon: template.temp({}) },
-    { name: 'Главная страница', href: '/', icon: template.home({}) }
+    { name: 'Доски', href: '#boards', icon: icons.trello },
+    { name: 'Шаблоны', href: '/', icon: icons.layout },
+    { name: 'Главная страница', href: '/', icon: icons.home },
 ];
 
+const CLASS = {
+    sidebar: '.sidebar',
+    sidebarLink: '.sidebar-link',
+    sidebarLinkLabel: '.sidebar-link-label',
+};
+
 const link = ({ name, href, icon }) => {
-    const $link = createElement('a', '.sidebar-action');
+    const $link = createElement('a', CLASS.sidebarLink);
     $link.href = href;
     $link.setAttribute('ripple', '');
 
-    const $span = createElement('span', '.sidebar-action-label');
+    const $span = createElement('span', CLASS.sidebarLinkLabel);
 
     $span.insertAdjacentText('afterbegin', name);
 
@@ -28,7 +31,7 @@ const link = ({ name, href, icon }) => {
 };
 
 function sidebar() {
-    const $sidebar = createElement('aside', '.sidebar');
+    const $sidebar = createElement('aside', CLASS.sidebar);
 
     for (const iterator of object) {
         $sidebar.appendChild(link(iterator));

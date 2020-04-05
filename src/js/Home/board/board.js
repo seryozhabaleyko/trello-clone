@@ -1,9 +1,11 @@
-'use strict';
-
 import DOMHelpers from '../../helpers/DOMHelpers';
 import icons from '../../helpers/icons';
+import ripple from '../../plugins/ripple';
+import favoriteHandler from './favorite';
 
-const board = ({ id, title, background, favorite }) => {
+const board = ({
+    id, title, background, favorite,
+}) => {
     const { createElement } = DOMHelpers();
 
     const CLASS = {
@@ -17,7 +19,8 @@ const board = ({ id, title, background, favorite }) => {
     const $link = createElement('a', CLASS.board);
     $link.href = `/#board/${id}`;
     $link.setAttribute('style', background);
-    $link.setAttribute('ripple', '');
+
+    ripple($link);
 
     const $details = createElement('div', CLASS.boardDetails);
 
@@ -33,7 +36,7 @@ const board = ({ id, title, background, favorite }) => {
     }
 
     $btn.insertAdjacentHTML('afterbegin', icons.starBorder);
-    //$btn.addEventListener('click', favoritesHandler.bind($btn, id), false);
+    $btn.addEventListener('click', favoriteHandler.bind($btn, id), false);
 
     $favorite.appendChild($btn);
     $details.append($title, $favorite);

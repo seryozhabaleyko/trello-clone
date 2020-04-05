@@ -1,32 +1,51 @@
-'use strict';
-
-import DOMHelpers from '../js/helpers/DOMHelpers';
+import DOMHelpers from './helpers/DOMHelpers';
+import icons from './helpers/icons';
+import boardsMenuPopover from './header/boardsMenuPopover';
+import '../scss/header.scss';
+import man from '../img/man.png';
+import firebase from './firebase';
 
 const { createElement } = DOMHelpers();
 
-const boards = () => {
-    const $boards = createElement('button', '.btn-boards');
-    $boards.textContent = 'доски';
-    return $boards;
+const CLASS = {
+    header: '.header',
+    logo: '.logo',
+    home: '.home',
+    boardsMenuPopover: '.boards-menu-popover',
 };
 
-const home = () => {
-    const $home = createElement('button', 'btn-home');
-
-    return $home;
+const logout = () => {
+    firebase.auth().signOut();
 };
 
-function logo() {
-    const $logo = createElement('a', '#logo');
+const header = () => {
+    const $home = createElement('a', CLASS.home);
+    $home.href = '/#boards';
+    $home.insertAdjacentHTML('afterbegin', icons.home);
+
+    const $boards = createElement('button', '.header-boards');
+    $boards.insertAdjacentHTML('afterbegin', `${icons.trello}<span>доски</span>`);
+    $boards.addEventListener('click', boardsMenuPopover, false);
+
+    const $logo = createElement('a', CLASS.logo);
     $logo.href = '/';
     $logo.textContent = 'kanban';
-    return $logo;
-}
 
-function header() {
+    const $profile = createElement('button', '#profile');
+    $profile.addEventListener('click', logout, false);
+
+    const $img = createElement('img', '');
+    $img.src = man;
+    $img.width = 32;
+    $img.height = 32;
+    $img.alt = 'Фото профиля';
+
+    $profile.appendChild($img);
+
     const $header = createElement('header');
-    $header.append(logo()); // home(), boards()
+    $header.append($home, $boards, $logo, createElement('div'), $profile);
+
     return $header;
-}
+};
 
 export default header;

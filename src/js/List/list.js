@@ -3,22 +3,26 @@
 import DOMHelpers from '../helpers/DOMHelpers.js';
 import header from './listHeader.js';
 import footer from './listFooter.js';
-import form from './cardAddingForm.js';
+import formAddingCard from './formAddingCard.js';
 import card from '../Card/card.js';
-import drag from './drag&drop.js';
-
+import dragList from './drag&drop.js';
 import '../../scss/board/list.scss';
 
 const { createElement } = DOMHelpers();
 
+export const CLASS = {
+    list: '.list',
+    listCards: '.list-cards',
+};
+
 const list = (obj) => {
-    const $list = createElement('div', '.list');
+    const $list = createElement('div', CLASS.list);
     $list.setAttribute('draggable', 'true');
     $list.setAttribute('data-list-id', obj.id);
 
-    drag($list);
+    dragList($list);
 
-    const $cards = createElement('div', '.list-cards');
+    const $cards = createElement('div', CLASS.listCards);
 
     if (obj.cards) {
         for (const iterator of obj.cards) {
@@ -26,11 +30,11 @@ const list = (obj) => {
         }
     }
 
-    const $form = form($list);
+    const $formAddingCard = formAddingCard($list);
 
-    $cards.appendChild($form);
+    $cards.appendChild($formAddingCard);
 
-    $list.append(header(obj, $list), $cards, footer($form));
+    $list.append(header(obj, $list), $cards, footer($formAddingCard));
 
     return $list;
 };

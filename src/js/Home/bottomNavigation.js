@@ -1,15 +1,18 @@
-'use strict';
 
-import DOMHelpers from '../helpers/DOMHelpers.js';
-import Template from '../Template.js';
+import DOMHelpers from '../helpers/DOMHelpers';
+import Template from '../Template';
 
 const template = Template();
 const { createElement } = DOMHelpers();
 
+const CLASS = {
+    bottomNavigation: '.bottom-navigation',
+};
+
 const object = [
     { name: 'Доски', href: '#boards', icon: template.boards({}) },
     { name: 'Шаблоны', href: '#', icon: template.temp({}) },
-    { name: 'Главная', href: '#home', icon: template.home({}) }
+    { name: 'Главная', href: '#home', icon: template.home({}) },
 ];
 
 const link = ({ name, href, icon }) => {
@@ -31,7 +34,7 @@ const link = ({ name, href, icon }) => {
 };
 
 function bottomNavigation() {
-    const $bottomNavigation = createElement('div', '.bottom-navigation');
+    const $bottomNavigation = createElement('div', CLASS.bottomNavigation);
 
     for (const iterator of object) {
         $bottomNavigation.appendChild(link(iterator));

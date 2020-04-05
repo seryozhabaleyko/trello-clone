@@ -1,6 +1,7 @@
 #board-header {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: max-content 32px 1fr max-content;
+    gap: 10px;
 
     padding: 9px 10px;
 }
@@ -45,7 +46,36 @@
         background-color: rgba(0,0,0,.24);
     }
 
+    svg {
+        width: 20px;
+        height: 20px;
+        fill: #fff;
+    }
+
     &[favorite] svg {
         fill: gold;
+    }
+}
+
+.boards-settings {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+    border-radius: 3px;
+
+    color: #fff;
+    background-color: rgba(0,0,0,.15);
+    background-color: rgba(255, 255, 255, 0.24);
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.32);
+    }
+
+    svg {
+        width: 20px;
+        height: 20px;
+        margin-right: 5px;
+        fill: #fff;
     }
 }

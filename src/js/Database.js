@@ -1,15 +1,14 @@
-'use strict';
 
-import Store from './Store.js';
-import DOMHelpers from './helpers/DOMHelpers.js';
+import Store from './Store';
+import DOMHelpers from './helpers/DOMHelpers';
 
 const {
     insert,
-    getLocalStorage
+    getLocalStorage,
 } = Store();
 
 const {
-    getElement
+    getElement,
 } = DOMHelpers();
 
 class Database {
@@ -17,35 +16,35 @@ class Database {
         const options = {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json;charset=utf-8'
+                'Content-Type': 'application/json;charset=utf-8',
             },
-            body: JSON.stringify(obj)
+            body: JSON.stringify(obj),
         };
 
         return fetch('https://kanban-fcf5f.firebaseio.com/boards.json', options)
-            .then(response => response.json())
-            .then(response => {
+            .then((response) => response.json())
+            .then((response) => {
                 obj.id = response.name;
                 return obj;
             })
             .then(insert)
-            .then(Database.renderList)
+            .then(Database.renderList);
     }
 
     static createList(obj) {
         const options = {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json;charset=utf-8'
+                'Content-Type': 'application/json;charset=utf-8',
             },
-            body: JSON.stringify(obj)
+            body: JSON.stringify(obj),
         };
 
         return fetch('https://kanban-fcf5f.firebaseio.com/boards/lists.json', options)
-            .then(response => response.json())
-            .then(response => {
+            .then((response) => response.json())
+            .then((response) => {
                 console.log(response);
-            })
+            });
     }
 
     static renderList() {
@@ -69,7 +68,6 @@ class Database {
 }
 
 function toBoard(obj) {
-
     return `<div class="board">${obj.title}, ${obj.date}</div>`;
 }
 

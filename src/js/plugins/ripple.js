@@ -29,10 +29,8 @@ function rippleHandler(e) {
     });
 }
 
-function ripple(array) {
-    for (const iterator of array) {
-        iterator.addEventListener('mousedown', rippleHandler, false);
-    }
+function ripple(element) {
+    element.addEventListener('mousedown', rippleHandler, false);
 }
 
 export default ripple;

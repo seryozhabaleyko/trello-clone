@@ -4,29 +4,34 @@
     }
     margin-top: 40px;
     padding: 0 15px;
-    &-action {
+
+    &-link {
         display: grid;
-        grid-template-columns: 24px 1fr;
+        grid-template-columns: 32px 1fr;
         grid-column-gap: 10px;
         grid-auto-rows: 32px;
         align-items: center;
 
-        padding: 0 10px;
-        border-radius: 3px;
-
-        margin-bottom: 4px;
+        &:hover {
+            background: #e1e5eb;
+            border-radius: 3px;
+        }
 
         svg {
-            fill: #42526e;
+            fill: #285473;
             width: 20px;
             height: 20px;
+            margin: 6px;
         }
 
         &-label {
-            color: #42526e;
-            font-size: 14px;
-            line-height: 20px;
-            font-weight: 700;
+            color: #285473;
+            font-weight: 400;
+            line-height: 27px;
+            font-size: 1.4rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            vertical-align: baseline;
         }
     }
 }

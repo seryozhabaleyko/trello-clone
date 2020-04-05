@@ -1,9 +1,7 @@
 'use strict';
 
-import DOMHelpers from '../helpers/DOMHelpers.js';
 import store from '../Store.js';
 
-const { $$, on } = DOMHelpers();
 
 export let draggedCard = null;
 
@@ -18,7 +16,7 @@ function dragend(e) {
     this.classList.remove('draggedCard');
     draggedCard = null;
 
-    $$('.card.under').forEach(x => x.classList.remove('under'));
+    document.querySelectorAll('.card.under').forEach(x => x.classList.remove('under'));
 
     e.stopPropagation();
 }
@@ -55,7 +53,7 @@ function drop(e) {
     }
 
     if (this.parentElement === draggedCard.parentElement) {
-        const cards = $$('.card', this.parentElement);
+        const cards = this.parentElement.querySelectorAll('.card');
         const indexA = cards.indexOf(this);
         const indexB = cards.indexOf(draggedCard);
 
@@ -72,13 +70,13 @@ function drop(e) {
     store.save();
 }
 
-const drag = (card) => {
-    on(card, 'dragstart', dragstart, false);
-    on(card, 'dragend', dragend, false);
-    on(card, 'dragenter', dragenter, false);
-    on(card, 'dragover', dragover, false);
-    on(card, 'dragleave', dragleave, false);
-    on(card, 'drop', drop, false);
+const dragCard = (card) => {
+    card.addEventListener('dragstart', dragstart, false);
+    card.addEventListener('dragend', dragend, false);
+    card.addEventListener('dragenter', dragenter, false);
+    card.addEventListener('dragover', dragover, false);
+    card.addEventListener('dragleave', dragleave, false);
+    card.addEventListener('drop', drop, false);
 };
 
-export default drag;
+export default dragCard;
