@@ -1,15 +1,25 @@
-'use strict';
-
-import DOMHelpers from '../helpers/DOMHelpers.js';
+import DOMHelpers from '../helpers/DOMHelpers';
 import icons from '../helpers/icons';
-import Template from '../Template.js';
-import store from '../Store.js';
 import list from '../List/list';
+
+import firebase from '../firebase';
 
 import '../../scss/board/form-adding-list.scss';
 
+const writeListData = (obj) => {
+    const boardId = localStorage.getItem('boardId');
+    const userId = firebase.auth().currentUser.uid;
+    const ref = firebase.database().ref(`users/${userId}/boards/${boardId}/lists/${obj.id}`);
+
+    ref.set(obj)
+        .then(() => ref.once('value'))
+        .then((snapshot) => {
+            const data = snapshot.val();
+            localStorage.setItem('lists-test', JSON.stringify(data));
+        });
+};
+
 const { createElement } = DOMHelpers();
-const template = Template();
 
 const CLASS = {
     addingList: '.adding-list',
@@ -51,27 +61,25 @@ function buttonCloseFormAddingListHandler() {
 function buttonCloseFormAddingList() {
     const $close = createElement('button', CLASS.buttonCloseFormAddingList);
     $close.type = 'button';
-    $close.insertAdjacentHTML('afterbegin', template.close);
+    $close.insertAdjacentHTML('afterbegin', icons.close);
     $close.addEventListener('click', buttonCloseFormAddingListHandler, false);
 
     return $close;
 }
 
 function buttonSubmitFieldInputFormAddingListHandler() {
-    const id = parseInt(localStorage.getItem('id'), 10);
-    const currentObjectBoard = store.find(id);
-
     const $input = document.querySelector(CLASS.fieldInputFormAddingList);
+    const title = $input.value || 'Название списка';
+    let order = document.querySelectorAll('.list').length;
+    order += 1;
 
     const obj = {
         id: Date.now(),
-        title: $input.value || 'Название',
-        cards: []
+        title,
+        order,
     };
 
-    currentObjectBoard.lists.push(obj);
-
-    store.setLocalStorage(store.replace(currentObjectBoard));
+    writeListData(obj);
 
     this.closest(CLASS.addingList).before(list(obj));
 

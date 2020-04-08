@@ -1,8 +1,9 @@
-'use strict';
+import DOMHelpers from '../helpers/DOMHelpers';
+import icons from '../helpers/icons';
+import dragCard from './dragCard';
+import details from './card.details';
+import firebase from '../firebase';
 
-import DOMHelpers from '../helpers/DOMHelpers.js';
-import icons from '../helpers/icons.js';
-import dragCard from './drag&drop.js';
 import popup from './popup';
 import '../../scss/board/card/card.scss';
 import '../../scss/board/card/card-detail.scss';
@@ -17,14 +18,11 @@ const CLASS = {
     cardDetailHeaderTitle: '.card-detail-header-title',
     cardDetailHeaderTitleTextarea: '.card-detail-header-title-textarea',
 
-
-
     detailSection: '.detail-section',
     detailSectionIcon: '.detail-section-icon',
     detailSectionBody: '.detail-section-body',
     detailSectionTitle: '.detail-section-title',
     detailSectionContent: '.detail-section-content',
-
 
     formAddingDescription: '.form-adding-description',
     fieldInputDescriptionCard: '.field-input-description-card',
@@ -47,12 +45,6 @@ const cardDetail = (obj) => {
     $cardDetailHeaderTitle.append($cardDetailHeaderTitleTextarea);
     $cardDetailHeader.append($cardDetailHeaderIcon, $cardDetailHeaderTitle);
 
-    const d = `
-        <div class="card-detail-header">
-            <div class="card-detail-header-icon"></div>
-            <div class="card-detail-header-title"></div>
-        </div>
-    `;
 
     const formAddingDescription = () => {
         const $formAddingDescription = createElement('form', CLASS.formAddingDescription);
@@ -97,15 +89,14 @@ const cardDetail = (obj) => {
     return $cardDetail;
 };
 
+// details();
+
 const card = (obj) => {
     const $card = createElement('div', CLASS.card);
     $card.setAttribute('draggable', 'true');
     $card.setAttribute('data-card-id', obj.id);
-    $card.insertAdjacentHTML('afterbegin', obj.content);
-
-    $card.addEventListener('click', function() {
-        popup(cardDetail(obj));
-    }, false);
+    $card.setAttribute('data-card-order', obj.order);
+    $card.insertAdjacentHTML('afterbegin', obj.title);
 
     dragCard($card);
 

@@ -1,7 +1,7 @@
-'use strict';
 
 const popup = (function () {
-    let wrapper, instance, closeButton, content, _params, t, isAnimating = false, animationType;
+    let wrapper; let instance; let closeButton; let content; let _params; let t; let isAnimating = false; let
+        animationType;
     const defineProperty = (obj, prop) => {
         obj = obj || {};
         obj[prop] = obj[prop] || '';
@@ -16,10 +16,9 @@ const popup = (function () {
         }
     };
 
-    function Popup() {}
+    function Popup() { }
 
     Popup.prototype.openModal = (params, cb) => {
-
         // set params
         _params = params;
 
@@ -43,7 +42,7 @@ const popup = (function () {
         tempDiv.innerHTML = params.content;
         content.appendChild(tempDiv);
 
-        //apply inline style
+        // apply inline style
         const maxWidth = params.styles.maxWidth ? `max-width: ${params.styles.maxWidth}` : '';
         const duration = params.styles.duration ? `; animation-duration:${params.styles.duration / 1000}s` : '';
         content.setAttribute('style', `${maxWidth}${_params.styles.animation && duration}`);
@@ -88,34 +87,32 @@ const popup = (function () {
 
                 setTimeout(() => {
                     wrapper && wrapper.parentNode.removeChild(wrapper);
-                }, _params.styles.duration || 350)
+                }, _params.styles.duration || 350);
             } else {
                 wrapper.parentNode.removeChild(wrapper);
             }
-
         }
     };
     Popup.prototype.init = (params) => {
-        let triggers = document.querySelectorAll('.sp-trigger');
+        const triggers = document.querySelectorAll('.sp-trigger');
         triggers.forEach((item) => {
             item.addEventListener('click', (e) => {
-                const target = e.target;
+                const { target } = e;
                 const id = target.getAttribute('data-target');
                 const source = document.querySelector(`#${id}`);
                 if (!source) {
-                    alert('Error: Source unknown.')
+                    alert('Error: Source unknown.');
                     return;
                 }
-                instance.openModal({ content: source.innerHTML, styles: params }, function () {
-                    //load close wrapper
+                instance.openModal({ content: source.innerHTML, styles: params }, () => {
+                    // load close wrapper
                     wrapper && wrapper.removeEventListener('click', instance.closeModal);
                     wrapper && wrapper.addEventListener('click', instance.closeModal);
-                    //load close button
+                    // load close button
                     closeButton && closeButton.removeEventListener('click', instance.closeModal);
                     closeButton && closeButton.addEventListener('add', instance.closeModal);
 
                     centerize();
-
                 });
             });
         });
@@ -125,14 +122,12 @@ const popup = (function () {
         instance = new Popup();
     }
     return instance;
-})();
-
-
+}());
 
 
 popup.init({
     maxWidth: '500px',
     duration: '200',
     closeButton: true,
-    animation: true
+    animation: true,
 });

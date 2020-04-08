@@ -1,6 +1,6 @@
 import DOMHelpers from '../helpers/DOMHelpers';
 import icons from '../helpers/icons';
-import store from '../Store/Store';
+import store from '../store/Store';
 
 const { createElement } = DOMHelpers();
 

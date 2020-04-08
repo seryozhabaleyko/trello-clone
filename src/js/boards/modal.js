@@ -1,5 +1,3 @@
-'use strict';
-
 import DOMHelpers from '../helpers/DOMHelpers';
 import background from '../helpers/background';
 
@@ -15,7 +13,7 @@ function _overlayHandler() {
 
 function _modal() {
     const $overlay = createElement('div', '.modal-overlay');
-    //$overlay.addEventListener('click', _overlayHandler, true);
+    // $overlay.addEventListener('click', _overlayHandler, true);
 
     const $modal = createElement('div', '.modal');
 
@@ -80,7 +78,7 @@ function _modal() {
             time: new Date().toLocaleTimeString(),
             background: $makingBoard.getAttribute('style'),
             favorite: false,
-            lists: []
+            lists: [],
         };
 
         console.log(obj);
@@ -104,7 +102,8 @@ function _modal() {
 function modal(options) {
     const ANIMATION_SPEED = 200;
     const $modal = _modal(options);
-    let closing, destroyed;
+    let closing; let
+        destroyed;
 
     const modal = {
         open() {
@@ -121,10 +120,10 @@ function modal(options) {
                 $modal.classList.remove('hide');
                 closing = false;
             }, ANIMATION_SPEED);
-        }
+        },
     };
 
-    const listener = e => {
+    const listener = (e) => {
         if (e.target.dataset.trigger) {
             modal.close();
         }
@@ -138,7 +137,7 @@ function modal(options) {
         },
         setContent(html) {
             $modal.querySelector('[data-content]').innerHTML = html;
-        }
+        },
     });
 }
 

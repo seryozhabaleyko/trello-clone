@@ -1,8 +1,5 @@
-'use strict';
-
-import store from '../Store.js';
-import { CLASS } from './list';
-import { draggedCard } from '../Card/drag&drop.js';
+import serializer from '../serializer';
+import { draggedCard } from '../Card/dragCard';
 
 let draggedList = null;
 let droppedList = null;
@@ -15,7 +12,7 @@ function dragstart(e) {
 
     document
         .querySelectorAll('.card')
-        .forEach(card => card.removeAttribute('draggable'));
+        .forEach((card) => card.removeAttribute('draggable'));
 }
 
 function dragend() {
@@ -25,18 +22,10 @@ function dragend() {
 
     document
         .querySelectorAll('.card')
-        .forEach(card => card.setAttribute('draggable', 'true'));
+        .forEach((card) => card.setAttribute('draggable', 'true'));
     document
         .querySelectorAll('.list')
-        .forEach(list => list.classList.remove('under'));
-}
-
-function dragenter() {
-    if (!draggedList || draggedList === this) {
-        return;
-    }
-
-    this.classList.add('under');
+        .forEach((list) => list.classList.remove('under'));
 }
 
 function dragover(e) {
@@ -57,17 +46,9 @@ function dragover(e) {
 
     document
         .querySelectorAll('.list')
-        .forEach(list => list.classList.remove('under'));
+        .forEach((list) => list.classList.remove('under'));
 
     this.classList.add('under');
-}
-
-function dragleave() {
-    if (!draggedList || draggedList === this) {
-        return;
-    }
-
-    this.classList.remove('under');
 }
 
 function drop() {
@@ -85,15 +66,13 @@ function drop() {
         }
     }
 
-    store.save();
+    serializer.save();
 }
 
 const dragList = (list) => {
     list.addEventListener('dragstart', dragstart, false);
     list.addEventListener('dragend', dragend, false);
-    // list.addEventListener('dragenter', dragenter, false);
     list.addEventListener('dragover', dragover, false);
-    // list.addEventListener('dragleave', dragleave, false);
     list.addEventListener('drop', drop, false);
 };
 

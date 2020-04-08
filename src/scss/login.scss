@@ -1,28 +1,83 @@
-.login-page {
+#login {
+    width: 350px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%,-50%);
+
+    .link-login-or-registration {
+        margin-top: 10px;
+        margin-bottom: 30px;
+
+        a {
+            padding-bottom: 10px;
+            border-bottom: 2px solid #a06df280;
+
+            &:first-child {
+                margin-right: 10px;
+            }
+
+            &:hover {
+                border-bottom-color: #a06df2;
+            }
+
+            &.current {
+                border-bottom-color: #a06df2;
+            }
+        }
+    }
+}
+
+.login {
     width: 100%;
     min-height: 100vh;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    padding: 15px;
+    flex-direction: row!important;
 
-    .login-wrapper {
+    &-bg {
+        position: relative;
+        overflow-x: hidden;
         overflow-y: auto;
-        width: 390px;
-        padding: 77px 55px 33px 55px;
+        display: inline-block;
+        width: 50%;
+        height: 100%;
+        background-color: #a06df2;
+
+        svg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-right: -50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+        }
+    }
+
+    &-wrapper {
+        position: relative;
+        display: inline-block;
+        overflow-x: hidden;
+        overflow-y: auto;
+        width: 50%;
 
         background: #fff;
-        border-radius: 4px;
-        box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
     }
 }
 
 form {
     display: grid;
     gap: 10px;
-    h2 {
-        text-align: center;
+    > h3 {
+        margin: 0;
+        padding: 0;
+        font-size: 2rem;
+        /* text-align: center; */
+    }
+    > p {
+        margin: 0;
+        padding: 0;
+        font-size: 1.4rem;
+        /* text-align: center; */
     }
     input {
         outline: none;

@@ -1,10 +1,10 @@
-'use strict';
-
-function RippleStyle(width, height, posX, posY) {
-    this.width = (width <= height) ? height : width;
-    this.height = (width <= height) ? height : width;
-    this.top = posY - (this.height * 0.5);
-    this.left = posX - (this.width * 0.5);
+class RippleStyle {
+    constructor(width, height, posX, posY) {
+        this.width = (width <= height) ? height : width;
+        this.height = (width <= height) ? height : width;
+        this.top = posY - (this.height * 0.5);
+        this.left = posX - (this.width * 0.5);
+    }
 }
 
 function rippleHandler(e) {
@@ -12,7 +12,9 @@ function rippleHandler(e) {
     $span.className = 'btn-ripple';
     this.appendChild($span);
 
-    const { width, height, left, top } = this.getBoundingClientRect();
+    const {
+        width, height, left, top,
+    } = this.getBoundingClientRect();
 
     const posX = e.pageX - left;
     const posY = e.pageY - top;
@@ -24,13 +26,13 @@ function rippleHandler(e) {
     $span.style.top = `${rippleStyle.top}px`;
     $span.style.left = `${rippleStyle.left}px`;
 
-    $span.addEventListener('animationend', function () {
-        this.remove();
-    });
+    $span.addEventListener('animationend', () => {
+        $span.remove();
+    }, false);
 }
 
-function ripple(element) {
+const ripple = (element) => {
     element.addEventListener('mousedown', rippleHandler, false);
-}
+};
 
 export default ripple;

@@ -1,6 +1,6 @@
 import createRouter from './js/router';
 import board from './views/board';
-import boardsPage from './views/boards';
+import boards from './views/boards';
 import login from './views/login';
 import register from './views/register';
 import details from './views/user.details';
@@ -17,7 +17,7 @@ router
     .addRoute('register', register)
     .addRoute('user/details', details)
     .addRoute('user/:nickname', details)
-    .addRoute('boards', boardsPage)
+    .addRoute('boards', boards)
     .addRoute('board/:id', board)
     .otherwise(() => {
         router.navigateTo('404');

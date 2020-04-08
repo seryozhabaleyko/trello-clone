@@ -1,4 +1,3 @@
-
 import Store from './Store';
 import DOMHelpers from './helpers/DOMHelpers';
 
@@ -48,28 +47,8 @@ class Database {
     }
 
     static renderList() {
-        const boards = getLocalStorage();
-        const $boards = getElement('.boards');
 
-        /* $boards.querySelectorAll('.board').forEach(item => {
-            item.remove();
-        }); */
-
-        /* boards.reverse().map(obj => {
-            $boards.insertAdjacentHTML('afterbegin', `
-                <a href="/#boards/${obj.id}" class="board" style="background: ${obj.bg}">
-                    <div class="board-title">${obj.title}</div>
-                    <div>${obj.date}</div>
-                    <div>${obj.time}</div>
-                </a>
-            `);
-        }); */
     }
 }
-
-function toBoard(obj) {
-    return `<div class="board">${obj.title}, ${obj.date}</div>`;
-}
-
 
 export default Database;

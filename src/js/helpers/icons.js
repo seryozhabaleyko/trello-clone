@@ -22,6 +22,7 @@ import lock from '../../img/icons/lock.svg';
 import next from '../../img/icons/next.svg';
 import nickname from '../../img/icons/nickname.svg';
 import login from '../../img/icons/login.svg';
+import bgLoginAndRegister from '../../img/bg-login&register.svg';
 
 const icons = (() => ({
     plus,
@@ -48,6 +49,7 @@ const icons = (() => ({
     next,
     nickname,
     login,
+    bgLoginAndRegister,
 }))();
 
 export default icons;

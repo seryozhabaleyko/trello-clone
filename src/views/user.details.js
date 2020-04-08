@@ -122,6 +122,8 @@ const form = (user) => {
 const details = (root) => {
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
+            console.log(user.displayName);
+
             const $wrapper = createElement('div', '.details-wrapper');
 
             const postId = firebase.auth().currentUser.uid;

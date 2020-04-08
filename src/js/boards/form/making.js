@@ -1,25 +1,36 @@
-'use strict';
-
 import DOMHelpers from '../../helpers/DOMHelpers';
 import backgroundsImages from '../../helpers/background';
 import background from './background';
 import icons from '../../helpers/icons';
-import board from '../board/board';
+import board from '../board';
 import store from '../../Store';
 
+import firebase from '../../firebase';
+
+const writeBoardData = (obj) => {
+    const userId = firebase.auth().currentUser.uid;
+    const ref = firebase.database().ref(`users/${userId}/boards/${obj.id}`);
+    ref.set(obj)
+        .then(() => ref.once('value'))
+        .then((snapshot) => {
+            const data = snapshot.val();
+            localStorage.setItem('boards-test', JSON.stringify(data));
+        });
+};
+
+const { createElement } = DOMHelpers();
+
+const CLASS = {
+    making: '.making',
+    makingBody: '.making-body',
+    makingFooter: '.making-footer',
+    makingBoard: '.making-board',
+    makingBoardTitle: '.making-board-title',
+    makingBoardClose: '.making-board-close',
+    makingBoardSubmit: '.making-board-submit',
+};
+
 const making = () => {
-    const { createElement } = DOMHelpers();
-
-    const CLASS = {
-        making: '.making',
-        makingBody: '.making-body',
-        makingFooter: '.making-footer',
-        makingBoard: '.making-board',
-        makingBoardTitle: '.making-board-title',
-        makingBoardClose: '.making-board-close',
-        makingBoardSubmit: '.making-board-submit',
-    };
-
     const $making = createElement('form', CLASS.making);
     const $makingBody = createElement('div', CLASS.makingBody);
     const $makingFooter = createElement('div', CLASS.makingFooter);
@@ -60,22 +71,24 @@ const making = () => {
     function submitHandler() {
         const obj = {
             id: Date.now(),
-            title: $input.value || 'Название доски',
+            title: ($input.value || 'Название доски'),
             date: new Date().toLocaleDateString(),
             time: new Date().toLocaleTimeString(),
             background: $makingBoard.getAttribute('style'),
             favorite: false,
-            lists: []
+            lists: [],
         };
 
-        document.querySelector('.adding-board').before(board(obj));
+        document.querySelector('.boards-adding').before(board(obj));
 
         store.insert(obj);
+
+        writeBoardData(obj);
     }
 
     $submit.addEventListener('click', submitHandler, false);
 
-    $makingFooter.appendChild($submit);
+    $makingFooter.append($submit);
 
     $makingBody.append($makingBoard, $background);
 

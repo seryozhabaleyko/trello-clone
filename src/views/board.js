@@ -1,43 +1,56 @@
+import firebase from '../js/firebase';
 import DOMHelpers from '../js/helpers/DOMHelpers';
-import store from '../js/Store';
 import header from '../js/header';
-import boardHeader from '../js/board/board.header';
+import boardHeader, { BoardHeader } from '../js/board/board.header';
 import formAddingList from '../js/board/formAddingList';
 import list from '../js/List/list';
-import storeRecentlyViewed from '../js/Store/storeRecentlyViewed';
+import storeRecentlyViewed from '../js/store/storeRecentlyViewed';
 import '../scss/board/board.scss';
 
 const { createElement } = DOMHelpers();
 
-const ID = {
-    boardBody: '#board-body',
-    board: '#board',
-    boardLists: '#board-lists',
+const board = (root, props) => {
+    const successCallback = (snapshot) => {
+        const data = snapshot.val();
+
+        document.title = `Kanban - ${data.title}`;
+
+        const $boardLists = createElement('div', '#board-lists');
+
+        const forEachCallback = (obj) => {
+            $boardLists.appendChild(list(obj));
+        };
+
+        const sortCallback = (a, b) => a.order - b.order;
+
+        if (Object.prototype.hasOwnProperty.call(data, 'lists')) {
+            Object.values(data.lists).sort(sortCallback).forEach(forEachCallback);
+        }
+
+        const $board = createElement('div', '#board');
+        $board.appendChild($boardLists).appendChild(formAddingList());
+
+        const $main = createElement('main', '#board-body');
+        $main.append(boardHeader(data), $board);
+
+        localStorage.setItem('boardId', props.id);
+        storeRecentlyViewed.insert(data);
+
+        root.setAttribute('style', data.background);
+        root.append(header(), $main);
+    };
+
+    const errorCallback = (error) => { alert(error); };
+
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            firebase.database().ref(`/users/${user.uid}/boards/${props.id}`)
+                .once('value', successCallback)
+                .catch(errorCallback);
+        } else {
+            window.location.href = '/#login';
+        }
+    });
 };
-
-function board(root, { id }) {
-    localStorage.setItem('id', id);
-    const currentObjectBoard = store.find(id);
-    storeRecentlyViewed.insert(currentObjectBoard);
-
-    root.setAttribute('style', currentObjectBoard.background);
-
-    const $main = createElement('main', ID.boardBody);
-    const $board = createElement('div', ID.board);
-    const $boardLists = createElement('div', ID.boardLists);
-
-    const { lists } = currentObjectBoard;
-
-    if (lists) {
-        lists.forEach((item) => {
-            $boardLists.appendChild(list(item));
-        });
-    }
-
-    $board.appendChild($boardLists).appendChild(formAddingList());
-    $main.append(boardHeader(currentObjectBoard), $board);
-
-    root.append(header(), $main);
-}
 
 export default board;

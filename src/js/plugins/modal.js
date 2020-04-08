@@ -1,6 +1,4 @@
-'use strict';
-
-import DOMHelpers from '../helpers/DOMHelpers.js';
+import DOMHelpers from '../helpers/DOMHelpers';
 
 const { createElement } = DOMHelpers();
 
@@ -9,7 +7,7 @@ function _overlayHandler() {
     this.removeEventListener('click', overlayHandler, true);
 }
 
-function _modal({ width = '600px', body = false }) { //title, content, closable
+function _modal({ width = '600px', body = false }) { // title, content, closable
     const $overlay = createElement('div', '.modal-overlay');
     $overlay.addEventListener('click', _overlayHandler, true);
 
@@ -50,7 +48,7 @@ function modal(options) {
                 $modal.classList.remove('hide');
                 closing = false;
             }, ANIMATION_SPEED);
-        }
+        },
     };
 
     /* const listener = e => {
@@ -67,7 +65,7 @@ function modal(options) {
         },
         setContent(html) {
             $modal.querySelector('data-content').innerHTML = html;
-        }
+        },
     });
 }
 

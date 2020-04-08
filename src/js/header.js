@@ -1,9 +1,9 @@
 import DOMHelpers from './helpers/DOMHelpers';
 import icons from './helpers/icons';
 import boardsMenuPopover from './header/boardsMenuPopover';
-import '../scss/header.scss';
-import man from '../img/man.png';
+import profile from '../img/profile.jpg';
 import firebase from './firebase';
+import '../scss/header.scss';
 
 const { createElement } = DOMHelpers();
 
@@ -29,13 +29,13 @@ const header = () => {
 
     const $logo = createElement('a', CLASS.logo);
     $logo.href = '/';
-    $logo.textContent = 'kanban';
+    $logo.textContent = '#лучшедома';
 
     const $profile = createElement('button', '#profile');
     $profile.addEventListener('click', logout, false);
 
-    const $img = createElement('img', '');
-    $img.src = man;
+    const $img = createElement('img', '#photoURL');
+    $img.src = profile;
     $img.width = 32;
     $img.height = 32;
     $img.alt = 'Фото профиля';

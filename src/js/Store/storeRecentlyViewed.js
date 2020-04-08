@@ -1,7 +1,4 @@
-'use strict';
-
 const storeRecentlyViewed = (() => {
-
     const STORE_NAME_RECENTLY_VIEWED = 'recentlyViewed';
 
     const getLocalStorage = () => {
@@ -16,7 +13,9 @@ const storeRecentlyViewed = (() => {
         return store;
     };
 
-    const setLocalStorage = (value) => localStorage.setItem(STORE_NAME_RECENTLY_VIEWED, JSON.stringify(value));
+    const setLocalStorage = (value) => (
+        localStorage.setItem(STORE_NAME_RECENTLY_VIEWED, JSON.stringify(value))
+    );
 
     const insert = (obj) => {
         let store = getLocalStorage();
@@ -25,10 +24,10 @@ const storeRecentlyViewed = (() => {
             store.push(obj);
             setLocalStorage(store);
 
-            return true;
+            return;
         }
 
-        store = store.filter(item => item.id !== obj.id);
+        store = store.filter((item) => item.id !== obj.id);
 
         store.push(obj);
 
@@ -38,7 +37,7 @@ const storeRecentlyViewed = (() => {
     return {
         getLocalStorage,
         setLocalStorage,
-        insert
+        insert,
     };
 })();
 

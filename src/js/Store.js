@@ -1,7 +1,4 @@
-'use strict';
-
-const store = (function() {
-
+const store = (() => {
     const STORE_NAME = 'kanban';
 
     const getLocalStorage = () => {
@@ -18,9 +15,9 @@ const store = (function() {
 
     const setLocalStorage = (value) => localStorage.setItem(STORE_NAME, JSON.stringify(value));
 
-    const replace = (obj) => getLocalStorage().map(board => board.id === obj.id ? obj : board);
+    const replace = (obj) => getLocalStorage().map((board) => (board.id === obj.id ? obj : board));
 
-    const find = (id) => getLocalStorage().find(board => board.id === id);
+    const find = (id) => getLocalStorage().find((board) => board.id === id);
 
     const insert = (obj) => {
         const store = getLocalStorage();
@@ -31,7 +28,7 @@ const store = (function() {
 
     const remove = (id = null) => {
         let store = getLocalStorage();
-        store = store.filter(board => board.id !== id);
+        store = store.filter((board) => board.id !== id);
 
         setLocalStorage(store);
     };
@@ -39,12 +36,12 @@ const store = (function() {
     const edit = (id, title) => {
         const newObject = {
             id,
-            title
+            title,
         };
 
         let store = getLocalStorage();
 
-        store = store.map(board => board.id === newObject.id ? newObject : board);
+        store = store.map((board) => (board.id === newObject.id ? newObject : board));
 
         setLocalStorage(store);
     };
@@ -56,17 +53,17 @@ const store = (function() {
 
         document
             .querySelectorAll('.list')
-            .forEach(list => {
+            .forEach((list) => {
                 const objList = {
                     id: parseInt(list.getAttribute('data-list-id'), 10),
                     title: list.querySelector('.list-title').textContent,
-                    cards: []
+                    cards: [],
                 };
 
-                list.querySelectorAll('.card').forEach(card => {
+                list.querySelectorAll('.card').forEach((card) => {
                     objList.cards.push({
                         id: parseInt(card.getAttribute('data-card-id'), 10),
-                        content: card.textContent.trim()
+                        content: card.textContent.trim(),
                     });
                 });
 
@@ -89,7 +86,7 @@ const store = (function() {
         edit,
         find,
         save,
-        load
+        load,
     };
 })();
 

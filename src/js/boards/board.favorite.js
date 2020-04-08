@@ -1,12 +1,12 @@
-import DOMHelpers from '../../helpers/DOMHelpers';
-import icons from '../../helpers/icons';
-import store from '../../Store';
+import DOMHelpers from '../helpers/DOMHelpers';
+import icons from '../helpers/icons';
+import store from '../Store';
 import board from './board';
-import { CLASS, title } from '../boards';
+import { CLASS, title } from './boards';
 
 const { createElement } = DOMHelpers();
 
-function favoriteHandler(id, e) {
+function handleFavorite(id, e) {
     e.preventDefault();
 
     const currentObjectFavoriteBoard = store.find(id);
@@ -63,4 +63,4 @@ function favoriteHandler(id, e) {
     store.setLocalStorage(store.replace(currentObjectFavoriteBoard));
 }
 
-export default favoriteHandler;
+export default handleFavorite;

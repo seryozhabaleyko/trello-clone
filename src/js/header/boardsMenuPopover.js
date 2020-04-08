@@ -1,7 +1,7 @@
 import DOMHelpers from '../helpers/DOMHelpers';
 import icons from '../helpers/icons';
-import store from '../Store/Store';
-import storeRecentlyViewed from '../Store/storeRecentlyViewed';
+import store from '../store/Store';
+import storeRecentlyViewed from '../store/storeRecentlyViewed';
 import favoriteButton from '../button/favorite.button';
 
 const { createElement } = DOMHelpers();
@@ -18,7 +18,9 @@ const CLASS = {
 const boardsMenuPopover = () => {
     const $menu = createElement('div', CLASS.boardsMenuPopover);
 
-    const boardHorizontal = ({ id, title, background, favorite }) => {
+    const boardHorizontal = ({
+        id, title, background, favorite,
+    }) => {
         const $link = createElement('a', CLASS.boardHorizontal);
         $link.href = `/#board/${id}`;
         $link.title = title;

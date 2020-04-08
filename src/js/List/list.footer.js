@@ -1,6 +1,4 @@
-'use strict';
-
-import DOMHelpers from '../helpers/DOMHelpers.js';
+import DOMHelpers from '../helpers/DOMHelpers';
 
 const { createElement } = DOMHelpers();
 

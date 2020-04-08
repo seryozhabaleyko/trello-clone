@@ -16,28 +16,25 @@ const CLASS = {
 };
 
 const link = ({ name, href, icon }) => {
-    const $link = createElement('a', CLASS.sidebarLink);
-    $link.href = href;
-    $link.setAttribute('ripple', '');
-
     const $span = createElement('span', CLASS.sidebarLinkLabel);
-
     $span.insertAdjacentText('afterbegin', name);
 
+    const $link = createElement('a', CLASS.sidebarLink);
+    $link.href = href;
     $link.insertAdjacentHTML('afterbegin', icon);
-    $link.appendChild($span);
+    $link.append($span);
 
     return $link;
 };
 
-function sidebar() {
+const sidebar = () => {
     const $sidebar = createElement('aside', CLASS.sidebar);
 
-    for (const iterator of object) {
-        $sidebar.appendChild(link(iterator));
-    }
+    object.forEach((iterator) => {
+        $sidebar.append(link(iterator));
+    });
 
     return $sidebar;
-}
+};
 
 export default sidebar;

@@ -9,9 +9,10 @@ const handleSignUp = (e) => {
     e.preventDefault();
 
     let {
-        email, password, passwordRepeat, submit,
+        login, email, password, passwordRepeat, submit,
     } = document.forms.register;
 
+    login = login.value;
     email = email.value;
     password = password.value;
     passwordRepeat = passwordRepeat.value;
@@ -33,17 +34,18 @@ const handleSignUp = (e) => {
 
     submit.disabled = true;
 
-    firebase.auth().createUserWithEmailAndPassword(email, password).catch((error) => {
-        const { code, message } = error;
-
-        if (code === 'auth/weak-password') {
-            console.error('The password is too weak');
-        } else {
-            console.error(message);
-        }
-
-        submit.disabled = false;
-    });
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then((response) => response.user.updateProfile({
+            displayName: login,
+        }))
+        .catch(({ code, message }) => {
+            if (code === 'auth/weak-password') {
+                console.error('The password is too weak');
+            } else {
+                console.error(message);
+            }
+            submit.disabled = false;
+        });
 };
 
 const form = () => {
@@ -51,23 +53,46 @@ const form = () => {
     $form.name = 'register';
     $form.addEventListener('submit', handleSignUp, false);
 
-    const $title = createElement('h2');
+    const $title = createElement('h3');
     $title.textContent = 'Регистрация';
+
+    const $description = createElement('p');
+    $description.textContent = 'Это бесплатно - и всегда так будет.';
+
+    const $linkLoginOrRegistration = createElement('div', '.link-login-or-registration');
+
+    const $linkLogin = createElement('a');
+    $linkLogin.href = '/#login';
+    $linkLogin.textContent = 'Вход';
+
+    const $linkRegister = createElement('a', '.current');
+    $linkRegister.href = '/#register';
+    $linkRegister.textContent = 'Регистрация';
+
+    $linkLoginOrRegistration.append($linkLogin, $linkRegister);
+
+    const $loginWrapper = createElement('div');
+    const $login = createElement('input', '#loginn');
+    $login.type = 'text';
+    $login.name = 'login';
+    $login.placeholder = 'Логин';
+    $loginWrapper.appendChild($login);
+    $loginWrapper.insertAdjacentHTML('beforeend', icons.login);
 
     const $emailWrapper = createElement('div');
     const $email = createElement('input', '#email');
     $email.type = 'email';
     $email.name = 'email';
-    $email.placeholder = 'Введите email';
+    $email.placeholder = 'Электронный адрес';
     $email.setAttribute('required', '');
     $emailWrapper.insertAdjacentHTML('beforeend', icons.email);
     $emailWrapper.appendChild($email);
 
     const $passwordWrapper = createElement('div');
-    const $password = document.createElement('input');
+    const $password = document.createElement('input', '#password');
     $password.type = 'password';
     $password.name = 'password';
-    $password.placeholder = 'Введите пароль';
+    $password.placeholder = 'Пароль';
     $password.setAttribute('required', '');
     $passwordWrapper.insertAdjacentHTML('beforeend', icons.lock);
     $passwordWrapper.appendChild($password);
@@ -76,7 +101,7 @@ const form = () => {
     const $passwordRepeat = document.createElement('input');
     $passwordRepeat.type = 'password';
     $passwordRepeat.name = 'passwordRepeat';
-    $passwordRepeat.placeholder = 'Введите пароль еще раз';
+    $passwordRepeat.placeholder = 'Пароль еще раз';
     $passwordRepeat.setAttribute('required', '');
     $passwordRepeatWrapper.insertAdjacentHTML('beforeend', icons.lock);
     $passwordRepeatWrapper.appendChild($passwordRepeat);
@@ -86,21 +111,35 @@ const form = () => {
     $submit.name = 'submit';
     $submit.value = 'Продолжить регистрацию';
 
-    $form.append($title, $emailWrapper, $passwordWrapper, $passwordRepeatWrapper, $submit);
+    $form.append(
+        $title,
+        $description,
+        $linkLoginOrRegistration,
+        $loginWrapper,
+        $emailWrapper,
+        $passwordWrapper,
+        $passwordRepeatWrapper,
+        $submit,
+    );
 
     return $form;
 };
 
-
 const register = (root) => {
+    document.title = 'Kanban — Выполните зарегистрацию';
+
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
-            window.location.href = '/#user/details';
+            window.location.href = '/';
         } else {
+            const $bg = createElement('div', '.register-bg');
+            $bg.insertAdjacentHTML('afterbegin', icons.bgLoginAndRegister);
+
             const $wrapper = createElement('div', '.register-wrapper');
             $wrapper.appendChild(form());
-            root.classList.add('register-page');
-            root.appendChild($wrapper);
+
+            root.classList.add('register');
+            root.append($bg, $wrapper);
         }
     });
 };

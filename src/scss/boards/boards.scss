@@ -31,9 +31,9 @@
     color: #285473;
 }
 
-
 .boards,
-.boards-favorites {
+.boards-marked,
+.boards-recentlyViewed {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	grid-auto-rows: minmax(80px, auto);
@@ -42,7 +42,8 @@
 
 @media (min-width: 575.98px) {
 	.boards,
-	.boards-favorites {
+	.boards-marked,
+	.boards-recentlyViewed {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 		grid-auto-rows: 110px;

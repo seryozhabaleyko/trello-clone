@@ -1,14 +1,10 @@
 import DOMHelpers from '../helpers/DOMHelpers';
 import icons from '../helpers/icons';
-import store from '../Store';
-import board from './board/board';
-import addingBoard from './addingBoard';
-import storeRecentlyViewed from '../Store/storeRecentlyViewed';
+import board from './board';
+import addingBoard from './boards.adding';
+import storeRecentlyViewed from '../store/storeRecentlyViewed';
 
 const { createElement } = DOMHelpers();
-
-const object = store.getLocalStorage();
-const favorite = object.filter(board => !!board.favorite);
 
 export const CLASS = {
     boardsWrapper: '.boards-wrapper',
@@ -25,66 +21,59 @@ export const title = (template) => {
     return $title;
 };
 
-const markedBoards = (wrapper) => {
+const markedBoards = (data, wrapper) => {
     const $boardsSection = createElement('section', CLASS.boardsSection);
     const $boards = createElement('div', CLASS.boardsFavorites);
 
-    for (const iterator of favorite) {
+    data.forEach((iterator) => {
         $boards.appendChild(board(iterator));
-    }
+    });
 
     wrapper
         .appendChild($boardsSection)
-        .append(
-            title(`${icons.star}<h3>Отмеченные доски</h3>`),
-            $boards,
-        );
+        .append(title(`${icons.star}<h3>Отмеченные доски</h3>`), $boards);
 };
 
 const recentlyViewedBoards = (wrapper) => {
     const $boardsSection = createElement('section', CLASS.boardsSection);
     const $boards = createElement('div', CLASS.boardsFavorites);
 
-    for (const iterator of storeRecentlyViewed.getLocalStorage()) {
+    storeRecentlyViewed.getLocalStorage().forEach((iterator) => {
         $boards.appendChild(board(iterator));
-    }
+    });
 
     wrapper
         .appendChild($boardsSection)
-        .append(
-            title(`${icons.clock}<h3>Недавно просмотренное</h3>`),
-            $boards,
-        );
+        .append(title(`${icons.clock}<h3>Недавно просмотренное</h3>`), $boards);
 };
 
 const boards = () => {
+    /* const favorite = data ? data.filter((iterator) => !!iterator.favorite) : null; */
+
     const $wrapper = createElement('div', CLASS.boardsWrapper);
 
-    if (favorite.length > 0) {
-        markedBoards($wrapper);
+    /* if (favorite && favorite.length > 0) {
+        markedBoards(favorite, $wrapper);
     }
 
     if (storeRecentlyViewed.getLocalStorage().length > 0) {
         recentlyViewedBoards($wrapper);
-    }
+    } */
 
-    const $boardsSection = createElement('section', CLASS.boardsSection);
     const $boards = createElement('div', CLASS.boards);
 
-    if (object.length > 0) {
-        for (const iterator of object) {
+    /* if (data && data.length > 0) {
+        data.forEach((iterator) => {
             $boards.appendChild(board(iterator));
-        }
-    }
+        });
+    } */
 
-    $boards.appendChild(addingBoard());
+    $boards.append(addingBoard());
 
-    $wrapper
-        .appendChild($boardsSection)
-        .append(
-            title(`${icons.user}<h3>Персональные доски</h3>`),
-            $boards,
-        );
+    const $boardsSection = createElement('section', CLASS.boardsSection);
+    $boardsSection.append(title(`${icons.user}<h3>Персональные доски</h3>`), $boards);
+
+    $wrapper.append($boardsSection);
 
     return $wrapper;
 };

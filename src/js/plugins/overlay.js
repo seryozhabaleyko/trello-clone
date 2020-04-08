@@ -1,22 +1,21 @@
-'use strict';
 
 var novicell = novicell || {};
 
 novicell.overlay = novicell.overlay || new function () {
-    var self = this;
-    var options = {};
-    var overlayElem;
-    var overlayContainer;
-    var overlayContent;
-    var backdrop;
-    var content;
-    var onCreate;
-    var onLoaded;
-    var onDestroy;
-    var isVideo = false;
+    const self = this;
+    let options = {};
+    let overlayElem;
+    let overlayContainer;
+    let overlayContent;
+    let backdrop;
+    let content;
+    let onCreate;
+    let onLoaded;
+    let onDestroy;
+    let isVideo = false;
 
     this.create = function (opts) {
-        var self = this;
+        const self = this;
         // Set global options
         options = opts;
 
@@ -30,33 +29,30 @@ novicell.overlay = novicell.overlay || new function () {
 
         // Check if content comes from a HTML element
         if (options.hasOwnProperty('selector') && options.selector !== null) {
-            var element = document.querySelector(options.selector);
+            const element = document.querySelector(options.selector);
 
             if (element) {
                 content = element.innerHTML;
                 constructOverlay();
             } else {
                 console.warn('novicell.overlay: element does not exist. Please provide a valid selector for use in document.querySelector.');
-                return;
             }
         }
         // Or if content comes from an URL
         else if (options.hasOwnProperty('videoId')) {
             if (options.videoId !== null) {
-                var src = '';
+                let src = '';
                 isVideo = true;
 
                 if (options.type == 'vimeo') {
-                    src = 'https://player.vimeo.com/video/' + options.videoId;
-                }
-                else if (options.type == 'youtube') {
-                    src = 'https://www.youtube.com/embed/' + options.videoId + '?ecver=2';
-                }
-                else {
+                    src = `https://player.vimeo.com/video/${options.videoId}`;
+                } else if (options.type == 'youtube') {
+                    src = `https://www.youtube.com/embed/${options.videoId}?ecver=2`;
+                } else {
                     return;
                 }
 
-                var iframe = document.createElement('iframe');
+                const iframe = document.createElement('iframe');
                 iframe.setAttribute('src', src);
                 iframe.setAttribute('frameborder', 0);
                 iframe.setAttribute('allowfullscreen', '');
@@ -68,13 +64,11 @@ novicell.overlay = novicell.overlay || new function () {
                 constructOverlay();
             } else {
                 console.warn('novicell.overlay: video-id is empty. Please provide a video-id for use in video embed code (we support only Vimeo and YouTube).');
-                return;
             }
         }
         // If nothing is working, send error to los consolé
         else {
-            console.error('novicell.overlay: no content to display! Please set a selector or a url to load.')
-            return;
+            console.error('novicell.overlay: no content to display! Please set a selector or a url to load.');
         }
     };
 
@@ -128,7 +122,7 @@ novicell.overlay = novicell.overlay || new function () {
         backdrop.classList.add('novi-backdrop');
         backdrop.id = 'js-novi-backdrop';
 
-        backdrop.addEventListener('click', function (e) {
+        backdrop.addEventListener('click', (e) => {
             if (e.target.classList.contains('novi-overlay') || e.target.classList.contains('novi-overlay__container')) {
                 self.destroy();
             }
@@ -167,7 +161,7 @@ novicell.overlay = novicell.overlay || new function () {
         overlayContent.classList.add('novi-overlay__content');
 
         if (isVideo) {
-            overlayContent.classList.add('novi-overlay__content--video')
+            overlayContent.classList.add('novi-overlay__content--video');
         }
 
         // Set content
@@ -180,7 +174,7 @@ novicell.overlay = novicell.overlay || new function () {
 
     function setupCloseButton() {
         // Create the button
-        var btnClose = document.createElement('button');
+        const btnClose = document.createElement('button');
         btnClose.classList.add('novi-overlay-close', 'button--close');
         btnClose.type = 'button';
         btnClose.id = 'js-novi-overlay-close';
@@ -189,7 +183,7 @@ novicell.overlay = novicell.overlay || new function () {
         btnClose.addEventListener('click', self.destroy);
 
         // Add eventlistener for esc key
-        document.addEventListener('keydown', function (e) {
+        document.addEventListener('keydown', (e) => {
             if (e.keyCode === 27) {
                 self.destroy();
             }
@@ -204,9 +198,9 @@ novicell.overlay = novicell.overlay || new function () {
      */
     function get(url) {
         // Return a new promise.
-        return new Promise(function (resolve, reject) {
+        return new Promise(((resolve, reject) => {
             // Do the usual XHR stuff
-            var req = new XMLHttpRequest();
+            const req = new XMLHttpRequest();
             req.open('GET', url);
 
             req.onload = function () {
@@ -221,54 +215,47 @@ novicell.overlay = novicell.overlay || new function () {
 
             // Handle network errors
             req.onerror = function () {
-                reject(Error("Network Error"));
+                reject(Error('Network Error'));
             };
 
             // Make the request
             req.send();
-        });
+        }));
     }
-
 }();
 
 
-
-
 // Waiting for the DOM to load
-document.addEventListener("DOMContentLoaded", function () {
-
+document.addEventListener('DOMContentLoaded', () => {
     // Select your overlay trigger
-    var trigger = document.querySelector('#js-overlay-trigger');
+    const trigger = document.querySelector('#js-overlay-trigger');
 
-    trigger.addEventListener('click', function (e) {
+    trigger.addEventListener('click', (e) => {
         e.preventDefault();
 
         novicell.overlay.create({
-            'selector': trigger.getAttribute('data-element'),
-            'class': 'selector-overlay',
-            "onCreate": function () { console.log('created'); },
-            "onLoaded": function () { console.log('loaded'); },
-            "onDestroy": function () { console.log('Destroyed'); }
+            selector: trigger.getAttribute('data-element'),
+            class: 'selector-overlay',
+            onCreate() { console.log('created'); },
+            onLoaded() { console.log('loaded'); },
+            onDestroy() { console.log('Destroyed'); },
         });
     });
 
     // Video overlay
-    var videoOverlayTriggers = document.querySelectorAll('.js-video-overlay-trigger');
+    const videoOverlayTriggers = document.querySelectorAll('.js-video-overlay-trigger');
 
-    for (var i = 0; i < videoOverlayTriggers.length; i++) {
-        videoOverlayTriggers[i].addEventListener('click', function (e) {
+    for (let i = 0; i < videoOverlayTriggers.length; i++) {
+        videoOverlayTriggers[i].addEventListener('click', (e) => {
             e.preventDefault();
 
-            var currentTrigger = e.target;
+            const currentTrigger = e.target;
 
             novicell.overlay.create({
-                'videoId': currentTrigger.getAttribute('data-video-id'),
-                'type': currentTrigger.getAttribute('data-type'),
-                'class': 'video-overlay'
+                videoId: currentTrigger.getAttribute('data-video-id'),
+                type: currentTrigger.getAttribute('data-type'),
+                class: 'video-overlay',
             });
-
-
         });
     }
-
 });

@@ -1,8 +1,7 @@
-'use strict';
-
 import DOMHelpers from '../helpers/DOMHelpers';
+import ripple from '../plugins/ripple';
 import making from './form/making';
-import '../../scss/boards/adding-board.scss';
+import '../../scss/boards/boards-adding.scss';
 
 const { createElement } = DOMHelpers();
 
@@ -39,15 +38,14 @@ const modal = () => {
         .appendChild(making());
 };
 
-const addingBoard = () => {
-    const $add = createElement('button', '.btn');
-    $add.type = 'button';
-    $add.classList.add(CLASS.addingBoard.slice(1));
-    $add.setAttribute('ripple', '');
-    $add.innerHTML = 'Создать доску';
-    $add.addEventListener('click', modal, false);
+const boardAdding = () => {
+    const $button = createElement('button', '.boards-adding');
+    $button.type = 'button';
+    $button.textContent = 'Создать доску';
+    $button.addEventListener('click', modal, false);
+    ripple($button);
 
-    return $add;
+    return $button;
 };
 
-export default addingBoard;
+export default boardAdding;
