@@ -2,8 +2,8 @@ import DOMHelpers from '../helpers/DOMHelpers';
 import header from './list.header';
 import footer from './list.footer';
 import formAddingCard from './formAddingCard';
-import card from '../Card/card';
-import dragList from './dragList';
+import card from '../card/card';
+import dragList from './list.drag';
 import '../../scss/board/list.scss';
 
 const { createElement } = DOMHelpers();

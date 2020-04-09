@@ -1,6 +1,6 @@
 import DOMHelpers from '../helpers/DOMHelpers';
 import icons from '../helpers/icons';
-import card from '../Card/card';
+import card from '../card/card';
 import firebase from '../firebase';
 import { hideFormHandler } from './list.footer';
 import '../../scss/board/form-adding-card.scss';

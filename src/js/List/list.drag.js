@@ -1,5 +1,5 @@
 import serializer from '../serializer';
-import { draggedCard } from '../Card/dragCard';
+import { draggedCard } from '../card/card.drag';
 
 let draggedList = null;
 let droppedList = null;

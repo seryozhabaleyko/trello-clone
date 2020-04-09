@@ -1,6 +1,6 @@
 import DOMHelpers from '../helpers/DOMHelpers';
 import icons from '../helpers/icons';
-import dragCard from './dragCard';
+import dragCard from './card.drag';
 import details from './card.details';
 import firebase from '../firebase';
 
