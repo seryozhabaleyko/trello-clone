@@ -5,46 +5,50 @@ const serializer = (() => {
         const userId = firebase.auth().currentUser.uid;
         const boardId = localStorage.getItem('boardId');
 
-        const ref = firebase.database().ref(`users/${userId}/boards/${boardId}/lists`);
-        ref.update(data).catch((error) => {
+        const errorCallback = (error) => {
             alert(error);
-        });
+        };
+
+        firebase.database()
+            .ref(`users/${userId}/boards/${boardId}/lists`)
+            .update(data)
+            .catch(errorCallback);
     };
 
     const save = () => {
         const objLists = {};
         let order = 0;
 
-        document
-            .querySelectorAll('.list')
-            .forEach((listElement) => {
+        const listCallback = (listElement) => {
+            order += 1;
+            listElement.setAttribute('data-list-order', order);
+            const listId = listElement.getAttribute('data-list-id');
+
+            const obj = {
+                id: listId,
+                title: listElement.querySelector('.list-title').textContent,
+                order,
+                cards: {},
+            };
+
+            const cardCallback = (cardElement) => {
                 order += 1;
-                listElement.setAttribute('data-list-order', order);
-                const listId = listElement.getAttribute('data-list-id');
+                cardElement.setAttribute('data-card-order', order);
+                const cardId = Number(cardElement.getAttribute('data-card-id'));
 
-                const obj = {
-                    id: listId,
-                    title: listElement.querySelector('.list-title').textContent,
+                obj.cards[cardId] = {
+                    id: cardId,
+                    title: cardElement.textContent,
                     order,
-                    cards: {},
                 };
+            };
 
-                listElement
-                    .querySelectorAll('.card')
-                    .forEach((cardElement) => {
-                        order += 1;
-                        cardElement.setAttribute('data-card-order', order);
-                        const cardId = Number(cardElement.getAttribute('data-card-id'));
+            listElement.querySelectorAll('.card').forEach(cardCallback);
 
-                        obj.cards[cardId] = {
-                            id: cardId,
-                            title: cardElement.textContent,
-                            order,
-                        };
-                    });
+            objLists[listId] = obj;
+        };
 
-                objLists[listId] = obj;
-            });
+        document.querySelectorAll('.list').forEach(listCallback);
 
         lists(objLists);
     };

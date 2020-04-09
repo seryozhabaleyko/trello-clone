@@ -1,58 +1,72 @@
-@import '../mixin/scrollbars';
-
-main#board-body {
+#board {
+    height: 100%;
     display: flex;
     flex-direction: column;
-    flex: 1 1 0%;
-}
+    margin-right: 0;
+    transition: margin .1s ease-in;
 
-#board {
-    position: relative;
-    flex: 1 1 0%;
-}
+    &-body {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
 
-#board-lists {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    user-select: none;
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-    margin-bottom: 10px;
-
-   /*  @include scrollbars(8px, #83a5ee, #e8f0fd); */
-
-    &::-webkit-scrollbar {
-        height: 12px;
+        position: relative;
+        overflow-y: auto;
+        outline: none;
     }
 
-    &::-webkit-scrollbar-track {
-        box-shadow: inset 0 0 5px rgba(241, 241, 241, 0.5);
-        border-radius: 10px;
-        margin: 0 10px;
+    &-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
     }
 
-    &::-webkit-scrollbar-thumb {
-        background: rgba(241, 241, 241, 0.5);
-        border-radius: 10px;
+    &-main {
+        position: relative;
+        flex-grow: 1;
+        background: linear-gradient(180deg,hsla(0,0%,100%,.24) 0,hsla(0,0%,100%,.24) 48px,hsla(0,0%,100%,0) 80px,hsla(0,0%,100%,0));
+    }
 
-        &:hover {
-            background: rgba(227,242,253,.7);
+    &-lists {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        white-space: nowrap;
+        margin-bottom: 8px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding-bottom: 8px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+
+        &::-webkit-scrollbar {
+            height: 12px;
+            width: 12px;
+        }
+
+        &::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px rgba(241, 241, 241, 0.5);
+            border-radius: 4px;
+            margin: 0 10px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: rgba(241, 241, 241, 0.5);
+            border-radius: 4px;
+
+            &:hover {
+                background: rgba(227,242,253,.7);
+            }
         }
     }
+}
 
-    @media (max-width: 576px) {
-        scroll-snap-type: mandatory;
-        scroll-snap-points-x: repeat(3rem);
-        scroll-snap-type: x mandatory;
-    }
-
-    @media (min-width: 768px) {}
-
-    @media (min-width: 992px) {}
-
-    @media (min-width: 1200px) {}
+.show-menu #board {
+    margin-right: 339px;
 }

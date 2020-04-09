@@ -23,6 +23,10 @@ import next from '../../img/icons/next.svg';
 import nickname from '../../img/icons/nickname.svg';
 import login from '../../img/icons/login.svg';
 import bgLoginAndRegister from '../../img/bg-login&register.svg';
+import back from '../../img/icons/left-arrow.svg';
+import cancel from '../../img/icons/cancel.svg';
+import quarantine from '../../img/icons/quarantine.svg';
+import background from '../../img/icons/background.svg';
 
 const icons = (() => ({
     plus,
@@ -50,6 +54,10 @@ const icons = (() => ({
     nickname,
     login,
     bgLoginAndRegister,
+    back,
+    cancel,
+    quarantine,
+    background,
 }))();
 
 export default icons;

@@ -1,7 +1,8 @@
 import firebase from '../js/firebase';
 import DOMHelpers from '../js/helpers/DOMHelpers';
 import header from '../js/header';
-import boardHeader, { BoardHeader } from '../js/board/board.header';
+import boardHeader from '../js/board/board.header';
+import boardDetails from '../js/board/board.details';
 import formAddingList from '../js/board/formAddingList';
 import list from '../js/List/list';
 import storeRecentlyViewed from '../js/store/storeRecentlyViewed';
@@ -18,7 +19,7 @@ const board = (root, props) => {
         const $boardLists = createElement('div', '#board-lists');
 
         const forEachCallback = (obj) => {
-            $boardLists.appendChild(list(obj));
+            $boardLists.append(list(obj));
         };
 
         const sortCallback = (a, b) => a.order - b.order;
@@ -27,11 +28,19 @@ const board = (root, props) => {
             Object.values(data.lists).sort(sortCallback).forEach(forEachCallback);
         }
 
+        $boardLists.append(formAddingList());
+
+        const $boardMain = createElement('div', '#board-main');
+        $boardMain.append($boardLists);
+
         const $board = createElement('div', '#board');
-        $board.appendChild($boardLists).appendChild(formAddingList());
+        $board.append(boardHeader(data), $boardMain);
+
+        const $wrapper = createElement('div', '#board-wrapper');
+        $wrapper.append($board, boardDetails());
 
         const $main = createElement('main', '#board-body');
-        $main.append(boardHeader(data), $board);
+        $main.append($wrapper);
 
         localStorage.setItem('boardId', props.id);
         storeRecentlyViewed.insert(data);

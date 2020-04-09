@@ -1,5 +1,3 @@
-'use strict';
-
 import DOMHelpers from '../../helpers/DOMHelpers';
 import backgroundsImages from '../../helpers/background';
 import '../../../scss/forms/background.scss';

@@ -6,11 +6,19 @@ import ripple from '../plugins/ripple';
 
 const { createElement } = DOMHelpers();
 
-const settings = () => {
-    const $settings = createElement('button', '.boards-settings');
-    $settings.insertAdjacentHTML('afterbegin', `${icons.settings}<span>Настройки</span>`);
+const menu = () => {
+    const $menu = createElement('button', '#board-menu');
+    $menu.insertAdjacentHTML(
+        'afterbegin',
+        `${icons.moreHoriz}<span>Меню</span>`,
+    );
+    $menu.addEventListener('click', () => {
+        $menu.classList.add('hide');
+        document.getElementById('board-wrapper').classList.add('show-menu');
+        document.getElementById('board-details').classList.remove('hide');
+    });
 
-    return $settings;
+    return $menu;
 };
 
 const handleActionFavorite = (e) => {
@@ -83,7 +91,7 @@ const title = (data) => {
 
 const header = (data) => {
     const $header = createElement('div', '#board-header');
-    $header.append(title(data), favorite(data), createElement('div'), settings());
+    $header.append(title(data), favorite(data), createElement('div'), menu());
 
     return $header;
 };
