@@ -1,11 +1,11 @@
-import firebase from '../js/firebase';
-import DOMHelpers from '../js/helpers/DOMHelpers';
-import header from '../js/header';
-import boardHeader from '../js/board/board.header';
-import boardDetails from '../js/board/board.details';
-import formAddingList from '../js/board/formAddingList';
-import list from '../js/list/list';
-import storeRecentlyViewed from '../js/store/storeRecentlyViewed';
+import firebase from '../modules/firebase';
+import DOMHelpers from '../modules/helpers/DOMHelpers';
+import header from '../modules/header';
+import boardHeader from '../modules/board/board.header';
+import boardDetails from '../modules/board/board.details';
+import formAddingList from '../modules/board/formAddingList';
+import list from '../modules/list/list';
+import storeRecentlyViewed from '../modules/store/storeRecentlyViewed';
 import '../scss/board/board.scss';
 
 const { createElement } = DOMHelpers();

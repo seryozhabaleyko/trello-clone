@@ -1,6 +1,6 @@
-import DOMHelpers from '../js/helpers/DOMHelpers';
-import icons from '../js/helpers/icons';
-import firebase from '../js/firebase';
+import DOMHelpers from '../modules/helpers/DOMHelpers';
+import icons from '../modules/helpers/icons';
+import firebase from '../modules/firebase';
 import '../scss/register.scss';
 
 const { createElement } = DOMHelpers();

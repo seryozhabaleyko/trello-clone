@@ -1,15 +1,15 @@
-import firebase from '../js/firebase';
-import storeRecentlyViewed from '../js/store/storeRecentlyViewed';
-import DOMHelpers from '../js/helpers/DOMHelpers';
-import header from '../js/header';
-import bottomNavigation from '../js/boards/bottomNavigation';
-import sidebar from '../js/boards/sidebar';
+import firebase from '../modules/firebase';
+import storeRecentlyViewed from '../modules/store/storeRecentlyViewed';
+import DOMHelpers from '../modules/helpers/DOMHelpers';
+import header from '../modules/header';
+import bottomNavigation from '../modules/boards/bottomNavigation';
+import sidebar from '../modules/boards/sidebar';
 
-import personalBoards from '../js/boards/boards.personal';
-import recentlyViewedBoards from '../js/boards/boards.recentlyViewed';
-import markedBoards from '../js/boards/boards.marked';
+import personalBoards from '../modules/boards/boards.personal';
+import recentlyViewedBoards from '../modules/boards/boards.recentlyViewed';
+import markedBoards from '../modules/boards/boards.marked';
 
-import board from '../js/boards/board';
+import board from '../modules/boards/board';
 
 const { createElement } = DOMHelpers();
 

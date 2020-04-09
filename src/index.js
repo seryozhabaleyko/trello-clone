@@ -1,4 +1,4 @@
-import createRouter from './js/router';
+import createRouter from './modules/router';
 import board from './views/board';
 import boards from './views/boards';
 import login from './views/login';
