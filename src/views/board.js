@@ -4,7 +4,7 @@ import header from '../js/header';
 import boardHeader from '../js/board/board.header';
 import boardDetails from '../js/board/board.details';
 import formAddingList from '../js/board/formAddingList';
-import list from '../js/List/list';
+import list from '../js/list/list';
 import storeRecentlyViewed from '../js/store/storeRecentlyViewed';
 import '../scss/board/board.scss';
 

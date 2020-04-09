@@ -1,5 +1,6 @@
 import DOMHelpers from '../helpers/DOMHelpers';
 import objBg from '../helpers/background';
+// eslint-disable-next-line import/no-cycle
 import background from './board.details.background';
 
 const { createElement } = DOMHelpers();

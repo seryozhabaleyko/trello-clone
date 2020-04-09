@@ -3,7 +3,6 @@ import backgroundsImages from '../../helpers/background';
 import background from './background';
 import icons from '../../helpers/icons';
 import board from '../board';
-import store from '../../Store';
 
 import firebase from '../../firebase';
 
@@ -80,8 +79,6 @@ const making = () => {
         };
 
         document.querySelector('.boards-adding').before(board(obj));
-
-        store.insert(obj);
 
         writeBoardData(obj);
     }

@@ -1,6 +1,6 @@
 import DOMHelpers from '../helpers/DOMHelpers';
 import icons from '../helpers/icons';
-import list from '../List/list';
+import list from '../list/list';
 
 import firebase from '../firebase';
 
