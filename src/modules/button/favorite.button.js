@@ -1,17 +1,13 @@
 import DOMHelpers from '../helpers/DOMHelpers';
 import icons from '../helpers/icons';
-import store from '../store/Store';
 
 const { createElement } = DOMHelpers();
 
-const favoriteButton = (id) => {
-    const currentObjectBoard = store.find(id);
-
+const favoriteButton = () => {
     function buttonHandler(e) {
         e.preventDefault();
         console.log(this.closest('.board') || this.closest('.board-horizontal'));
     }
-
 
     const $button = createElement('button', '.btn-favorite');
     $button.type = 'button';

@@ -6,30 +6,30 @@ import background from './board.details.background';
 const { createElement } = DOMHelpers();
 
 const menu = () => {
-    const $bgLink = createElement('a');
-    $bgLink.href = '#';
-    $bgLink.textContent = 'Сменить фон';
-    $bgLink.insertAdjacentHTML('afterbegin', icons.background);
+    const bgLink = createElement('a');
+    bgLink.href = '#';
+    bgLink.textContent = 'Сменить фон';
+    bgLink.insertAdjacentHTML('afterbegin', icons.background);
 
     const handleBgLink = (e) => {
         e.preventDefault();
 
-        const $main = document.getElementById('board-details-main');
-        $main.textContent = '';
-        $main.append(background());
+        const detailsMain = document.getElementById('board-details-main');
+        detailsMain.textContent = '';
+        detailsMain.append(background());
 
-        $bgLink.removeEventListener('click', handleBgLink, false);
+        bgLink.removeEventListener('click', handleBgLink, false);
     };
 
-    $bgLink.addEventListener('click', handleBgLink);
+    bgLink.addEventListener('click', handleBgLink);
 
-    const $bg = createElement('li');
-    $bg.append($bgLink);
+    const bg = createElement('li');
+    bg.append(bgLink);
 
-    const $menu = createElement('ul', '#board-details-menu');
-    $menu.append($bg);
+    const detailsMenu = createElement('ul', '#board-details-menu');
+    detailsMenu.append(bg);
 
-    return $menu;
+    return detailsMenu;
 };
 
 export default menu;

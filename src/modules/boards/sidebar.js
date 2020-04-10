@@ -9,17 +9,11 @@ const object = [
     { name: 'Главная страница', href: '/', icon: icons.home },
 ];
 
-const CLASS = {
-    sidebar: '.sidebar',
-    sidebarLink: '.sidebar-link',
-    sidebarLinkLabel: '.sidebar-link-label',
-};
-
 const link = ({ name, href, icon }) => {
-    const $span = createElement('span', CLASS.sidebarLinkLabel);
-    $span.insertAdjacentText('afterbegin', name);
+    const $span = createElement('span', '.sidebar-link-label');
+    $span.textContent = name;
 
-    const $link = createElement('a', CLASS.sidebarLink);
+    const $link = createElement('a', '.sidebar-link');
     $link.href = href;
     $link.insertAdjacentHTML('afterbegin', icon);
     $link.append($span);
@@ -28,10 +22,10 @@ const link = ({ name, href, icon }) => {
 };
 
 const sidebar = () => {
-    const $sidebar = createElement('aside', CLASS.sidebar);
+    const $sidebar = createElement('aside', '.sidebar');
 
-    object.forEach((iterator) => {
-        $sidebar.append(link(iterator));
+    object.forEach((obj) => {
+        $sidebar.append(link(obj));
     });
 
     return $sidebar;

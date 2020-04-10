@@ -1,7 +1,6 @@
 import DOMHelpers from '../helpers/DOMHelpers';
 import dragCard from './card.drag';
 import details from './card.details';
-
 import '../../scss/board/card/card.scss';
 
 const { createElement } = DOMHelpers();

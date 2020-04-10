@@ -1,5 +1,5 @@
-const store = (function () {
-    const STORE_NAME = 'kanban';
+const store = (() => {
+    const STORE_NAME = 'boards';
 
     const getLocalStorage = () => {
         let store;
@@ -73,10 +73,6 @@ const store = (function () {
         setLocalStorage(replace(currentBoard));
     };
 
-    const load = () => {
-
-    };
-
     return {
         getLocalStorage,
         setLocalStorage,
@@ -86,8 +82,7 @@ const store = (function () {
         edit,
         find,
         save,
-        load,
     };
-}());
+})();
 
 export default store;

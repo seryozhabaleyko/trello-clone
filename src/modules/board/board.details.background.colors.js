@@ -13,9 +13,9 @@ const handleColor = (e) => {
 };
 
 const handleColorsBack = () => {
-    const $main = document.getElementById('board-details-main');
-    $main.textContent = '';
-    $main.append(background());
+    const detailsMain = document.getElementById('board-details-main');
+    while (detailsMain.firstChild) detailsMain.removeChild(detailsMain.firstChild);
+    detailsMain.append(background());
 
     document.getElementById('board-details-title')
         .textContent = 'Смена фона';

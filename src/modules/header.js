@@ -1,33 +1,33 @@
 import DOMHelpers from './helpers/DOMHelpers';
 import icons from './helpers/icons';
-import boardsMenuPopover from './header/boardsMenuPopover';
+import headerBoards from './header.boards';
 import profile from '../img/profile.jpg';
 import firebase from './firebase';
 import '../scss/header.scss';
 
 const { createElement } = DOMHelpers();
 
-const CLASS = {
-    header: '.header',
-    logo: '.logo',
-    home: '.home',
-    boardsMenuPopover: '.boards-menu-popover',
-};
-
 const logout = () => {
     firebase.auth().signOut();
 };
 
 const header = () => {
-    const $home = createElement('a', CLASS.home);
+    const $home = createElement('a', '.home');
     $home.href = '/#boards';
     $home.insertAdjacentHTML('afterbegin', icons.home);
 
     const $boards = createElement('button', '.header-boards');
     $boards.insertAdjacentHTML('afterbegin', `${icons.trello}<span>доски</span>`);
-    $boards.addEventListener('click', boardsMenuPopover, false);
+    $boards.addEventListener('click', () => {
+        const headerBoardsWrapper = document.getElementById('header-boards-wrapper');
+        if (headerBoardsWrapper) {
+            headerBoardsWrapper.remove();
+            return;
+        }
+        headerBoards();
+    }, false);
 
-    const $logo = createElement('a', CLASS.logo);
+    const $logo = createElement('a', '.logo');
     $logo.href = '/';
     $logo.textContent = '#лучшедома';
 
@@ -40,7 +40,7 @@ const header = () => {
     $img.height = 32;
     $img.alt = 'Фото профиля';
 
-    $profile.appendChild($img);
+    $profile.append($img);
 
     const $header = createElement('header');
     $header.append($home, $boards, $logo, createElement('div'), $profile);

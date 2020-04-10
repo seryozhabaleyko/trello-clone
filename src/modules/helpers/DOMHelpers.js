@@ -1,15 +1,12 @@
-'use strict';
-
 const DOMHelpers = () => {
+    const $ = (selector, parent) => (parent || document).querySelector(selector);
 
-    const $ = (selector, parent) => (parent ? parent : document).querySelector(selector);
-
-    const $$ = (selector, parent) => Array.from((parent ? parent : document).querySelectorAll(selector));
+    const $$ = (selector, parent) => Array.from((parent || document).querySelectorAll(selector));
 
     const contains = (elem, child) => elem !== child && elem.contains(child);
 
     const createElement = (tag, idClass) => {
-        let elem = document.createElement(tag);
+        const elem = document.createElement(tag);
 
         if (idClass) {
             switch (idClass.charAt(0)) {
@@ -45,49 +42,10 @@ const DOMHelpers = () => {
         this.classList.add('show');
     };
 
-    Element.prototype.hide = function() {
+    Element.prototype.hide = function () {
         this.classList.contains('show') && this.classList.remove('show');
         this.classList.add('hide');
     };
-
-    const hideAll = (elemList) => {
-        Array.from(elemList).forEach(elem => hide(elem));
-    };
-
-    /* const fadeOut = (elem) => {
-        if (window.requestAnimationFrame) {
-            elem.style.opacity = 1;
-
-            (function fade() {
-                if ((elem.style.opacity -= 0.1) < 0) {
-                    elem.style.display = 'none';
-                } else {
-                    requestAnimationFrame(fade);
-                }
-            })();
-        } else {
-            elem.style.display = 'none';
-        }
-    };
-
-    const fadeIn = (elem) => {
-        if (window.requestAnimationFrame) {
-            elem.style.opacity = 0;
-            elem.style.display = display || 'block';
-
-            (function fade() {
-                let val = parseFloat(elem.style.opacity, 10);
-                const calc = (val += 0.1) > 1;
-
-                if (!calc) {
-                    elem.style.opacity = val;
-                    requestAnimationFrame(fade);
-                }
-            })();
-        } else {
-            elem.style.display = display || 'block';
-        }
-    }; */
 
     const fadeIn = (el, smooth = true, displayStyle = 'block') => {
         el.style.opacity = 0;
@@ -109,7 +67,6 @@ const DOMHelpers = () => {
                 animation();
             };
             rAf();
-
         } else {
             el.style.opacity = 1;
         }
@@ -117,7 +74,7 @@ const DOMHelpers = () => {
 
     const fadeOut = (el, smooth = true, displayStyle = 'none') => {
         if (smooth) {
-            let opacity = el.style.opacity;
+            let { opacity } = el.style;
             let request;
 
             const animation = () => {
@@ -134,7 +91,6 @@ const DOMHelpers = () => {
                 animation();
             };
             rAf();
-
         } else {
             el.style.opacity = 0;
         }
@@ -149,7 +105,6 @@ const DOMHelpers = () => {
         contains,
         on,
         off,
-        hideAll,
         addClass,
         removeClass,
         toggleClass,

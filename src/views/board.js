@@ -14,7 +14,7 @@ const board = (root, props) => {
     const successCallback = (snapshot) => {
         const data = snapshot.val();
 
-        document.title = `Kanban - ${data.title}`;
+        document.title = `${data.title} - Kanban`;
 
         const $boardLists = createElement('div', '#board-lists');
 

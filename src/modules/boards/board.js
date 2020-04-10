@@ -2,46 +2,33 @@ import DOMHelpers from '../helpers/DOMHelpers';
 import icons from '../helpers/icons';
 import ripple from '../plugins/ripple';
 // eslint-disable-next-line import/no-cycle
-// import handleFavorite from './board.favorite';
+import marked from './board.marked';
 
 const { createElement } = DOMHelpers();
-
-const CLASS = {
-    board: '.board',
-    boardDetails: '.board-details',
-    boardTitle: '.board-title',
-    boardFavorite: '.board-favorite',
-    btnFavorite: '.btn-favorite',
-};
 
 const board = ({
     id, title, background, favorite,
 }) => {
-    const $link = createElement('a', CLASS.board);
-    $link.href = `/#board/${id}`;
-    $link.setAttribute('style', background);
+    const $markedButton = createElement('button', '.board-marked-button');
+    $markedButton.setAttribute('data-marked', favorite);
+    $markedButton.insertAdjacentHTML('afterbegin', icons.starBorder);
+    $markedButton.addEventListener('click', marked.bind($markedButton, id), false);
 
-    ripple($link);
+    const $favorite = createElement('div', '.board-marked');
+    $favorite.appendChild($markedButton);
 
-    const $details = createElement('div', CLASS.boardDetails);
-
-    const $title = createElement('div', CLASS.boardTitle);
+    const $title = createElement('div', '.board-title');
     $title.textContent = title;
 
-    const $favorite = createElement('div', CLASS.boardFavorite);
-
-    const $btn = createElement('button', CLASS.btnFavorite);
-
-    if (favorite) {
-        $btn.setAttribute('data-favorite', '');
-    }
-
-    $btn.insertAdjacentHTML('afterbegin', icons.starBorder);
-    // $btn.addEventListener('click', handleFavorite.bind($btn, id), false);
-
-    $favorite.appendChild($btn);
+    const $details = createElement('div', '.board-details');
     $details.append($title, $favorite);
-    $link.appendChild($details);
+
+    const $link = createElement('a', '.board');
+    $link.href = `/#board/${id}`;
+    $link.setAttribute('data-board-id', id);
+    $link.setAttribute('style', background);
+    ripple($link);
+    $link.append($details);
 
     return $link;
 };

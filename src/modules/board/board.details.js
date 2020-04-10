@@ -6,33 +6,33 @@ import '../../scss/board/board-details.scss';
 const { createElement } = DOMHelpers();
 
 const boardDetails = () => {
-    const $close = createElement('button', '#board-details-close');
-    $close.insertAdjacentHTML('afterbegin', icons.cancel);
+    const detailsClose = createElement('button', '#board-details-close');
+    detailsClose.insertAdjacentHTML('afterbegin', icons.cancel);
 
-    $close.addEventListener('click', () => {
+    detailsClose.addEventListener('click', () => {
         document.getElementById('board-wrapper').classList.remove('show-menu');
         document.getElementById('board-details').classList.add('hide');
         document.getElementById('board-menu').classList.remove('hide');
     });
 
-    const $title = createElement('h3', '#board-details-title');
-    $title.textContent = 'Меню';
+    const detailsTitle = createElement('h3', '#board-details-title');
+    detailsTitle.textContent = 'Меню';
 
-    const $back = createElement('button', '#board-details-back');
-    $back.style.display = 'none';
-    $back.insertAdjacentHTML('afterbegin', icons.back);
+    const detailsBack = createElement('button', '#board-details-back');
+    detailsBack.style.display = 'none';
+    detailsBack.insertAdjacentHTML('afterbegin', icons.back);
 
-    const $header = createElement('div', '#board-details-header');
-    $header.append($back, $title, $close);
+    const detailsHeader = createElement('div', '#board-details-header');
+    detailsHeader.append(detailsBack, detailsTitle, detailsClose);
 
-    const $main = createElement('div', '#board-details-main');
-    $main.append(menu());
+    const detailsMain = createElement('div', '#board-details-main');
+    detailsMain.append(menu());
 
-    const $details = createElement('div', '#board-details');
-    $details.classList.add('hide');
-    $details.append($header, $main);
+    const details = createElement('div', '#board-details');
+    details.classList.add('hide');
+    details.append(detailsHeader, detailsMain);
 
-    return $details;
+    return details;
 };
 
 export default boardDetails;

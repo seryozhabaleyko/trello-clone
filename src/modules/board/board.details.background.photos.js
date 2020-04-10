@@ -14,9 +14,9 @@ const handlePhoto = (e) => {
 };
 
 const handlePhotosBack = () => {
-    const $main = document.getElementById('board-details-main');
-    $main.textContent = '';
-    $main.append(background());
+    const detailsMain = document.getElementById('board-details-main');
+    while (detailsMain.firstChild) detailsMain.removeChild(detailsMain.firstChild);
+    detailsMain.append(background());
 
     document.getElementById('board-details-title')
         .textContent = 'Смена фона';
@@ -36,11 +36,11 @@ const photos = () => {
     $photos.addEventListener('click', handlePhoto);
 
     Object.values(objBg).forEach((img) => {
-        const $photo = createElement('div', '.photo');
-        $photo.setAttribute('style', `background-image: url(${img});`);
-        $photo.setAttribute('data-photo', '');
+        const photo = createElement('div', '.photo');
+        photo.setAttribute('style', `background-image: url(${img});`);
+        photo.setAttribute('data-photo', '');
 
-        $photos.append($photo);
+        $photos.append(photo);
     });
 
     return $photos;

@@ -3,45 +3,17 @@ import backgroundsImages from '../../helpers/background';
 import background from './background';
 import icons from '../../helpers/icons';
 import board from '../board';
-
 import firebase from '../../firebase';
 
 const writeBoardData = (obj) => {
     const userId = firebase.auth().currentUser.uid;
-    const ref = firebase.database().ref(`users/${userId}/boards/${obj.id}`);
-    ref.set(obj)
-        .then(() => ref.once('value'))
-        .then((snapshot) => {
-            const data = snapshot.val();
-            localStorage.setItem('boards-test', JSON.stringify(data));
-        });
+    firebase.database().ref(`users/${userId}/boards/${obj.id}`).set(obj);
 };
 
 const { createElement } = DOMHelpers();
 
-const CLASS = {
-    making: '.making',
-    makingBody: '.making-body',
-    makingFooter: '.making-footer',
-    makingBoard: '.making-board',
-    makingBoardTitle: '.making-board-title',
-    makingBoardClose: '.making-board-close',
-    makingBoardSubmit: '.making-board-submit',
-};
-
 const making = () => {
-    const $making = createElement('form', CLASS.making);
-    const $makingBody = createElement('div', CLASS.makingBody);
-    const $makingFooter = createElement('div', CLASS.makingFooter);
-
-    const $makingBoard = createElement('div', CLASS.makingBoard);
-    $makingBoard.style.backgroundImage = `url('${backgroundsImages.bg1}')`;
-
-    const $input = createElement('input', CLASS.makingBoardTitle);
-    $input.type = 'text';
-    $input.placeholder = 'Добавить заголовок доски';
-
-    const $button = createElement('button', CLASS.makingBoardClose);
+    const $button = createElement('button', '.making-board-close');
     $button.type = 'button';
     $button.insertAdjacentHTML('afterbegin', icons.close);
 
@@ -52,6 +24,12 @@ const making = () => {
 
     $button.addEventListener('click', makingModalCloseHandler, false);
 
+    const $input = createElement('input', '.making-board-title');
+    $input.type = 'text';
+    $input.placeholder = 'Добавить заголовок доски';
+
+    const $makingBoard = createElement('div', '.making-board');
+    $makingBoard.style.backgroundImage = `url('${backgroundsImages.bg1}')`;
     $makingBoard.append($input, $button);
 
     function backgroundHandler(e) {
@@ -63,7 +41,7 @@ const making = () => {
     const $background = background();
     $background.addEventListener('click', backgroundHandler, false);
 
-    const $submit = createElement('button', CLASS.makingBoardSubmit);
+    const $submit = createElement('button', '.making-board-submit');
     $submit.type = 'button';
     $submit.innerHTML = 'Создать доску';
 
@@ -85,10 +63,13 @@ const making = () => {
 
     $submit.addEventListener('click', submitHandler, false);
 
+    const $makingFooter = createElement('div', '.making-footer');
     $makingFooter.append($submit);
 
+    const $makingBody = createElement('div', '.making-body');
     $makingBody.append($makingBoard, $background);
 
+    const $making = createElement('form', '.making');
     $making.append($makingBody, $makingFooter);
 
     return $making;

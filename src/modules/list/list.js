@@ -8,11 +8,6 @@ import '../../scss/board/list.scss';
 
 const { createElement } = DOMHelpers();
 
-export const CLASS = {
-    list: '.list',
-    listCards: '.list-cards',
-};
-
 const list = (data) => {
     const $list = createElement('div', '.list');
     $list.setAttribute('draggable', 'true');
@@ -35,7 +30,7 @@ const list = (data) => {
 
     const $formAddingCard = formAddingCard($list);
 
-    $listCards.appendChild($formAddingCard);
+    $listCards.append($formAddingCard);
 
     $list.append(
         header(data, $list),

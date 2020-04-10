@@ -4,22 +4,12 @@ import icons from '../helpers/icons';
 
 const { createElement } = DOMHelpers();
 
-const CLASS = {
-    listHeader: '.list-header',
-    listTitle: '.list-title',
-    listMore: '.list-more',
-    listMoreToggle: '.list-more-toggle',
-    listMoreMenuPopover: '.list-more-menu-popover',
-    listMoreMenu: '.list-more-menu',
-    listMoreItem: '.list-more-item',
-};
-
 const handleSaveTitle = (e) => {
     const { target } = e;
     target.removeAttribute('contenteditable');
 
     const text = target.textContent.trim();
-    const content = text !== '' ? text : 'Название листа';
+    const content = text || 'Название листа';
 
     const listId = target.closest('.list').getAttribute('data-list-id');
     const boardId = localStorage.getItem('boardId');
@@ -37,16 +27,6 @@ const handleEditTitle = (e) => {
     target.focus();
 };
 
-const title = (text) => {
-    const $title = createElement('span', CLASS.listTitle);
-    $title.textContent = text;
-
-    $title.addEventListener('click', handleEditTitle, false);
-    $title.addEventListener('blur', handleSaveTitle, false);
-
-    return $title;
-};
-
 const menu = (list) => {
     const removeHandler = (e) => {
         e.preventDefault();
@@ -62,50 +42,49 @@ const menu = (list) => {
         list.remove();
     };
 
-    const remove = () => {
-        const $link = createElement('a', CLASS.listMoreItem);
-        $link.href = '#';
-        $link.insertAdjacentHTML('afterbegin', `${icons.remove}<span>Удаление списка</span>`);
+    const $link = createElement('a', '.list-more-item');
+    $link.href = '#';
+    $link.insertAdjacentHTML(
+        'afterbegin',
+        `${icons.remove}<span>Удаление списка</span>`,
+    );
+    $link.addEventListener('click', removeHandler, false);
 
-        $link.addEventListener('click', removeHandler, false);
+    const $menu = createElement('div', '.list-more-menu');
+    $menu.append($link);
 
-        return $link;
-    };
-
-    const $popover = createElement('div', CLASS.listMoreMenuPopover);
-    const $menu = createElement('div', CLASS.listMoreMenu);
-    $menu.append(remove());
-
+    const $popover = createElement('div', '.list-more-menu-popover');
     $popover.append($menu);
 
     return $popover;
 };
 
 const handleActionCloseMore = () => {
-    document.querySelector(`${CLASS.listMore}.show`).classList.remove('show');
+    document.querySelector('.list-more.show').classList.remove('show');
     window.removeEventListener('click', handleActionCloseMore, true);
 };
 
 const handleActionMore = (e) => {
     const { target } = e;
-    target.closest(`${CLASS.listMore}`).classList.toggle('show');
+    target.closest('.list-more').classList.toggle('show');
     window.addEventListener('click', handleActionCloseMore, true);
 };
 
-const more = (list) => {
-    const $toggle = createElement('button', CLASS.listMoreToggle);
+const header = (data, list) => {
+    const $toggle = createElement('button', '.list-more-toggle');
     $toggle.insertAdjacentHTML('afterbegin', icons.moreHoriz);
     $toggle.addEventListener('click', handleActionMore, false);
 
-    const $more = createElement('div', CLASS.listMore);
+    const $more = createElement('div', '.list-more');
     $more.append($toggle, menu(list));
 
-    return $more;
-};
+    const $title = createElement('span', '.list-title');
+    $title.textContent = data.title;
+    $title.addEventListener('click', handleEditTitle, false);
+    $title.addEventListener('blur', handleSaveTitle, false);
 
-const header = (data, list) => {
-    const $header = createElement('div', CLASS.listHeader);
-    $header.append(title(data.title), more(list));
+    const $header = createElement('div', '.list-header');
+    $header.append($title, $more);
 
     return $header;
 };

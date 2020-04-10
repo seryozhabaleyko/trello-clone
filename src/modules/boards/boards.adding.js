@@ -5,12 +5,6 @@ import '../../scss/boards/boards-adding.scss';
 
 const { createElement } = DOMHelpers();
 
-const CLASS = {
-    addingBoard: '.adding-board',
-    modal: '.modal',
-    modalOverlay: '.modal-overlay',
-};
-
 const modal = () => {
     function modalOverlayAnimationEndHandler() {
         this.remove();
@@ -25,11 +19,11 @@ const modal = () => {
         }
     }
 
-    const $overlay = createElement('div', CLASS.modalOverlay);
+    const $overlay = createElement('div', '.modal-overlay');
     $overlay.setAttribute('data-modal-close', '');
     $overlay.addEventListener('click', modalOverlayHandler, false);
 
-    const $modal = createElement('div', CLASS.modal);
+    const $modal = createElement('div', '.modal');
 
     document
         .body

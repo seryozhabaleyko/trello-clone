@@ -9,22 +9,15 @@ const object = [
     { name: 'Главная', href: '#home', icon: icons.home },
 ];
 
-const CLASS = {
-    bottomNavigation: '.bottom-navigation',
-    bottomNavigationAction: '.bottom-navigation-action',
-    bottomNavigationActionWrapper: '.bottom-navigation-action-wrapper',
-    bottomNavigationActionLabel: '.bottom-navigation-action-label',
-};
-
 const link = ({ name, href, icon }) => {
-    const $span = createElement('span', CLASS.bottomNavigationActionLabel);
-    $span.insertAdjacentText('afterbegin', name);
+    const $span = createElement('span', '.bottom-navigation-action-label');
+    $span.textContent = name;
 
-    const $wrapper = createElement('span', CLASS.bottomNavigationActionWrapper);
+    const $wrapper = createElement('span', '.bottom-navigation-action-wrapper');
     $wrapper.insertAdjacentHTML('afterbegin', icon);
     $wrapper.append($span);
 
-    const $link = createElement('a', CLASS.bottomNavigationAction);
+    const $link = createElement('a', '.bottom-navigation-action');
     $link.href = href;
     $link.append($wrapper);
 
@@ -32,10 +25,10 @@ const link = ({ name, href, icon }) => {
 };
 
 const bottomNavigation = () => {
-    const $bottomNavigation = createElement('div', CLASS.bottomNavigation);
+    const $bottomNavigation = createElement('div', '.bottom-navigation');
 
-    object.forEach((iterator) => {
-        $bottomNavigation.append(link(iterator));
+    object.forEach((obj) => {
+        $bottomNavigation.append(link(obj));
     });
 
     return $bottomNavigation;

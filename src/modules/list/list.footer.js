@@ -2,43 +2,31 @@ import DOMHelpers from '../helpers/DOMHelpers';
 
 const { createElement } = DOMHelpers();
 
-export function hideFormHandler(e) {
-    if (!e.target.closest('.form-adding-card.show')) {
-        const $cardAddingFormShow = document.querySelector('.form-adding-card.show');
-        $cardAddingFormShow.hide();
-
+export const handleHideForm = (e) => {
+    const { target } = e;
+    if (!target.closest('.form-adding-card.show')) {
+        document.querySelector('.form-adding-card.show').hide();
         document.querySelector('.list-footer.hide').classList.remove('hide');
-
-        document.removeEventListener('click', hideFormHandler, true);
+        document.removeEventListener('click', handleHideForm, true);
     }
-}
+};
+
+const handleShowForm = (footer, form) => {
+    footer.hide();
+    form.show();
+    form.querySelector('.field-input-form-adding-card').focus();
+    document.addEventListener('click', handleHideForm, true);
+};
 
 const footer = (form) => {
-    const CLASS = {
-        listFooter: '.list-footer',
-    };
+    const $footer = createElement('div', '.list-footer');
 
-    function showFormHandler(root, form) {
-        root.hide();
-        form.show();
-        form.querySelector('.field-input-form-adding-card').focus();
+    const $button = createElement('button', '.add-card');
+    $button.setAttribute('type', 'button');
+    $button.textContent = '+ Добавить карточку';
+    $button.addEventListener('click', handleShowForm.bind(this, $footer, form), false);
 
-        document.addEventListener('click', hideFormHandler, true);
-    }
-
-    const showForm = (root, form) => {
-        const $button = createElement('button', '.add-card');
-        $button.setAttribute('type', 'button');
-        $button.insertAdjacentText('afterbegin', '+ Добавить карточку');
-
-        $button.addEventListener('click', showFormHandler.bind(this, root, form), false);
-
-        return $button;
-    };
-
-    const $footer = createElement('div', CLASS.listFooter);
-
-    $footer.appendChild(showForm($footer, form));
+    $footer.append($button);
 
     return $footer;
 };

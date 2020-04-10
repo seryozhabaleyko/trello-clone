@@ -10,7 +10,7 @@ class RippleStyle {
 function rippleHandler(e) {
     const $span = document.createElement('span');
     $span.className = 'btn-ripple';
-    this.appendChild($span);
+    this.append($span);
 
     const {
         width, height, left, top,

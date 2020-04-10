@@ -4,36 +4,38 @@ import DOMHelpers from '../modules/helpers/DOMHelpers';
 import header from '../modules/header';
 import bottomNavigation from '../modules/boards/bottomNavigation';
 import sidebar from '../modules/boards/sidebar';
-
 import personalBoards from '../modules/boards/boards.personal';
 import recentlyViewedBoards from '../modules/boards/boards.recentlyViewed';
 import markedBoards from '../modules/boards/boards.marked';
-
 import board from '../modules/boards/board';
 
 const { createElement } = DOMHelpers();
 
 const boards = (root) => {
-  document.title = 'Kanban — Доски';
+  document.title = 'Доски | Kanban';
 
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       const $wrapper = createElement('div', '.boards-wrapper');
       $wrapper.append(personalBoards());
 
+      const forEachCallback = (obj) => {
+        document.querySelector('.boards-adding').before(board(obj));
+        if (obj.favorite) {
+          $wrapper.prepend(markedBoards());
+          document.querySelector('.boards-marked').append(board(obj));
+        }
+      };
+
       const successCallback = (snapshot) => {
-        const data = snapshot.val();
+        let data = snapshot.val();
         if (storeRecentlyViewed.getLocalStorage().length > 0) {
           $wrapper.prepend(recentlyViewedBoards());
         }
         if (data) {
-          Object.values(data).forEach((obj) => {
-            document.querySelector('.boards-adding').before(board(obj));
-            if (obj.favorite) {
-              $wrapper.prepend(markedBoards());
-              document.querySelector('.boards-marked').append(board(obj));
-            }
-          });
+          data = Object.values(data);
+          data.forEach(forEachCallback);
+          localStorage.setItem('boards', JSON.stringify(data));
         }
       };
 

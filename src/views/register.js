@@ -76,7 +76,7 @@ const form = () => {
     $login.type = 'text';
     $login.name = 'login';
     $login.placeholder = 'Логин';
-    $loginWrapper.appendChild($login);
+    $loginWrapper.append($login);
     $loginWrapper.insertAdjacentHTML('beforeend', icons.login);
 
     const $emailWrapper = createElement('div');
@@ -86,7 +86,7 @@ const form = () => {
     $email.placeholder = 'Электронный адрес';
     $email.setAttribute('required', '');
     $emailWrapper.insertAdjacentHTML('beforeend', icons.email);
-    $emailWrapper.appendChild($email);
+    $emailWrapper.append($email);
 
     const $passwordWrapper = createElement('div');
     const $password = document.createElement('input', '#password');
@@ -95,7 +95,7 @@ const form = () => {
     $password.placeholder = 'Пароль';
     $password.setAttribute('required', '');
     $passwordWrapper.insertAdjacentHTML('beforeend', icons.lock);
-    $passwordWrapper.appendChild($password);
+    $passwordWrapper.append($password);
 
     const $passwordRepeatWrapper = createElement('div');
     const $passwordRepeat = document.createElement('input');
@@ -104,7 +104,7 @@ const form = () => {
     $passwordRepeat.placeholder = 'Пароль еще раз';
     $passwordRepeat.setAttribute('required', '');
     $passwordRepeatWrapper.insertAdjacentHTML('beforeend', icons.lock);
-    $passwordRepeatWrapper.appendChild($passwordRepeat);
+    $passwordRepeatWrapper.append($passwordRepeat);
 
     const $submit = document.createElement('input');
     $submit.type = 'submit';
@@ -126,7 +126,7 @@ const form = () => {
 };
 
 const register = (root) => {
-    document.title = 'Kanban — Выполните зарегистрацию';
+    document.title = 'Выполните зарегистрацию | Kanban';
 
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
@@ -136,7 +136,7 @@ const register = (root) => {
             $bg.insertAdjacentHTML('afterbegin', icons.bgLoginAndRegister);
 
             const $wrapper = createElement('div', '.register-wrapper');
-            $wrapper.appendChild(form());
+            $wrapper.append(form());
 
             root.classList.add('register');
             root.append($bg, $wrapper);

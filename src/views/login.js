@@ -73,7 +73,7 @@ const form = () => {
     $email.name = 'email';
     $email.placeholder = 'Электронный адрес';
     $email.setAttribute('required', '');
-    $emailWrapper.appendChild($email);
+    $emailWrapper.append($email);
     $emailWrapper.insertAdjacentHTML('beforeend', icons.email);
 
     const $passwordWrapper = createElement('div');
@@ -82,7 +82,7 @@ const form = () => {
     $password.name = 'password';
     $password.placeholder = 'Пароль';
     $password.setAttribute('required', '');
-    $passwordWrapper.appendChild($password);
+    $passwordWrapper.append($password);
     $passwordWrapper.insertAdjacentHTML('beforeend', icons.lock);
 
     const $submit = createElement('input', '.blue');
@@ -103,7 +103,7 @@ const form = () => {
 };
 
 const login = (root) => {
-    document.title = 'Kanban — Выполните вход';
+    document.title = 'Выполните вход | Kanban';
 
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
@@ -118,7 +118,7 @@ const login = (root) => {
             $bg.insertAdjacentHTML('afterbegin', icons.bgLoginAndRegister);
 
             const $wrapper = createElement('div', '.login-wrapper');
-            $wrapper.appendChild(form());
+            $wrapper.append(form());
 
             root.classList.add('login');
             root.append($bg, $wrapper);
