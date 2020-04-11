@@ -1,23 +1,6 @@
 .adding-list {
-    position: relative;
-    overflow: hidden;
-
-    width: 272px;
-    border-radius: 3px;
-
-    margin-left: 10px;
-    margin-right: 10px;
-
-    display: inline-block;
-    vertical-align: top;
-
-    box-shadow: 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);
-
-    &.show {
-        padding: 8px;
-        background-color: #ebecf0;
-        box-shadow: 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);
-    }
+    width: 282px;
+    padding-right: 10px;
 }
 
 .show-form-adding-list {
@@ -32,6 +15,7 @@
     outline: none;
     cursor: pointer;
     background-color: rgba(241, 241, 241, 0.5);
+    box-shadow: 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);
 
     svg {
         width: 24px;
@@ -53,6 +37,11 @@
     display: none;
     grid-template-rows: 35px;
     gap: 8px;
+
+    padding: 8px;
+    border-radius: 3px;
+    background-color: #ebecf0;
+    box-shadow: 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);
 }
 
 .show .form-adding-list {

@@ -1,7 +1,5 @@
 import DOMHelpers from '../helpers/DOMHelpers';
 import icons from '../helpers/icons';
-import storeRecentlyViewed from '../store/storeRecentlyViewed';
-import board from './board';
 
 const { createElement } = DOMHelpers();
 
@@ -14,10 +12,6 @@ const recentlyViewedBoards = () => {
     $header.append($title);
 
     const $boards = createElement('div', '.boards-recentlyViewed');
-
-    storeRecentlyViewed.getLocalStorage().forEach((obj) => {
-        $boards.append(board(obj));
-    });
 
     const $section = createElement('section', '.boards-section');
     $section.append($header, $boards);

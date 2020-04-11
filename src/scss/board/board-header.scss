@@ -11,18 +11,14 @@
     }
 
     &-title {
-        display: flex;
-        align-items: center;
-
         padding: 0 10px;
         border-radius: 3px;
-
         color: #fff;
-
-        font-size: 18px;
-        font-weight: 700;
         line-height: 32px;
 
+        font-size: 1.8rem;
+        font-weight: 700;
+        white-space: nowrap;
         margin: 0;
 
         &:hover {
@@ -30,7 +26,7 @@
         }
     }
 
-    &-favorite {
+    &-marked {
         position: relative;
         overflow: hidden;
 
@@ -52,12 +48,12 @@
         }
 
         svg {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             fill: #fff;
         }
 
-        &[favorite] svg {
+        &[data-marked="true"] svg {
             fill: gold;
         }
     }

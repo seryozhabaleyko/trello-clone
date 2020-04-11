@@ -22,11 +22,14 @@ const link = ({ name, href, icon }) => {
 };
 
 const sidebar = () => {
-    const $sidebar = createElement('aside', '.sidebar');
+    const $nav = createElement('nav');
 
     object.forEach((obj) => {
-        $sidebar.append(link(obj));
+        $nav.append(link(obj));
     });
+
+    const $sidebar = createElement('aside', '.sidebar');
+    $sidebar.append($nav);
 
     return $sidebar;
 };

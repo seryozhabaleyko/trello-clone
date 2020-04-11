@@ -30,20 +30,14 @@ const board = (root, props) => {
 
         $boardLists.append(formAddingList());
 
-        const $boardMain = createElement('div', '#board-main');
-        $boardMain.append($boardLists);
-
         const $board = createElement('div', '#board');
-        $board.append(boardHeader(data), $boardMain);
-
-        const $wrapper = createElement('div', '#board-wrapper');
-        $wrapper.append($board, boardDetails());
+        $board.append(boardHeader(data), $boardLists);
 
         const $main = createElement('main', '#board-body');
-        $main.append($wrapper);
+        $main.append($board, boardDetails());
 
         localStorage.setItem('boardId', props.id);
-        storeRecentlyViewed.insert(data);
+        storeRecentlyViewed.insert(props.id);
 
         root.setAttribute('style', data.background);
         root.append(header(), $main);

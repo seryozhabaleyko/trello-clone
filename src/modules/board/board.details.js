@@ -10,7 +10,7 @@ const boardDetails = () => {
     detailsClose.insertAdjacentHTML('afterbegin', icons.cancel);
 
     detailsClose.addEventListener('click', () => {
-        document.getElementById('board-wrapper').classList.remove('show-menu');
+        document.getElementById('board-body').classList.remove('show-menu');
         document.getElementById('board-details').classList.add('hide');
         document.getElementById('board-menu').classList.remove('hide');
     });

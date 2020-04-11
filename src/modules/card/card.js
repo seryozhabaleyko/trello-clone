@@ -15,12 +15,15 @@ const handleCard = (e) => {
 };
 
 const card = (obj) => {
+    const title = createElement('span', '.card-title');
+    title.textContent = obj.title;
+
     const $card = createElement('div', '.card');
     $card.setAttribute('draggable', 'true');
     $card.setAttribute('data-card-id', obj.id);
     $card.setAttribute('data-card-order', obj.order);
-    $card.insertAdjacentHTML('afterbegin', obj.title);
     $card.addEventListener('click', handleCard, false);
+    $card.append(title);
 
     dragCard($card);
 

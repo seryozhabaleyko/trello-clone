@@ -16,22 +16,38 @@ const boards = (root) => {
 
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      const $wrapper = createElement('div', '.boards-wrapper');
-      $wrapper.append(personalBoards());
+      const wrapper = createElement('div', '#boards-wrapper');
+      wrapper.append(personalBoards());
 
       const forEachCallback = (obj) => {
         document.querySelector('.boards-adding').before(board(obj));
+
+        const recentlyViewed = storeRecentlyViewed.getLocalStorage();
+
+        const recentlyViewedForEachCallback = (item) => {
+          if (obj.id === item) {
+            if (!document.querySelector('.boards-recentlyViewed')) {
+              wrapper.prepend(recentlyViewedBoards());
+            }
+            document.querySelector('.boards-recentlyViewed').append(board(obj));
+          }
+        };
+
+        if (recentlyViewed.length > 0) {
+          recentlyViewed.forEach(recentlyViewedForEachCallback);
+        }
+
         if (obj.favorite) {
-          $wrapper.prepend(markedBoards());
+          if (!document.querySelector('.boards-marked')) {
+            wrapper.prepend(markedBoards());
+          }
           document.querySelector('.boards-marked').append(board(obj));
         }
       };
 
       const successCallback = (snapshot) => {
         let data = snapshot.val();
-        if (storeRecentlyViewed.getLocalStorage().length > 0) {
-          $wrapper.prepend(recentlyViewedBoards());
-        }
+
         if (data) {
           data = Object.values(data);
           data.forEach(forEachCallback);
@@ -47,7 +63,7 @@ const boards = (root) => {
 
       const $main = document.createElement('main');
       $main.id = 'boards-body';
-      $main.append(sidebar(), bottomNavigation(), $wrapper);
+      $main.append(sidebar(), bottomNavigation(), wrapper);
 
       const $header = header();
       $header.classList.add('bg-boards');

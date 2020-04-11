@@ -91,28 +91,6 @@ button {
     display: none!important;
 }
 
-main#boards-body {
-    padding: 0 15px;
-    overflow-y: auto;
-
-    @media (min-width: 575.98px) {
-        display: grid;
-        grid-template-columns: 272px 1fr;
-    }
-    @media (min-width: 575.98px){
-        padding: 0 calc(50vw - 270px);
-    }
-    @media (min-width: 767.98px){
-        padding: 0 calc(50vw - 360px);
-    }
-    @media (min-width: 991.98px) {
-        padding: 0 calc(50vw - 480px);
-    }
-    @media (min-width: 1199.98px){
-        padding: 0 calc(50vw - 590px);
-    }
-}
-
 .btn {
     margin: 0;
     padding: 0;
@@ -125,8 +103,6 @@ main#boards-body {
 }
 
 #root {
-    display: flex;
-    flex-direction: column;
     height: 100vh;
 
     background-size: cover;

@@ -2,8 +2,16 @@
     @media (max-width: 992px) {
         display: none;
     }
-    margin-top: 40px;
-    padding: 0 15px;
+
+    position: sticky;
+    top: 0px;
+
+    > nav {
+        display: block;
+        margin: 40px 0 0;
+        padding: 0 16px;
+        width: 240px;
+    }
 
     &-link {
         display: grid;

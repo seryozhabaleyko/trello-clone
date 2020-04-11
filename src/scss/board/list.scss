@@ -3,17 +3,33 @@
     box-shadow: 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);
 
     width: 272px;
+
+    display: flex;
+    flex-direction: column;
+    background-color: #e2e4e6;
     border-radius: 3px;
 
-    flex: 0 0 auto;
-    margin-left: 10px;
+    display: grid;
+    grid-template-rows: auto minmax(auto, 1fr) auto;
 
-    display: inline-block;
-    vertical-align: top;
+    max-height: calc(100vh - 118.5px);
 
-    /* height: 100vh;
-    width: 100vw;
-    scroll-snap-align: start; */
+    &-cards {
+        overflow-y: auto;
+        padding-left: 8px;
+        padding-right: 8px;
+
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    &-footer {
+        padding-top: 0;
+        padding: 8px;
+
+        display: flex;
+        justify-content: space-between;
+    }
 }
 
 
@@ -170,32 +186,6 @@
 .list-more-item:hover {
     background-color: #0000001a;
 }
-
-
-
-
-
-
-
-
-.list-cards {
-    max-height: calc(100% - 48px - 48px);
-    overflow-y: auto;
-    padding-left: 8px;
-    padding-right: 8px;
-
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
-.list-footer {
-    padding: 8px;
-    padding-right: 47px;
-
-    display: flex;
-    justify-content: space-between;
-}
-
 
 .add-card {
     cursor: pointer;

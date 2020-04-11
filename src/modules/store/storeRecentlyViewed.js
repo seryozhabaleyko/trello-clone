@@ -17,21 +17,19 @@ const storeRecentlyViewed = (() => {
         localStorage.setItem(STORE_NAME_RECENTLY_VIEWED, JSON.stringify(value))
     );
 
-    const insert = (obj) => {
+    const insert = (id) => {
         let store = getLocalStorage();
 
-        if (!store.length) {
-            store.push(obj);
-            setLocalStorage(store);
+        if (store.length > 0) {
+            store = store.filter((item) => item !== id);
+            store.push(id);
+            setLocalStorage(store.slice(-3));
 
             return;
         }
 
-        store = store.filter((item) => item.id !== obj.id);
-
-        store.push(obj);
-
-        setLocalStorage(store.slice(-3));
+        store.push(id);
+        setLocalStorage(store);
     };
 
     return {

@@ -14,7 +14,7 @@ const menu = () => {
     );
     boardMenu.addEventListener('click', () => {
         boardMenu.classList.add('hide');
-        document.getElementById('board-wrapper').classList.add('show-menu');
+        document.getElementById('board-body').classList.add('show-menu');
         document.getElementById('board-details').classList.remove('hide');
     });
 
@@ -23,14 +23,14 @@ const menu = () => {
 
 const handleActionFavorite = (e) => {
     const { target } = e;
-    const favorite = target.closest('#board-favorite');
+    const marked = target.closest('#board-marked');
     let value = null;
 
-    if (favorite.hasAttribute('favorite')) {
-        favorite.removeAttribute('favorite');
+    if (marked.getAttribute('data-marked') === 'true') {
+        marked.setAttribute('data-marked', false);
         value = false;
     } else {
-        favorite.setAttribute('favorite', '');
+        marked.setAttribute('data-marked', true);
         value = true;
     }
 
@@ -43,16 +43,11 @@ const handleActionFavorite = (e) => {
         .set(value);
 };
 
-const favorite = (data) => {
-    const button = createElement('button', '#board-favorite');
+const marked = (data) => {
+    const button = createElement('button', '#board-marked');
     button.insertAdjacentHTML('afterbegin', icons.starBorder);
-
-    if (data.favorite) {
-        button.setAttribute('favorite', '');
-    }
-
+    button.setAttribute('data-marked', data.favorite);
     button.addEventListener('click', handleActionFavorite, false);
-
     ripple(button);
 
     return button;
@@ -85,7 +80,7 @@ const header = (data) => {
     title.addEventListener('blur', handleSaveTitle, false);
 
     const boardHeader = createElement('div', '#board-header');
-    boardHeader.append(title, favorite(data), createElement('div'), menu());
+    boardHeader.append(title, marked(data), createElement('div'), menu());
 
     return boardHeader;
 };
