@@ -5,9 +5,7 @@ import firebase from '../firebase';
 
 const { createElement } = DOMHelpers();
 
-const details = (cardNode, boardId, listId, cardId) => {
-    const userId = firebase.auth().currentUser.uid;
-
+const details = (cardText, listId, cardId) => {
     const $close = createElement('button', '.card-details-close');
     $close.insertAdjacentHTML('beforeend', icons.close);
 
@@ -15,16 +13,20 @@ const details = (cardNode, boardId, listId, cardId) => {
     $header.textContent = '123123123';
     $header.append($close);
 
+    const userId = firebase.auth().currentUser.uid;
+    const boardId = localStorage.getItem('boardId');
+
     const handleTitleInput = (e) => {
         const { target } = e;
+        const { value } = target;
         // eslint-disable-next-line no-param-reassign
-        cardNode.textContent = target.value;
+        cardText.textContent = value;
 
         firebase.database().ref(`/users/${userId}/boards/${boardId}/lists/${listId}/cards/${cardId}`)
-            .child('title').set(target.value);
+            .child('title').set(value);
     };
 
-    const $titleInput = createElement('input', '.card-details-title-input');
+    const $titleInput = createElement('textarea', '.card-details-title-input');
     $titleInput.placeholder = 'Название карточки';
     $titleInput.addEventListener('blur', handleTitleInput, false);
 
@@ -61,18 +63,18 @@ const details = (cardNode, boardId, listId, cardId) => {
 
     $overlay.addEventListener('click', (e) => {
         const { target } = e;
-        const overlay = document.querySelector('.card-details-overlay');
-        if (target.classList.contains('card-details-overlay')) {
-            overlay.remove();
-        }
-        if (target.closest('.card-details-close')) {
-            overlay.remove();
+        if (target.classList.contains('card-details-overlay') || target.closest('.card-details-close')) {
+            $details.classList.add('card-details-close-animation');
+            $details.addEventListener('animationend', () => {
+                $details.parentNode.remove();
+            });
         }
     });
 
     const successCallback = (snapshot) => {
         const data = snapshot.val();
-        $titleInput.value = data.title;
+
+        $descriptionTextarea.value = data.title;
     };
 
     const errorCallback = (error) => {

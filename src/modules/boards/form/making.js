@@ -12,65 +12,61 @@ const writeBoardData = (obj) => {
 
 const { createElement } = DOMHelpers();
 
+const close = () => {
+    const modal = document.querySelector('.modal');
+    modal.classList.add('modal-close-animation');
+    modal.addEventListener('animationend', () => {
+        modal.parentNode.remove();
+    });
+};
+
 const making = () => {
-    const $button = createElement('button', '.making-board-close');
-    $button.type = 'button';
-    $button.insertAdjacentHTML('afterbegin', icons.close);
+    const makingClose = createElement('button', '.making-board-close');
+    makingClose.type = 'button';
+    makingClose.insertAdjacentHTML('afterbegin', icons.close);
 
-    function makingModalCloseHandler() {
-        this.closest('[data-modal-close]').remove();
-        this.removeEventListener('click', makingModalCloseHandler, false);
-    }
+    const makingTitle = createElement('input', '.making-board-title');
+    makingTitle.type = 'text';
+    makingTitle.placeholder = 'Добавить заголовок доски';
 
-    $button.addEventListener('click', makingModalCloseHandler, false);
+    const makingBoard = createElement('div', '.making-board');
+    makingBoard.style.backgroundImage = `url('${backgroundsImages.bg1}')`;
+    makingBoard.append(makingTitle, makingClose);
 
-    const $input = createElement('input', '.making-board-title');
-    $input.type = 'text';
-    $input.placeholder = 'Добавить заголовок доски';
+    const submit = createElement('button', '.making-board-submit');
+    submit.type = 'button';
+    submit.innerHTML = 'Создать доску';
 
-    const $makingBoard = createElement('div', '.making-board');
-    $makingBoard.style.backgroundImage = `url('${backgroundsImages.bg1}')`;
-    $makingBoard.append($input, $button);
-
-    function backgroundHandler(e) {
-        if (e.target.dataset.trigger !== undefined) {
-            $makingBoard.setAttribute('style', e.target.getAttribute('style'));
+    const handleSubmit = () => {
+        if (makingTitle.value.length === 0) {
+            makingTitle.focus();
+            return;
         }
-    }
 
-    const $background = background();
-    $background.addEventListener('click', backgroundHandler, false);
-
-    const $submit = createElement('button', '.making-board-submit');
-    $submit.type = 'button';
-    $submit.innerHTML = 'Создать доску';
-
-    function submitHandler() {
         const obj = {
             id: Date.now(),
-            title: ($input.value || 'Название доски'),
+            title: makingTitle.value,
             date: new Date().toLocaleDateString(),
             time: new Date().toLocaleTimeString(),
-            background: $makingBoard.getAttribute('style'),
+            background: makingBoard.getAttribute('style'),
             favorite: false,
-            lists: [],
         };
 
         document.querySelector('.boards-adding').before(board(obj));
-
         writeBoardData(obj);
-    }
+        close();
+    };
 
-    $submit.addEventListener('click', submitHandler, false);
+    submit.addEventListener('click', handleSubmit, false);
 
-    const $makingFooter = createElement('div', '.making-footer');
-    $makingFooter.append($submit);
+    const makingFooter = createElement('div', '.making-footer');
+    makingFooter.append(submit);
 
-    const $makingBody = createElement('div', '.making-body');
-    $makingBody.append($makingBoard, $background);
+    const makingBody = createElement('div', '.making-body');
+    makingBody.append(makingBoard, background());
 
     const $making = createElement('form', '.making');
-    $making.append($makingBody, $makingFooter);
+    $making.append(makingBody, makingFooter);
 
     return $making;
 };

@@ -5,25 +5,19 @@ import '../../scss/board/card/card.scss';
 
 const { createElement } = DOMHelpers();
 
-const handleCard = (e) => {
-    const { target } = e;
-    const cardId = target.getAttribute('data-card-id');
-    const listId = target.closest('.list').getAttribute('data-list-id');
-    const boardId = localStorage.getItem('boardId');
-
-    details(target, boardId, listId, cardId);
-};
-
-const card = (obj) => {
-    const title = createElement('span', '.card-title');
-    title.textContent = obj.title;
+const card = ({ id, title, order }) => {
+    const $title = createElement('span', '.card-title');
+    $title.textContent = title;
 
     const $card = createElement('div', '.card');
     $card.setAttribute('draggable', 'true');
-    $card.setAttribute('data-card-id', obj.id);
-    $card.setAttribute('data-card-order', obj.order);
-    $card.addEventListener('click', handleCard, false);
-    $card.append(title);
+    $card.setAttribute('data-card-id', id);
+    $card.setAttribute('data-card-order', order);
+    $card.addEventListener('click', () => {
+        const listId = $card.closest('.list').getAttribute('data-list-id');
+        details($title, listId, id);
+    }, false);
+    $card.append($title);
 
     dragCard($card);
 

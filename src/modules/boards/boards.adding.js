@@ -5,41 +5,37 @@ import '../../scss/boards/boards-adding.scss';
 
 const { createElement } = DOMHelpers();
 
+const handleOverlay = (e) => {
+  const { target } = e;
+  if (target.classList.contains('modal-overlay') || target.closest('.making-board-close')) {
+    const modal = document.querySelector('.modal');
+    modal.classList.add('modal-close-animation');
+    modal.addEventListener('animationend', () => {
+      modal.parentNode.remove();
+    });
+  }
+};
+
 const modal = () => {
-    function modalOverlayAnimationEndHandler() {
-        this.remove();
-        this.removeEventListener('animationend', modalOverlayAnimationEndHandler, false);
-    }
+  const $modal = createElement('div', '.modal');
+  $modal.append(making());
 
-    function modalOverlayHandler(e) {
-        if (e.target.dataset.modalClose !== undefined) {
-            this.classList.add('open');
-            this.addEventListener('animationend', modalOverlayAnimationEndHandler, false);
-            this.removeEventListener('click', modalOverlayHandler, false);
-        }
-    }
+  const $overlay = createElement('div', '.modal-overlay');
+  $overlay.addEventListener('click', handleOverlay, false);
+  $overlay.append($modal);
 
-    const $overlay = createElement('div', '.modal-overlay');
-    $overlay.setAttribute('data-modal-close', '');
-    $overlay.addEventListener('click', modalOverlayHandler, false);
-
-    const $modal = createElement('div', '.modal');
-
-    document
-        .body
-        .appendChild($overlay)
-        .appendChild($modal)
-        .appendChild(making());
+  document.body.append($overlay);
+  document.querySelector('.making-board-title').focus();
 };
 
 const boardAdding = () => {
-    const $button = createElement('button', '.boards-adding');
-    $button.type = 'button';
-    $button.textContent = 'Создать доску';
-    $button.addEventListener('click', modal, false);
-    ripple($button);
+  const $button = createElement('button', '.boards-adding');
+  $button.type = 'button';
+  $button.textContent = 'Создать доску';
+  $button.addEventListener('click', modal, false);
+  ripple($button);
 
-    return $button;
+  return $button;
 };
 
 export default boardAdding;

@@ -27,6 +27,8 @@ import back from '../../img/icons/left-arrow.svg';
 import cancel from '../../img/icons/cancel.svg';
 import quarantine from '../../img/icons/quarantine.svg';
 import background from '../../img/icons/background.svg';
+import deletee from '../../img/icons/delete.svg';
+import view from '../../img/icons/view.svg';
 
 const icons = (() => ({
     plus,
@@ -58,6 +60,8 @@ const icons = (() => ({
     cancel,
     quarantine,
     background,
+    deletee,
+    view,
 }))();
 
 export default icons;

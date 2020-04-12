@@ -10,12 +10,13 @@
     bottom: 0;
     z-index: 5;
 
-    box-shadow: 0 12px 24px -6px rgba(9,30,66,.25), 0 0 0 1px rgba(9,30,66,.08);
-    transform: translateX(0);
+    transform: translateX(339px);
 
     transition-property: transform, width;
     transition-duration: .1s;
     transition-timing-function: ease-in;
+
+    will-change: transform, width;
 
     &-header {
         border-bottom: 1px solid rgba(0,0,0,0.12);
@@ -231,16 +232,21 @@
     &-menu {
         > li {
             > a {
+                overflow: hidden;
+                position: relative;
                 display: grid;
                 grid-template-columns: 20px 1fr;
                 gap: 10px;
 
                 border-radius: 3px;
                 font-size: 1.4rem;
-                font-weight: 600;
+                font-weight: 500;
                 line-height: 2rem;
 
                 padding: 10px;
+
+                -webkit-transition: background-color .3s ease;
+                transition: background-color .3s ease;
 
                 &:hover {
                     background-color: rgba(9,30,66,.08);
@@ -250,6 +256,12 @@
                     width: 20px;
                     height: 20px;
                     fill: #525252;
+                }
+
+                > .lds-ring {
+                    position: absolute;
+                    top: 0px;
+                    right: 0px;
                 }
             }
         }
@@ -263,4 +275,9 @@
     100% {
         transform: translateX(0);
     }
+}
+
+.show-menu #board-details {
+    box-shadow: 0 12px 24px -6px rgba(9,30,66,.25), 0 0 0 1px rgba(9,30,66,.08);
+    transform: translateX(0);
 }

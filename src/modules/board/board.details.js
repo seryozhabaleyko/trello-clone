@@ -11,7 +11,9 @@ const boardDetails = () => {
 
     detailsClose.addEventListener('click', () => {
         document.getElementById('board-body').classList.remove('show-menu');
-        document.getElementById('board-details').classList.add('hide');
+        setTimeout(() => {
+            document.getElementById('board-details').classList.add('hide');
+        }, 100);
         document.getElementById('board-menu').classList.remove('hide');
     });
 

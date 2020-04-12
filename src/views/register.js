@@ -76,6 +76,7 @@ const form = () => {
     $login.type = 'text';
     $login.name = 'login';
     $login.placeholder = 'Логин';
+    $login.setAttribute('required', '');
     $loginWrapper.append($login);
     $loginWrapper.insertAdjacentHTML('beforeend', icons.login);
 

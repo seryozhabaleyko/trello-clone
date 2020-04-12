@@ -8,7 +8,7 @@ const recentlyViewedBoards = () => {
     $title.textContent = 'Недавно просмотренное';
 
     const $header = createElement('div', '.boards-header');
-    $header.insertAdjacentHTML('afterbegin', icons.clock);
+    $header.insertAdjacentHTML('afterbegin', icons.view);
     $header.append($title);
 
     const $boards = createElement('div', '.boards-recentlyViewed');

@@ -1,14 +1,19 @@
 import DOMHelpers from '../helpers/DOMHelpers';
 // eslint-disable-next-line import/no-cycle
 import background from './board.details.background';
+import firebase from '../firebase';
 
 const { createElement } = DOMHelpers();
 
 const handleColor = (e) => {
     const { target } = e;
     if (target.dataset.color !== undefined) {
+        const value = target.getAttribute('style');
         document.getElementById('root')
-            .setAttribute('style', target.getAttribute('style'));
+            .setAttribute('style', value);
+        const userId = firebase.auth().currentUser.uid;
+        const boardId = localStorage.getItem('boardId');
+        firebase.database().ref(`users/${userId}/boards/${boardId}`).child('background').set(value);
     }
 };
 

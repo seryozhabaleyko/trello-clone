@@ -3,6 +3,7 @@ import icons from './helpers/icons';
 import headerBoards from './header.boards';
 import profile from '../img/profile.jpg';
 import firebase from './firebase';
+import ripple from './plugins/ripple';
 import '../scss/header.scss';
 
 const { createElement } = DOMHelpers();
@@ -15,6 +16,7 @@ const header = () => {
     const $home = createElement('a', '.home');
     $home.href = '/#boards';
     $home.insertAdjacentHTML('afterbegin', icons.home);
+    ripple($home);
 
     const $boards = createElement('button', '.header-boards');
     $boards.insertAdjacentHTML('afterbegin', `${icons.trello}<span>доски</span>`);
@@ -26,6 +28,8 @@ const header = () => {
         }
         headerBoards();
     }, false);
+
+    ripple($boards);
 
     const $logo = createElement('a', '.logo');
     $logo.href = '/';

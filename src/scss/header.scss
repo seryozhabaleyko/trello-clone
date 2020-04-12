@@ -3,12 +3,12 @@ header {
 
     display: grid;
     grid-template-columns: max-content max-content 1fr 32px;
+    grid-column-gap: 5px;
     align-items: center;
 
     width: 100%;
     height: 42px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 5px 10px;
 
     background: rgba(0,0,0,.15);
 
@@ -32,23 +32,32 @@ header {
     }
 
     .logo {
-        display: block;
+        display: none;
         position: absolute;
         top: 50%;
         left: 50%;
         margin-right: -50%;
         transform: translate(-50%, -50%);
 
-        color: #fff;
+        color: rgba(255, 255, 255, 0.6);
         font-size: 25px;
         font-family: cursive;
+
+        &:hover {
+            color: #fff;
+        }
+
+        @media (min-width: 576px) {
+            display: block;
+        }
     }
 
-    .home {
+    > .home {
+        position: relative;
+        overflow: hidden;
         height: 32px;
         line-height: 32px;
         width: 32px;
-        margin-right: 4px;
         border-radius: 3px;
         background-color: hsla(0,0%,100%,.3);
         display: flex;
@@ -68,6 +77,8 @@ header {
 }
 
 .header-boards {
+    position: relative;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;

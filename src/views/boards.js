@@ -55,7 +55,9 @@ const boards = (root) => {
         }
       };
 
-      const errorCallback = (error) => { alert(error); };
+      const errorCallback = (error) => {
+        alert(error);
+      };
 
       firebase.database().ref(`users/${user.uid}/boards`)
         .once('value', successCallback)
