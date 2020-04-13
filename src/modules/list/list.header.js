@@ -39,7 +39,9 @@ const menu = (list) => {
             .ref(`users/${userId}/boards/${boardId}/lists/${listId}`)
             .remove();
 
-        window.navigator.vibrate(1000);
+        if (window.navigator && window.navigator.vibrate) {
+            window.navigator.vibrate(1000);
+        }
 
         list.remove();
     };
