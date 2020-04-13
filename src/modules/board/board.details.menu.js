@@ -20,7 +20,9 @@ const menu = () => {
         const userId = firebase.auth().currentUser.uid;
         firebase.database().ref(`users/${userId}/boards/${boardId}`).remove();
         setTimeout(() => {
-            window.navigator.vibrate(1000);
+            if (window.navigator && window.navigator.vibrate) {
+                window.navigator.vibrate(1000);
+            }
             removeLink.removeChild(document.querySelector('.lds-ring'));
             window.location.href = '/#boards';
         }, 1000);
