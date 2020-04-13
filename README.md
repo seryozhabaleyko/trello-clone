@@ -1,3 +1,3 @@
 # kanban
 
-- [kanban](https://seryozhabaleyko.github.io/kanban/#boards)
+- [kanban](https://kanban-it-academy.web.app/)
