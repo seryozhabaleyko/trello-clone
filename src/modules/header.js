@@ -1,7 +1,7 @@
 import DOMHelpers from './helpers/DOMHelpers';
 import icons from './helpers/icons';
 import headerBoards from './header/header.boards';
-import profile from '../img/profile.jpg';
+import profileJpg from '../img/profile.jpg';
 import firebase from './firebase';
 import ripple from './plugins/ripple';
 import '../scss/header.scss';
@@ -13,14 +13,14 @@ const logout = () => {
 };
 
 const header = () => {
-    const $home = createElement('a', '.home');
-    $home.href = '/#boards';
-    $home.insertAdjacentHTML('afterbegin', icons.home);
-    ripple($home);
+    const home = createElement('a', '.home');
+    home.href = '/#boards';
+    home.insertAdjacentHTML('afterbegin', icons.home);
+    ripple(home);
 
-    const $boards = createElement('button', '.header-boards');
-    $boards.insertAdjacentHTML('afterbegin', `${icons.trello}<span>доски</span>`);
-    $boards.addEventListener('click', () => {
+    const boards = createElement('button', '.header-boards');
+    boards.insertAdjacentHTML('afterbegin', `${icons.trello}<span>доски</span>`);
+    boards.addEventListener('click', () => {
         const headerBoardsWrapper = document.getElementById('header-boards-wrapper');
         if (headerBoardsWrapper) {
             headerBoardsWrapper.remove();
@@ -29,25 +29,25 @@ const header = () => {
         headerBoards();
     }, false);
 
-    ripple($boards);
+    ripple(boards);
 
-    const $logo = createElement('a', '.logo');
-    $logo.href = '/';
-    $logo.textContent = '#лучшедома';
+    const logo = createElement('a', '.logo');
+    logo.href = '/';
+    logo.textContent = '#лучшедома';
 
-    const $profile = createElement('button', '#profile');
-    $profile.addEventListener('click', logout, false);
+    const profile = createElement('button', '#profile');
+    profile.addEventListener('click', logout, false);
 
-    const $img = createElement('img', '#photoURL');
-    $img.src = profile;
-    $img.width = 32;
-    $img.height = 32;
-    $img.alt = 'Фото профиля';
+    const profileImg = createElement('img', '#photoURL');
+    profileImg.src = profileJpg;
+    profileImg.width = 32;
+    profileImg.height = 32;
+    profileImg.alt = 'Фото профиля';
 
-    $profile.append($img);
+    profile.append(profileImg);
 
     const $header = createElement('header');
-    $header.append($home, $boards, $logo, createElement('div'), $profile);
+    $header.append(home, boards, logo, createElement('div'), profile);
 
     return $header;
 };
