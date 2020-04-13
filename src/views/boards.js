@@ -2,7 +2,6 @@ import firebase from '../modules/firebase';
 import storeRecentlyViewed from '../modules/store/storeRecentlyViewed';
 import DOMHelpers from '../modules/helpers/DOMHelpers';
 import header from '../modules/header';
-import bottomNavigation from '../modules/boards/bottomNavigation';
 import sidebar from '../modules/boards/sidebar';
 import personalBoards from '../modules/boards/boards.personal';
 import recentlyViewedBoards from '../modules/boards/boards.recentlyViewed';
@@ -65,7 +64,7 @@ const boards = (root) => {
 
       const $main = document.createElement('main');
       $main.id = 'boards-body';
-      $main.append(sidebar(), bottomNavigation(), wrapper);
+      $main.append(sidebar(), wrapper);
 
       const $header = header();
       $header.classList.add('bg-boards');
