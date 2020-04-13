@@ -105,7 +105,9 @@ const details = (cardText, listId, cardId) => {
                 .ref(`/users/${userId}/boards/${boardId}/lists/${listId}/cards/${cardId}`)
                 .remove();
 
-            window.navigator.vibrate(1000);
+            if (window.navigator && window.navigator.vibrate) {
+                window.navigator.vibrate(1000);
+            }
 
             cardText.closest('.card').remove();
             close();
