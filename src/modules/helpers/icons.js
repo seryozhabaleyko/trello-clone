@@ -29,6 +29,7 @@ import quarantine from '../../img/icons/quarantine.svg';
 import background from '../../img/icons/background.svg';
 import deletee from '../../img/icons/delete.svg';
 import view from '../../img/icons/view.svg';
+import action from '../../img/icons/action.svg';
 
 const icons = (() => ({
     plus,
@@ -62,6 +63,7 @@ const icons = (() => ({
     background,
     deletee,
     view,
+    action,
 }))();
 
 export default icons;

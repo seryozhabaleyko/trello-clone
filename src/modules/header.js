@@ -1,6 +1,6 @@
 import DOMHelpers from './helpers/DOMHelpers';
 import icons from './helpers/icons';
-import headerBoards from './header.boards';
+import headerBoards from './header/header.boards';
 import profile from '../img/profile.jpg';
 import firebase from './firebase';
 import ripple from './plugins/ripple';

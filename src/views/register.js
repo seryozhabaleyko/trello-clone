@@ -34,18 +34,20 @@ const handleSignUp = (e) => {
 
     submit.disabled = true;
 
+    const errorCallback = ({ code, message }) => {
+        if (code === 'auth/weak-password') {
+            console.error('The password is too weak');
+        } else {
+            console.error(message);
+        }
+        submit.disabled = false;
+    };
+
     firebase.auth().createUserWithEmailAndPassword(email, password)
         .then((response) => response.user.updateProfile({
             displayName: login,
         }))
-        .catch(({ code, message }) => {
-            if (code === 'auth/weak-password') {
-                console.error('The password is too weak');
-            } else {
-                console.error(message);
-            }
-            submit.disabled = false;
-        });
+        .catch(errorCallback);
 };
 
 const form = () => {

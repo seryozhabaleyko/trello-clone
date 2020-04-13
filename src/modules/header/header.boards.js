@@ -1,10 +1,8 @@
-import DOMHelpers from './helpers/DOMHelpers';
-import store from './store/Store';
-import storeRecentlyViewed from './store/storeRecentlyViewed';
+import DOMHelpers from '../helpers/DOMHelpers';
 import personalBoards from './header.boards.personal';
-import recentlyViewedBoards from './header.boards.recentlyViewed';
 import markedBoards from './header.boards.marked';
-import '../scss/header-boards.scss';
+import firebase from '../firebase';
+import '../../scss/header-boards.scss';
 
 const { createElement } = DOMHelpers();
 
@@ -25,23 +23,25 @@ const handleWindowClose = (e) => {
 };
 
 const headerBoards = () => {
-    const personal = store.getLocalStorage();
-    const marked = personal.filter((obj) => !!obj.favorite);
-    const recentlyViewed = storeRecentlyViewed.getLocalStorage();
-
+    const wrapper = createElement('div', '#header-boards-wrapper');
     const boards = createElement('div', '#header-boards');
 
-    boards.append(
-        markedBoards(marked),
-        recentlyViewedBoards(recentlyViewed),
-        personalBoards(personal),
-    );
+    const userId = firebase.auth().currentUser.uid;
 
-    const wrapper = createElement('div', '#header-boards-wrapper');
-    wrapper.append(boards);
+    firebase.database().ref(`users/${userId}/boards`).once('value', (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+            const boardsObject = Object.values(data);
+            const marked = boardsObject.filter((obj) => !!obj.favorite);
+            boards.append(
+                markedBoards(marked),
+                personalBoards(boardsObject),
+            );
+            wrapper.append(boards);
+        }
+    });
 
     document.getElementById('root').append(wrapper);
-
     document.addEventListener('click', handleWindowClose);
 };
 

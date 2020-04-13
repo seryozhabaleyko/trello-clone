@@ -1,22 +1,25 @@
-import DOMHelpers from './helpers/DOMHelpers';
-import icons from './helpers/icons';
+import DOMHelpers from '../helpers/DOMHelpers';
+import icons from '../helpers/icons';
 import board from './header.boards.board';
 
 const { createElement } = DOMHelpers();
 
-const markedBoards = (marked) => {
+const recentlyViewedBoards = (recentlyViewed) => {
     const title = createElement('div', '.section-title');
-    title.insertAdjacentHTML('afterbegin', '<span>Отмеченные доски</span>');
+    title.insertAdjacentHTML(
+        'afterbegin',
+        '<span>Недавно просмотренное</span>',
+    );
 
     const icon = createElement('div', '.section-icon');
-    icon.insertAdjacentHTML('afterbegin', icons.star);
+    icon.insertAdjacentHTML('afterbegin', icons.view);
 
     const header = createElement('div', '.section-header');
     header.append(icon, title);
 
     const body = createElement('div', '.section-body');
 
-    marked.forEach((obj) => {
+    recentlyViewed.forEach((obj) => {
         body.append(board(obj));
     });
 
@@ -26,4 +29,4 @@ const markedBoards = (marked) => {
     return section;
 };
 
-export default markedBoards;
+export default recentlyViewedBoards;

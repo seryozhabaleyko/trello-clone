@@ -1,5 +1,4 @@
-import DOMHelpers from './helpers/DOMHelpers';
-import favoriteButton from './button/favorite.button';
+import DOMHelpers from '../helpers/DOMHelpers';
 
 const { createElement } = DOMHelpers();
 
@@ -15,14 +14,16 @@ const board = ({
 
     const $background = createElement('div', '.board-horizontal-background');
     const styles = `${background}; background-color: rgb(171, 203, 215);`;
-    $background.setAttribute('style', styles);
 
     const $img = createElement('div', '.board-horizontal-image');
-    $img.setAttribute('style', background);
+
+    setTimeout(() => {
+        $background.setAttribute('style', styles);
+        $img.setAttribute('style', background);
+    }, 250);
 
     const $favorite = createElement('div', '.board-horizontal-favorite');
     $favorite.setAttribute('favorite', favorite);
-    $favorite.append(favoriteButton(id));
 
     $link.append($background, $img, $title, $favorite);
 

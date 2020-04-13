@@ -97,6 +97,9 @@
         position: relative;
         padding: 20px;
         padding-right: 40px;
+
+        font-size: 20px;
+        font-weight: 500;
     }
 
     &-main {
@@ -109,46 +112,201 @@
         gap: 20px;
     }
 
-    &-fieldset {
-        &-legend {
-            color: #172b4d;
-            font-size: 1.3rem;
-            font-weight: 500;
-            text-transform: uppercase;
-        }
-
-        border: 1px solid #d3d9de;
-        border-radius: 3px;
-    }
-
     &-title {
+        display: grid;
+        grid-template-areas: "icon content";
+        grid-template-columns: 32px 1fr;
+        margin-bottom: 8px;
+        gap: 8px;
 
-        &-input {
-            width: 100%;
-            height: 3rem;
-            border: 0;
-            outline: none;
-            font: inherit;
-            background-color: inherit;
+        > .title {
+            &-icon {
+                width: 32px;
+                height: 32px;
+                display: flex;
+                -webkit-box-align: center;
+                align-items: center;
+                -webkit-box-pack: center;
+                justify-content: center;
+                color: rgb(131, 140, 145);
+                grid-area: icon / icon / icon / icon;
 
-            &:placeholder {
-                font: inherit;
+                svg {
+                    width: 20px;
+                    height: 20px;
+                    fill: currentColor;
+                }
+            }
+
+            &-content {
+                display: flex;
+                flex-direction: column;
+
+                .title-input-field {
+                    width: 100%;
+                    box-sizing: border-box;
+                    -webkit-appearance: none;
+                    display: block;
+
+                    font-size: 2rem;
+                    font-weight: 600;
+                    line-height: 24px;
+
+                    resize: none;
+                    overflow: hidden;
+                    overflow-wrap: break-word;
+                    margin: 0;
+                    margin-top: 2px;
+                    border-radius: 3px;
+                    padding: 4px 0px;
+                    background: transparent;
+                    outline: none;
+                    border: none;
+                    box-shadow: none;
+                    transition: box-shadow 0.3s ease 0s,  padding 0.3s ease 0s;
+
+                    &:focus {
+                        background: #fff;
+                        padding: 4px 8px;
+                        border: none;
+                        resize: vertical;
+                        box-shadow: inset 0 0 0 2px #0079bf;
+                    }
+
+                    &:placeholder {
+                        font: inherit;
+                    }
+                }
             }
         }
     }
 
     &-description {
+        display: grid;
+        grid-template-areas: "icon content";
+        grid-template-columns: 32px 1fr;
+        margin-bottom: 8px;
+        gap: 8px;
 
-        &-textarea {
-            width: 100%;
-            border: 0;
-            outline: none;
-            font: inherit;
-            resize: vertical;
-            background-color: inherit;
+        &-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            -webkit-box-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            justify-content: center;
+            color: rgb(131, 140, 145);
+            grid-area: icon / icon / icon / icon;
 
-            &:placeholder {
-                font: inherit;
+            svg {
+                width: 20px;
+                height: 20px;
+                fill: currentColor;
+            }
+        }
+
+        &-title {
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 20px;
+            margin: 6px 0 0;
+        }
+
+        &-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        &-main {
+            position: relative;
+            margin-top: 8px;
+
+            > a {
+                box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 6px inset;
+                display: block;
+                min-height: 48px;
+                line-height: 22px;
+                color: rgb(131, 140, 145);
+                cursor: pointer;
+                outline: none;
+                background: rgba(0, 0, 0, 0.03);
+                padding: 6px 8px;
+                border-width: 1px;
+                border-style: solid;
+                border-color: rgb(214, 218, 220);
+                border-image: initial;
+                border-radius: 3px;
+            }
+        }
+    }
+
+    &-action {
+        display: grid;
+        grid-template-areas: "icon content";
+        grid-template-columns: 32px 1fr;
+        margin-bottom: 8px;
+        gap: 8px;
+
+        > .action {
+            &-icon {
+                width: 32px;
+                height: 32px;
+                display: flex;
+                -webkit-box-align: center;
+                align-items: center;
+                -webkit-box-pack: center;
+                justify-content: center;
+                color: rgb(131, 140, 145);
+                grid-area: icon / icon / icon / icon;
+
+                svg {
+                    width: 20px;
+                    height: 20px;
+                    fill: currentColor;
+                }
+            }
+
+            &-content {
+                display: flex;
+                flex-direction: column;
+
+                > .action-title {
+                    font-size: 16px;
+                    font-weight: 600;
+                    line-height: 20px;
+                    margin: 6px 0 0;
+                }
+
+                > .action-main {
+                    position: relative;
+                    margin-top: 8px;
+
+                    > .action-delete {
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        font-size: 14px;
+                        font-weight: 500;
+                        font-family: inherit;
+
+                        padding: 8px 13px;
+                        border-radius: 3px;
+
+                        color: rgb(51, 51, 51);
+                        background: rgb(226, 228, 230);
+                        box-shadow: rgb(214, 218, 220) 0px 1px 0px 0px;
+
+                        svg {
+                            margin-right: 6px;
+                            width: 15px;
+                            height: 15px;
+                            fill: currentColor;
+                        }
+                    }
+                }
             }
         }
     }

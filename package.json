@@ -1,4 +1,5 @@
 {
+  "homepage": "https://seryozhabaleyko.github.io/kanban",
   "name": "kanban",
   "version": "1.0.0",
   "description": "- [kanban](https://seryozhabaleyko.github.io/kanban/#boards)",
@@ -19,6 +20,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "file-loader": "^6.0.0",
     "firebase": "^7.13.2",
+    "gh-pages": "^2.2.0",
     "html-webpack-plugin": "^3.2.0",
     "jshint": "^2.11.0",
     "mini-css-extract-plugin": "^0.9.0",
@@ -38,7 +40,8 @@
     "lint:fix": "eslint /.src --fix",
     "start": "webpack-dev-server --mode development --open",
     "dev": "webpack --mode development",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "deploy": "gh-pages -d build"
   },
   "repository": {
     "type": "git",
@@ -49,6 +52,5 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/seryozhabaleyko/kanban/issues"
-  },
-  "homepage": "https://github.com/seryozhabaleyko/kanban#readme"
+  }
 }

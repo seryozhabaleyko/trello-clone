@@ -1,4 +1,3 @@
-
 #header-boards {
     &-wrapper {
         overflow: hidden;
@@ -121,9 +120,6 @@
     }
 
     &:hover {
-        .board-horizontal-favorite {
-            margin-right: 5px;
-        }
         .board-horizontal-background {
             &:before {
                 opacity: .77;
@@ -136,8 +132,6 @@
         height: 100%;
         display: flex;
         align-items: center;
-
-        margin-right: -24px;
 
         button {
             margin-right: 0;

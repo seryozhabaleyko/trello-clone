@@ -1,5 +1,5 @@
-import DOMHelpers from './helpers/DOMHelpers';
-import icons from './helpers/icons';
+import DOMHelpers from '../helpers/DOMHelpers';
+import icons from '../helpers/icons';
 import board from './header.boards.board';
 
 const { createElement } = DOMHelpers();
@@ -9,7 +9,7 @@ const personalBoards = (boards) => {
     title.insertAdjacentHTML('afterbegin', '<span>Персональные доски</span>');
 
     const icon = createElement('div', '.section-icon');
-    icon.insertAdjacentHTML('afterbegin', icons.personOutline);
+    icon.insertAdjacentHTML('afterbegin', icons.user);
 
     const header = createElement('div', '.section-header');
     header.append(icon, title);
