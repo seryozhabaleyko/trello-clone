@@ -5,3 +5,9 @@
 <h1 align="center">Trello Clone</h1>
 
 <p align="center">Простой и удобный таск-трекер. Он представляет собой инструмент для управления проектами в различных нишах — коммерческими, творческими, социальными. Также сервис и приложение удобны для личного планирования и самоконтроля.</p>
+
+<h1>Скриншоты</h1>
+
+<img src="https://github.com/seryozhabaleyko/trello-clone/blob/master/kanban1.png?raw=true" />
+<img src="https://github.com/seryozhabaleyko/trello-clone/blob/master/kanban2.png?raw=true" />
+<img src="https://github.com/seryozhabaleyko/trello-clone/blob/master/trello3.jpg?raw=true" />
